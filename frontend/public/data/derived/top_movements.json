@@ -1,0 +1,146 @@
+[
+  {
+    "movement": "row (erg)",
+    "days": 2507
+  },
+  {
+    "movement": "run",
+    "days": 1715
+  },
+  {
+    "movement": "pull-up",
+    "days": 1369
+  },
+  {
+    "movement": "deadlift",
+    "days": 1346
+  },
+  {
+    "movement": "clean",
+    "days": 1117
+  },
+  {
+    "movement": "push-up",
+    "days": 1085
+  },
+  {
+    "movement": "snatch",
+    "days": 1025
+  },
+  {
+    "movement": "burpee",
+    "days": 999
+  },
+  {
+    "movement": "back squat",
+    "days": 731
+  },
+  {
+    "movement": "jerk (split/push)",
+    "days": 727
+  },
+  {
+    "movement": "bike (assault/echo)",
+    "days": 705
+  },
+  {
+    "movement": "kettlebell swing",
+    "days": 641
+  },
+  {
+    "movement": "box jump",
+    "days": 613
+  },
+  {
+    "movement": "double under",
+    "days": 601
+  },
+  {
+    "movement": "power clean",
+    "days": 599
+  },
+  {
+    "movement": "bench press",
+    "days": 597
+  },
+  {
+    "movement": "front squat",
+    "days": 520
+  },
+  {
+    "movement": "muscle-up",
+    "days": 493
+  },
+  {
+    "movement": "thruster",
+    "days": 492
+  },
+  {
+    "movement": "lunge",
+    "days": 491
+  },
+  {
+    "movement": "push press",
+    "days": 455
+  },
+  {
+    "movement": "wall ball",
+    "days": 403
+  },
+  {
+    "movement": "handstand push-up",
+    "days": 358
+  },
+  {
+    "movement": "toes-to-bar",
+    "days": 356
+  },
+  {
+    "movement": "power snatch",
+    "days": 354
+  },
+  {
+    "movement": "overhead squat",
+    "days": 306
+  },
+  {
+    "movement": "row (weighted)",
+    "days": 264
+  },
+  {
+    "movement": "strict press",
+    "days": 170
+  },
+  {
+    "movement": "dumbbell thruster",
+    "days": 127
+  },
+  {
+    "movement": "dumbbell snatch",
+    "days": 107
+  },
+  {
+    "movement": "turkish get-up",
+    "days": 83
+  },
+  {
+    "movement": "rope climb",
+    "days": 67
+  },
+  {
+    "movement": "kettlebell snatch",
+    "days": 33
+  },
+  {
+    "movement": "ski erg",
+    "days": 20
+  },
+  {
+    "movement": "dumbbell clean",
+    "days": 16
+  },
+  {
+    "movement": "clean and jerk",
+    "days": 8
+  }
+]
