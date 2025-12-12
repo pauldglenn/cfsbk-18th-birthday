@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Running backend tests (uv run pytest)..."
+uv run pytest
+
+echo "Running frontend tests (npm test -- --run)..."
+cd frontend
+npm test -- --run
