@@ -37,7 +37,7 @@ jobs:
         run: uv sync
 
       - name: Run ETL to refresh derived data
-        run: uv run python etl.py build
+        run: uv run python etl.py all
 
       - name: Install frontend deps
         working-directory: frontend
