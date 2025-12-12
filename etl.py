@@ -1,0 +1,346 @@
+"""
+ETL pipeline for CrossFit workouts.
+
+Commands:
+    uv run python etl.py fetch [--max-pages N]     # fetch raw posts to data/raw/
+    uv run python etl.py build                     # parse raw posts -> canonical + aggregates
+    uv run python etl.py all                       # fetch + build
+"""
+
+import argparse
+import json
+import re
+import time
+from collections import Counter, defaultdict
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, Iterable, List, Tuple
+
+import yaml
+
+from scrape_cfsbk import (
+    fetch_posts,
+    process_post,
+)
+
+ROOT = Path(__file__).parent
+RAW_DIR = ROOT / "data" / "raw"
+DERIVED_DIR = ROOT / "data" / "derived"
+CONFIG_DIR = ROOT / "config"
+
+
+def ensure_dirs() -> None:
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    DERIVED_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def load_movement_patterns() -> List[Tuple[str, List[re.Pattern]]]:
+    config_path = CONFIG_DIR / "movements.yml"
+    with config_path.open() as f:
+        data = yaml.safe_load(f) or []
+    compiled = []
+    for entry in data:
+        name = entry.get("name")
+        patterns = entry.get("patterns") or []
+        regexes = [re.compile(pat, re.IGNORECASE) for pat in patterns]
+        if name and regexes:
+            compiled.append((name, regexes))
+    return compiled
+
+
+def tag_movements(text: str, compiled: List[Tuple[str, List[re.Pattern]]]) -> List[str]:
+    found = []
+    for name, regexes in compiled:
+        if any(r.search(text) for r in regexes):
+            found.append(name)
+    return found
+
+
+def movement_text_from_components(components: List[Dict]) -> str:
+    """
+    Build a text blob for movement detection but drop lines that reference
+    future workouts (e.g., "tomorrow we have running").
+    """
+    skip_markers = ("tomorrow", "next week", "next day", "next cycle", "tomorrows")
+    lines: List[str] = []
+    for comp in components or []:
+        detail = comp.get("details") or ""
+        for line in detail.split("\n"):
+            if not line.strip():
+                continue
+            lc = line.lower()
+            if any(mark in lc for mark in skip_markers):
+                continue
+            lines.append(line)
+    return " ".join(lines)
+
+
+def extract_rep_scheme(components: List[Dict]) -> str:
+    """
+    Heuristic: pull lines from component details that look like rep schemes
+    (numbers, AMRAP, For Time, EMOM). If nothing matches, fallback to the
+    first 120 chars of the first component.
+    """
+    keywords = ("amrap", "for time", "emom", "every", "round", "rounds", "minutes", "minute")
+    lines = []
+    for comp in components or []:
+        detail = comp.get("details") or ""
+        for line in detail.split("\n"):
+            line_clean = line.strip()
+            if not line_clean:
+                continue
+            lc = line_clean.lower()
+            if any(k in lc for k in keywords) or re.search(r"\d", line_clean):
+                lines.append(f"{comp.get('component') or ''}: {line_clean}".strip(": "))
+    if lines:
+        return " | ".join(lines)[:400]
+    # fallback
+    if components:
+        first = (components[0].get("component") or "") + ": " + (components[0].get("details") or "")
+        return first[:200]
+    return ""
+
+
+def detect_format(text: str) -> str:
+    text_l = text.lower()
+    if "amrap" in text_l:
+        return "amrap"
+    if "for time" in text_l:
+        return "for time"
+    if "emom" in text_l or "every minute" in text_l:
+        return "emom"
+    if "interval" in text_l or "tabata" in text_l:
+        return "interval"
+    return ""
+
+
+def component_tag(name: str) -> str:
+    name_l = name.lower()
+    if "floater strength" in name_l:
+        return "floater_strength"
+    if "strength" in name_l:
+        return "strength"
+    if "assistance" in name_l or "accessory" in name_l or "bodybuilding" in name_l:
+        return "assistance"
+    if "metcon" in name_l or "conditioning" in name_l or "workout" in name_l:
+        return "conditioning"
+    if "partner" in name_l or "team" in name_l:
+        return "partner"
+    return ""
+
+
+def fetch_raw(max_pages: int | None) -> Path:
+    ensure_dirs()
+    ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    out_path = RAW_DIR / f"posts-{ts}.jsonl"
+    total = 0
+    with out_path.open("w", encoding="utf-8") as f:
+        for posts in fetch_posts(max_pages=max_pages):
+            for post in posts:
+                json.dump(post, f, ensure_ascii=False)
+                f.write("\n")
+                total += 1
+    print(f"Fetched {total} posts -> {out_path}")
+    return out_path
+
+
+def load_raw_posts() -> Iterable[Dict]:
+    files = sorted(RAW_DIR.glob("posts-*.jsonl"), reverse=True)
+    if not files:
+        raise SystemExit("No raw files found in data/raw. Run `uv run python etl.py fetch` first.")
+    # Use the newest file; older files may contain partial downloads.
+    path = files[0]
+    with path.open() as f:
+        for line in f:
+            yield json.loads(line)
+
+
+def build_canonical(raw_posts: Iterable[Dict]) -> List[Dict]:
+    compiled_movements = load_movement_patterns()
+    canonical: List[Dict] = []
+    for post in raw_posts:
+        base = process_post(post)
+        movement_text = movement_text_from_components(base.get("components") or [])
+        movements = tag_movements(movement_text.lower(), compiled_movements)
+        formats = detect_format(movement_text.lower())
+        component_tags = list(
+            {
+                component_tag(c.get("component") or "")
+                for c in base.get("components") or []
+                if component_tag(c.get("component") or "")
+            }
+        )
+        base.update(
+            {
+                "movements": movements,
+                "format": formats,
+                "component_tags": component_tags,
+            }
+        )
+        canonical.append(base)
+    # seq_no by date then id
+    canonical.sort(key=lambda x: (x.get("date") or "", x.get("id") or 0))
+    for idx, item in enumerate(canonical, start=1):
+        item["seq_no"] = idx
+        if idx in {1000, 2500, 5000} or idx == len(canonical):
+            item.setdefault("milestones", []).append(f"{idx}th workout")
+    return canonical
+
+
+def aggregate(canonical: List[Dict]) -> Dict[str, Dict]:
+    movements_days = Counter()
+    movement_pairs = Counter()
+    yearly_counts = Counter()
+    weekday_counts = Counter()
+    movement_yearly = defaultdict(lambda: Counter())
+    movement_weekday = defaultdict(lambda: Counter())
+    movement_monthly = defaultdict(lambda: defaultdict(Counter))
+    movement_calendar = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+
+    for item in canonical:
+        date = item.get("date") or ""
+        if date:
+            yearly_counts[date[:4]] += 1
+            try:
+                dt_obj = datetime.fromisoformat(date)
+                weekday = dt_obj.strftime("%A")
+                weekday_counts[weekday] += 1
+                ym = dt_obj.strftime("%Y-%m")
+            except Exception:
+                pass
+        movs = set(item.get("movements") or [])
+        summary = " ".join(
+            (c.get("component") or "") + ": " + (c.get("details") or "")
+            for c in item.get("components") or []
+        )
+        rep_summary = extract_rep_scheme(item.get("components") or [])
+        for m in movs:
+            movements_days[m] += 1
+            if date:
+                movement_yearly[m][date[:4]] += 1
+                try:
+                    dt_obj = datetime.fromisoformat(date)
+                    weekday = dt_obj.strftime("%A")
+                    movement_weekday[m][weekday] += 1
+                    ym = dt_obj.strftime("%Y-%m")
+                    movement_monthly[m][dt_obj.year][dt_obj.month] += 1
+                    movement_calendar[m][dt_obj.year][dt_obj.month].append(
+                        {
+                            "day": dt_obj.day,
+                            "date": date,
+                            "title": item.get("title"),
+                            "summary": rep_summary,
+                            "link": item.get("link"),
+                        }
+                    )
+                except Exception:
+                    pass
+        for a, b in itertools_pairs(sorted(movs)):
+            movement_pairs[(a, b)] += 1
+
+    top_movements = movements_days.most_common(100)
+    top_pairs = [
+        {"a": a, "b": b, "count": cnt} for (a, b), cnt in movement_pairs.most_common(200)
+    ]
+
+    return {
+        "top_movements": [{"movement": m, "days": d} for m, d in top_movements],
+        "top_pairs": top_pairs,
+        "yearly_counts": dict(yearly_counts),
+        "weekday_counts": dict(weekday_counts),
+        "movement_yearly": {m: dict(c) for m, c in movement_yearly.items()},
+        "movement_weekday": {m: dict(c) for m, c in movement_weekday.items()},
+        "movement_monthly": {
+            m: {str(y): {str(mon): count for mon, count in months.items()} for y, months in years.items()}
+            for m, years in movement_monthly.items()
+        },
+        "movement_calendar": {
+            m: {str(y): {str(mon): entries for mon, entries in months.items()} for y, months in years.items()}
+            for m, years in movement_calendar.items()
+        },
+    }
+
+
+def itertools_pairs(seq: List[str]):
+    import itertools
+
+    return itertools.combinations(seq, 2)
+
+
+def write_artifacts(canonical: List[Dict], aggregates: Dict[str, Dict]) -> None:
+    ensure_dirs()
+    canonical_path = DERIVED_DIR / "workouts.jsonl"
+    with canonical_path.open("w", encoding="utf-8") as f:
+        for item in canonical:
+            json.dump(item, f, ensure_ascii=False)
+            f.write("\n")
+    for name, data in aggregates.items():
+        out_path = DERIVED_DIR / f"{name}.json"
+        with out_path.open("w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    # Search bundle: slim fields for UI search
+    search_path = DERIVED_DIR / "search_index.json"
+    search_data = [
+        {
+            "id": item.get("id"),
+            "date": item.get("date"),
+            "title": item.get("title"),
+            "link": item.get("link"),
+            "movements": item.get("movements"),
+            "component_tags": item.get("component_tags"),
+            "format": item.get("format"),
+            "cycle_info": item.get("cycle_info"),
+        }
+        for item in canonical
+    ]
+    with search_path.open("w", encoding="utf-8") as f:
+        json.dump(search_data, f, ensure_ascii=False)
+    version_path = DERIVED_DIR / "data_version.json"
+    version = {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "total_workouts": len(canonical),
+    }
+    with version_path.open("w", encoding="utf-8") as f:
+        json.dump(version, f, indent=2)
+    print(f"Wrote canonical -> {canonical_path}")
+    print(f"Wrote aggregates -> {DERIVED_DIR}")
+
+
+def cmd_fetch(args: argparse.Namespace) -> None:
+    fetch_raw(max_pages=args.max_pages)
+
+
+def cmd_build(_: argparse.Namespace) -> None:
+    raw = list(load_raw_posts())
+    canonical = build_canonical(raw)
+    aggregates = aggregate(canonical)
+    write_artifacts(canonical, aggregates)
+
+
+def cmd_all(args: argparse.Namespace) -> None:
+    fetch_raw(max_pages=args.max_pages)
+    time.sleep(0.1)
+    cmd_build(args)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="ETL for CFSBK workouts.")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_fetch = sub.add_parser("fetch", help="Fetch raw posts to data/raw.")
+    p_fetch.add_argument("--max-pages", type=int, default=None, help="Limit pages (testing).")
+    p_fetch.set_defaults(func=cmd_fetch)
+
+    p_build = sub.add_parser("build", help="Build canonical + aggregates from latest raw.")
+    p_build.set_defaults(func=cmd_build)
+
+    p_all = sub.add_parser("all", help="Fetch then build.")
+    p_all.add_argument("--max-pages", type=int, default=None, help="Limit pages (testing).")
+    p_all.set_defaults(func=cmd_all)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()

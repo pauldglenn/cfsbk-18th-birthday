@@ -1,0 +1,204 @@
+# Base movement patterns and synonyms.
+# Each entry:
+# - name: canonical movement label
+#   patterns: list of regex fragments (joined with |)
+#   tags: optional list (e.g., modality: weightlifting/gymnastics/monostructural)
+
+- name: burpee
+  patterns:
+    - burpee
+  tags: [gymnastics]
+
+- name: row (erg)
+  patterns:
+    - row(er)?
+    - calories? row(ed|ing)?
+    - row for
+  tags: [monostructural]
+
+- name: run
+  patterns:
+    - \brun
+  tags: [monostructural]
+
+- name: bike (assault/echo)
+  patterns:
+    - bike
+    - assault
+    - echo bike
+  tags: [monostructural]
+
+- name: ski erg
+  patterns:
+    - \bski\b
+  tags: [monostructural]
+
+- name: double under
+  patterns:
+    - double under
+    - \bdu\b
+  tags: [monostructural]
+
+- name: box jump
+  patterns:
+    - box jump
+  tags: [gymnastics]
+
+- name: wall ball
+  patterns:
+    - wall ball
+  tags: [weightlifting]
+
+- name: thruster
+  patterns:
+    - thruster
+  tags: [weightlifting]
+
+- name: deadlift
+  patterns:
+    - \bdeadlift
+  tags: [weightlifting]
+
+- name: power clean
+  patterns:
+    - power clean
+  tags: [weightlifting]
+
+- name: clean
+  patterns:
+    - (?<!power )clean
+  tags: [weightlifting]
+
+- name: power snatch
+  patterns:
+    - power snatch
+  tags: [weightlifting]
+
+- name: snatch
+  patterns:
+    - \bsnatch
+  tags: [weightlifting]
+
+- name: clean and jerk
+  patterns:
+    - clean.?jerk
+  tags: [weightlifting]
+
+- name: jerk (split/push)
+  patterns:
+    - \bjerk
+  tags: [weightlifting]
+
+- name: push press
+  patterns:
+    - push press
+  tags: [weightlifting]
+
+- name: strict press
+  patterns:
+    - strict press
+    - shoulder press
+  tags: [weightlifting]
+
+- name: bench press
+  patterns:
+    - bench press
+  tags: [weightlifting]
+
+- name: back squat
+  patterns:
+    - back squat
+  tags: [weightlifting]
+
+- name: front squat
+  patterns:
+    - front squat
+  tags: [weightlifting]
+
+- name: overhead squat
+  patterns:
+    - overhead squat
+  tags: [weightlifting]
+
+- name: lunge
+  patterns:
+    - lunge
+  tags: [weightlifting]
+
+- name: rope climb
+  patterns:
+    - rope climb
+  tags: [gymnastics]
+
+- name: pull-up
+  patterns:
+    - pull[- ]?up
+  tags: [gymnastics]
+
+- name: muscle-up
+  patterns:
+    - muscle[- ]?up
+  tags: [gymnastics]
+
+- name: toes-to-bar
+  patterns:
+    - toes[- ]?to[- ]?bar
+    - ttb
+  tags: [gymnastics]
+
+- name: push-up
+  patterns:
+    - push[- ]?up
+  tags: [gymnastics]
+
+- name: handstand push-up
+  patterns:
+    - handstand (push[- ]?up|pushup)
+    - hspu
+  tags: [gymnastics]
+
+- name: kettlebell swing
+  patterns:
+    - kettlebell swing
+    - kb swing
+  tags: [weightlifting]
+
+- name: kettlebell snatch
+  patterns:
+    - kettlebell snatch
+    - kb snatch
+  tags: [weightlifting]
+
+- name: turkish get-up
+  patterns:
+    - turkish get[- ]?up
+  tags: [weightlifting]
+
+- name: dumbbell snatch
+  patterns:
+    - db snatch
+    - dumbbell snatch
+  tags: [weightlifting]
+
+- name: dumbbell clean
+  patterns:
+    - db clean
+    - dumbbell clean
+  tags: [weightlifting]
+
+- name: dumbbell thruster
+  patterns:
+    - db thruster
+    - dumbbell thruster
+  tags: [weightlifting]
+
+- name: row (weighted)
+  patterns:
+    - db row
+    - dumbbell row
+    - barbell row
+    - bent[- ]?over row
+    - pendlay row
+    - seal row
+    - three[- ]point db row
+  tags: [weightlifting]

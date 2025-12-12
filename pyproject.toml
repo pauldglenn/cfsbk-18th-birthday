@@ -1,0 +1,15 @@
+[project]
+name = "crossfit-analysis"
+version = "0.1.0"
+description = "Scrape CrossFit South Brooklyn workouts"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "beautifulsoup4",
+    "matplotlib",
+    "pyyaml",
+    "requests",
+]
+
+[tool.uv]
+package = false
