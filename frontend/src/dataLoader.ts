@@ -13,17 +13,17 @@ async function fetchJson<T>(path: string): Promise<T> {
 export async function loadAggregates(): Promise<Aggregates> {
   const [top_movements, top_pairs, yearly_counts, weekday_counts, movement_yearly, movement_weekday] =
     await Promise.all([
-      fetchJson(`${BASE}/top_movements.json`),
-      fetchJson(`${BASE}/top_pairs.json`),
-      fetchJson(`${BASE}/yearly_counts.json`),
-      fetchJson(`${BASE}/weekday_counts.json`),
-      fetchJson(`${BASE}/movement_yearly.json`),
-      fetchJson(`${BASE}/movement_weekday.json`),
+      fetchJson<Aggregates["top_movements"]>(`${BASE}/top_movements.json`),
+      fetchJson<Aggregates["top_pairs"]>(`${BASE}/top_pairs.json`),
+      fetchJson<Aggregates["yearly_counts"]>(`${BASE}/yearly_counts.json`),
+      fetchJson<Aggregates["weekday_counts"]>(`${BASE}/weekday_counts.json`),
+      fetchJson<Aggregates["movement_yearly"]>(`${BASE}/movement_yearly.json`),
+      fetchJson<Aggregates["movement_weekday"]>(`${BASE}/movement_weekday.json`),
       // movement_monthly loaded separately below
     ]);
   const [movement_monthly, movement_calendar] = await Promise.all([
-    fetchJson<Record<string, Record<string, Record<string, number>>>>(`${BASE}/movement_monthly.json`),
-    fetchJson<Record<string, Record<string, Record<string, any>>>>(`${BASE}/movement_calendar.json`),
+    fetchJson<Aggregates["movement_monthly"]>(`${BASE}/movement_monthly.json`),
+    fetchJson<Aggregates["movement_calendar"]>(`${BASE}/movement_calendar.json`),
   ]);
   return {
     top_movements,
