@@ -1,7 +1,15 @@
+import pathlib
+import sys
+
 import pytest
+from bs4 import BeautifulSoup
+
+# Ensure project root on path for module imports
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from scrape_cfsbk import derive_workout_date, extract_rep_scheme, movement_text_from_components, parse_components
-from bs4 import BeautifulSoup
 
 
 def test_derive_workout_date_prefers_title():
