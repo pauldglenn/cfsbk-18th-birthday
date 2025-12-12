@@ -9,7 +9,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scrape_cfsbk import derive_workout_date, extract_rep_scheme, movement_text_from_components, parse_components
+from scrape_cfsbk import derive_workout_date, parse_components
+from etl import extract_rep_scheme, movement_text_from_components
 
 
 def test_derive_workout_date_prefers_title():
