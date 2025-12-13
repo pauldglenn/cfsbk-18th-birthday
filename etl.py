@@ -75,6 +75,19 @@ def movement_text_from_components(components: List[Dict]) -> str:
     return " ".join(lines)
 
 
+def is_rest_day(components: List[Dict]) -> bool:
+    """
+    Heuristic rest-day detector: if the combined component text mentions "rest day"
+    and contains no rep schemes/numbers, treat as rest and skip movement tagging.
+    """
+    text = " ".join((c.get("component") or "") + " " + (c.get("details") or "") for c in components or "").lower()
+    if "rest day" not in text:
+        return False
+    if re.search(r"\d", text):
+        return False
+    return True
+
+
 def extract_rep_scheme(components: List[Dict]) -> str:
     """
     Heuristic: pull lines from component details that look like rep schemes
@@ -160,6 +173,10 @@ def build_canonical(raw_posts: Iterable[Dict]) -> List[Dict]:
     canonical: List[Dict] = []
     for post in raw_posts:
         base = process_post(post)
+        if is_rest_day(base.get("components") or []):
+            base.update({"movements": [], "format": "", "component_tags": []})
+            canonical.append(base)
+            continue
         movement_text = movement_text_from_components(base.get("components") or [])
         movements = tag_movements(movement_text.lower(), compiled_movements)
         formats = detect_format(movement_text.lower())

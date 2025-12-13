@@ -11,9 +11,12 @@
 
 - name: row (erg)
   patterns:
-    - row(er)?
     - calories? row(ed|ing)?
     - row for
+    - \d+\s*m(?:eters)?\s*row
+    - row\s+\d+\s*m(?:eters)?
+    - rower\b
+    - erg\b
   tags: [monostructural]
 
 - name: run
@@ -201,4 +204,5 @@
     - pendlay row
     - seal row
     - three[- ]point db row
+    - renegade row
   tags: [weightlifting]

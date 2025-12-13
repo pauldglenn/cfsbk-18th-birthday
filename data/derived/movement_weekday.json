@@ -1,13 +1,4 @@
 {
-  "burpee": {
-    "Saturday": 185,
-    "Friday": 109,
-    "Sunday": 138,
-    "Tuesday": 111,
-    "Wednesday": 126,
-    "Monday": 160,
-    "Thursday": 170
-  },
   "pull-up": {
     "Saturday": 227,
     "Friday": 128,
@@ -16,6 +7,15 @@
     "Wednesday": 207,
     "Monday": 246,
     "Tuesday": 159
+  },
+  "burpee": {
+    "Saturday": 185,
+    "Friday": 109,
+    "Sunday": 138,
+    "Tuesday": 111,
+    "Wednesday": 126,
+    "Monday": 160,
+    "Thursday": 170
   },
   "thruster": {
     "Friday": 42,
@@ -26,15 +26,6 @@
     "Monday": 66,
     "Tuesday": 44
   },
-  "double under": {
-    "Friday": 77,
-    "Saturday": 70,
-    "Sunday": 89,
-    "Wednesday": 117,
-    "Monday": 96,
-    "Thursday": 80,
-    "Tuesday": 72
-  },
   "kettlebell swing": {
     "Friday": 64,
     "Sunday": 101,
@@ -43,6 +34,15 @@
     "Saturday": 99,
     "Thursday": 102,
     "Tuesday": 64
+  },
+  "double under": {
+    "Friday": 77,
+    "Saturday": 70,
+    "Sunday": 89,
+    "Wednesday": 117,
+    "Monday": 96,
+    "Thursday": 80,
+    "Tuesday": 72
   },
   "box jump": {
     "Saturday": 101,
@@ -55,21 +55,12 @@
   },
   "deadlift": {
     "Tuesday": 224,
-    "Sunday": 211,
+    "Sunday": 210,
     "Saturday": 174,
     "Thursday": 207,
     "Wednesday": 178,
     "Friday": 144,
     "Monday": 208
-  },
-  "clean": {
-    "Friday": 157,
-    "Tuesday": 142,
-    "Sunday": 139,
-    "Wednesday": 138,
-    "Thursday": 182,
-    "Monday": 201,
-    "Saturday": 158
   },
   "push-up": {
     "Friday": 106,
@@ -79,6 +70,24 @@
     "Sunday": 118,
     "Monday": 194,
     "Wednesday": 180
+  },
+  "clean": {
+    "Friday": 157,
+    "Tuesday": 142,
+    "Sunday": 138,
+    "Wednesday": 138,
+    "Thursday": 182,
+    "Monday": 201,
+    "Saturday": 158
+  },
+  "lunge": {
+    "Saturday": 64,
+    "Friday": 55,
+    "Sunday": 52,
+    "Wednesday": 90,
+    "Thursday": 70,
+    "Monday": 100,
+    "Tuesday": 59
   },
   "power snatch": {
     "Saturday": 35,
@@ -98,24 +107,6 @@
     "Monday": 172,
     "Tuesday": 120
   },
-  "lunge": {
-    "Saturday": 64,
-    "Friday": 55,
-    "Sunday": 52,
-    "Wednesday": 90,
-    "Thursday": 70,
-    "Monday": 100,
-    "Tuesday": 59
-  },
-  "push press": {
-    "Tuesday": 71,
-    "Saturday": 59,
-    "Wednesday": 53,
-    "Monday": 97,
-    "Sunday": 60,
-    "Thursday": 72,
-    "Friday": 43
-  },
   "jerk (split/push)": {
     "Tuesday": 71,
     "Thursday": 156,
@@ -123,7 +114,16 @@
     "Saturday": 99,
     "Friday": 87,
     "Monday": 140,
-    "Sunday": 106
+    "Sunday": 105
+  },
+  "push press": {
+    "Tuesday": 71,
+    "Saturday": 59,
+    "Wednesday": 53,
+    "Monday": 97,
+    "Sunday": 59,
+    "Thursday": 72,
+    "Friday": 43
   },
   "power clean": {
     "Friday": 51,
@@ -154,7 +154,7 @@
   },
   "back squat": {
     "Tuesday": 132,
-    "Sunday": 91,
+    "Sunday": 90,
     "Wednesday": 143,
     "Monday": 138,
     "Friday": 54,
@@ -169,15 +169,6 @@
     "Thursday": 277,
     "Tuesday": 241,
     "Friday": 243
-  },
-  "row (erg)": {
-    "Wednesday": 395,
-    "Sunday": 323,
-    "Tuesday": 337,
-    "Saturday": 350,
-    "Monday": 383,
-    "Thursday": 402,
-    "Friday": 316
   },
   "kettlebell snatch": {
     "Sunday": 3,
@@ -196,6 +187,15 @@
     "Friday": 15,
     "Monday": 11,
     "Tuesday": 11
+  },
+  "row (weighted)": {
+    "Saturday": 26,
+    "Thursday": 38,
+    "Monday": 67,
+    "Wednesday": 67,
+    "Sunday": 32,
+    "Friday": 43,
+    "Tuesday": 52
   },
   "front squat": {
     "Saturday": 86,
@@ -238,7 +238,7 @@
     "Sunday": 7,
     "Monday": 16,
     "Thursday": 8,
-    "Tuesday": 10,
+    "Tuesday": 9,
     "Saturday": 12,
     "Friday": 6
   },
@@ -250,6 +250,15 @@
     "Thursday": 21,
     "Friday": 16,
     "Sunday": 9
+  },
+  "row (erg)": {
+    "Saturday": 153,
+    "Sunday": 118,
+    "Thursday": 127,
+    "Monday": 117,
+    "Tuesday": 80,
+    "Wednesday": 133,
+    "Friday": 74
   },
   "dumbbell thruster": {
     "Wednesday": 22,
@@ -268,15 +277,6 @@
     "Friday": 63,
     "Tuesday": 119,
     "Sunday": 74
-  },
-  "row (weighted)": {
-    "Thursday": 31,
-    "Monday": 58,
-    "Sunday": 27,
-    "Wednesday": 51,
-    "Friday": 35,
-    "Tuesday": 44,
-    "Saturday": 18
   },
   "dumbbell clean": {
     "Saturday": 3,
