@@ -92,3 +92,17 @@ def test_deadlift_not_from_promo():
     assert "deadlift" not in tags
     assert "wall ball" in tags
     assert "power clean" in tags
+
+
+def test_burpee_not_from_tomorrow_note():
+    title = "Floater Strength"
+    comps = [
+        {
+            "component": "FLOATER STRENGTH",
+            "details": "A. Power Clean and Push Jerk\nE. Deadlift 3x4-6 Across\nNotes\nTomorrow we have running, wall balls, sit-ups, burpees, and kipping pull-ups.",
+        }
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "burpee" not in tags
+    assert "deadlift" in tags

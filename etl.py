@@ -97,6 +97,8 @@ def movement_text_from_components(components: List[Dict]) -> str:
         "next level weightlifting",
         "subway series",
         "our new cycle starts",
+        "training cycle dates",
+        "goals:",
     ]
 
     for comp in source_components:
@@ -104,18 +106,13 @@ def movement_text_from_components(components: List[Dict]) -> str:
         # Drop blog extras after separator lines (e.g., trivia, links)
         if "___" in detail:
             detail = detail.split("___", 1)[0]
-        lc_detail = " ".join(detail.lower().replace("\xa0", " ").split())
-    cut_points = []
-    for marker in promo_breaks + ["post work to comments", "post loads to comments", "post load to comments", "post to comments", "exposure"]:
-        idx = lc_detail.find(marker)
-        if idx != -1:
-            cut_points.append(idx)
-        if cut_points and min(cut_points) > 0:
-            cut_at = min(cut_points)
-            # map index from normalized to original best-effort by proportion
-            ratio = cut_at / max(len(lc_detail), 1)
-            cut_idx_orig = int(len(detail) * ratio)
-            detail = detail[:cut_idx_orig]
+        detail_lower = detail.lower()
+        for marker in promo_breaks + ["post work to comments", "post loads to comments", "post load to comments", "post to comments"]:
+            idx = detail_lower.find(marker)
+            if idx > 0:
+                detail = detail[:idx]
+                detail_lower = detail_lower[:idx]
+                break
         for line in detail.split("\n"):
             if not line.strip():
                 continue
@@ -141,6 +138,8 @@ def movement_text_from_components(components: List[Dict]) -> str:
             if "post" in lc_norm and "comments" in lc_norm:
                 cut_index = lc.lower().find("post")
                 lines.append(line[:cut_index].strip())
+                break
+            if re.search(r"weeks\\s+1-2", lc_norm):
                 break
             if "exposure" in lc_norm:
                 lines.append(line.split("exposure", 1)[0].strip())
