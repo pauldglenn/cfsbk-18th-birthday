@@ -127,8 +127,25 @@ def parse_components(soup: BeautifulSoup) -> List[Dict[str, str]]:
         and "workout of the day" in tag.get_text(" ", strip=True).lower()
     )
     if not wod_heading:
-        # Fallback: older posts often omit the heading, so try to pull any
-        # heading-delimited sections. If none exist, capture the whole body.
+        # Fallback: if there is text before the first heading, treat that as the workout
+        # and ignore later headings (often blog/news content).
+        first_heading = soup.find(lambda t: t.name in {"h2", "h3", "h4", "h5", "h6"})
+        leading_text_parts: List[str] = []
+        if first_heading:
+            for node in first_heading.previous_siblings:
+                if isinstance(node, Tag):
+                    txt = node.get_text(" ", strip=True)
+                elif isinstance(node, NavigableString):
+                    txt = str(node).strip()
+                else:
+                    txt = ""
+                if txt:
+                    leading_text_parts.append(txt)
+        leading_text = clean_text(" ".join(reversed(leading_text_parts)))
+        if leading_text:
+            return [{"component": "Workout", "details": leading_text}]
+
+        # Otherwise, try heading-delimited sections. If none exist, capture the whole body.
         sections: List[Dict[str, str]] = []
         for heading in soup.find_all(lambda t: t.name in {"h2", "h3", "h4", "h5", "h6"}):
             heading_text = heading.get_text(" ", strip=True)
