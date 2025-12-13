@@ -220,8 +220,9 @@ def build_canonical(raw_posts: Iterable[Dict], comment_counts: Dict[int, int] | 
             canonical.append(base)
             continue
         movement_text = movement_text_from_components(base.get("components") or [])
-        movements = tag_movements(movement_text.lower(), compiled_movements)
-        formats = detect_format(movement_text.lower())
+        movement_source = f"{base.get('title') or ''} {movement_text}".strip()
+        movements = tag_movements(movement_source.lower(), compiled_movements)
+        formats = detect_format(movement_source.lower())
         component_tags = list(
             {
                 component_tag(c.get("component") or "")
