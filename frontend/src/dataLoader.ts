@@ -1,6 +1,6 @@
 import type { Aggregates, SearchItem } from "./types";
 
-const BASE = "/data/derived";
+const BASE = `${import.meta.env.BASE_URL}data/derived`;
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(path);
