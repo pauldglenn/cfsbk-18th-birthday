@@ -494,3 +494,87 @@
     padding: 48px 32px;
   }
 }
+
+@media (max-width: 768px) {
+  .story-container {
+    height: auto;
+    max-height: none;
+    scroll-snap-type: none;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 32px 16px;
+  }
+
+  .section {
+    min-height: auto;
+    padding: 28px 16px;
+  }
+
+  .bars {
+    gap: 8px;
+  }
+
+  .bar-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .bar-label {
+    font-size: 16px;
+  }
+
+  .bar-value {
+    text-align: left;
+  }
+
+  .heatmap {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 8px;
+  }
+
+  .heatmap-cell {
+    padding: 6px;
+  }
+
+  .heatmap-block {
+    height: 14px;
+  }
+
+  .heatmap-year {
+    font-size: 12px;
+  }
+
+  .heatmap-value {
+    font-size: 11px;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(7, minmax(32px, 1fr));
+  }
+
+  .trend-card {
+    overflow-x: auto;
+  }
+
+  .trend-table {
+    min-width: unset;
+    width: max-content;
+  }
+
+  .trend-row {
+    grid-template-columns: 140px repeat(auto-fit, minmax(40px, 1fr));
+  }
+
+  .trend-cell {
+    font-size: 12px;
+    padding: 6px 4px;
+  }
+
+  .legend {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
