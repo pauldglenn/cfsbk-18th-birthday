@@ -76,8 +76,8 @@ def movement_text_from_components(components: List[Dict]) -> str:
             lc = line.lower()
             if any(mark in lc for mark in skip_markers):
                 continue
-            # Skip obvious non-workout trivia/questions
-            if "trivia" in lc or lc.strip().startswith(tuple(str(n) for n in range(1, 11))):
+            # Skip obvious non-workout trivia/questions like numbered Q lists
+            if "trivia" in lc or (re.match(r"^\\d+\\.", lc.strip()) and "?" in line):
                 continue
             lines.append(line)
     return " ".join(lines)
