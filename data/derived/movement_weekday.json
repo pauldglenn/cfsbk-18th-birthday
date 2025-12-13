@@ -1,141 +1,141 @@
 {
   "kettlebell swing": {
-    "Friday": 35,
-    "Sunday": 61,
-    "Wednesday": 57,
-    "Monday": 62,
-    "Saturday": 83,
-    "Thursday": 72,
-    "Tuesday": 23
+    "Friday": 32,
+    "Sunday": 59,
+    "Wednesday": 52,
+    "Monday": 60,
+    "Saturday": 81,
+    "Thursday": 68,
+    "Tuesday": 22
   },
   "double under": {
-    "Friday": 41,
-    "Saturday": 56,
-    "Sunday": 76,
-    "Wednesday": 90,
-    "Monday": 75,
-    "Thursday": 71,
-    "Tuesday": 39
+    "Friday": 40,
+    "Saturday": 53,
+    "Sunday": 69,
+    "Wednesday": 88,
+    "Monday": 73,
+    "Thursday": 68,
+    "Tuesday": 37
   },
   "thruster": {
-    "Friday": 12,
-    "Saturday": 104,
-    "Wednesday": 47,
-    "Sunday": 56,
-    "Monday": 37,
-    "Thursday": 46,
-    "Tuesday": 6
+    "Friday": 10,
+    "Saturday": 98,
+    "Wednesday": 42,
+    "Sunday": 54,
+    "Monday": 34,
+    "Thursday": 42,
+    "Tuesday": 4
   },
   "box jump": {
-    "Saturday": 101,
+    "Saturday": 97,
     "Sunday": 70,
-    "Tuesday": 32,
-    "Wednesday": 51,
-    "Monday": 58,
-    "Thursday": 75,
-    "Friday": 39
+    "Tuesday": 30,
+    "Wednesday": 48,
+    "Monday": 51,
+    "Thursday": 71,
+    "Friday": 36
   },
   "burpee": {
-    "Saturday": 162,
-    "Friday": 49,
-    "Sunday": 87,
-    "Tuesday": 47,
-    "Wednesday": 72,
-    "Monday": 79,
-    "Thursday": 123
+    "Saturday": 152,
+    "Friday": 43,
+    "Sunday": 86,
+    "Tuesday": 46,
+    "Wednesday": 69,
+    "Monday": 76,
+    "Thursday": 117
   },
   "deadlift": {
-    "Tuesday": 115,
-    "Sunday": 220,
-    "Saturday": 182,
-    "Monday": 232,
-    "Thursday": 175,
-    "Wednesday": 146,
-    "Friday": 89
+    "Tuesday": 111,
+    "Sunday": 212,
+    "Saturday": 170,
+    "Monday": 218,
+    "Thursday": 164,
+    "Wednesday": 138,
+    "Friday": 86
   },
   "clean": {
-    "Friday": 47,
-    "Tuesday": 56,
-    "Sunday": 149,
-    "Wednesday": 108,
-    "Thursday": 193,
-    "Saturday": 131,
-    "Monday": 145
+    "Friday": 45,
+    "Tuesday": 55,
+    "Sunday": 141,
+    "Wednesday": 101,
+    "Thursday": 185,
+    "Saturday": 117,
+    "Monday": 136
   },
   "push-up": {
-    "Friday": 48,
-    "Saturday": 145,
-    "Thursday": 128,
-    "Tuesday": 66,
-    "Sunday": 105,
-    "Monday": 155,
-    "Wednesday": 117
+    "Friday": 45,
+    "Saturday": 138,
+    "Thursday": 125,
+    "Tuesday": 63,
+    "Sunday": 102,
+    "Monday": 152,
+    "Wednesday": 113
   },
   "power snatch": {
-    "Saturday": 43,
+    "Saturday": 41,
     "Monday": 33,
     "Wednesday": 32,
-    "Sunday": 91,
-    "Thursday": 90,
-    "Tuesday": 38,
+    "Sunday": 84,
+    "Thursday": 85,
+    "Tuesday": 33,
     "Friday": 15
   },
   "lunge": {
     "Saturday": 51,
-    "Friday": 30,
-    "Sunday": 43,
-    "Wednesday": 80,
-    "Thursday": 59,
-    "Monday": 83,
+    "Friday": 26,
+    "Sunday": 40,
+    "Wednesday": 76,
+    "Thursday": 58,
+    "Monday": 79,
     "Tuesday": 30
   },
   "snatch": {
-    "Saturday": 113,
-    "Sunday": 171,
-    "Wednesday": 92,
-    "Thursday": 193,
-    "Friday": 35,
-    "Monday": 108,
-    "Tuesday": 63
+    "Saturday": 106,
+    "Sunday": 167,
+    "Wednesday": 88,
+    "Thursday": 188,
+    "Friday": 33,
+    "Monday": 104,
+    "Tuesday": 60
   },
   "push press": {
-    "Tuesday": 39,
-    "Saturday": 52,
-    "Wednesday": 34,
-    "Monday": 102,
-    "Sunday": 57,
-    "Thursday": 79,
+    "Tuesday": 38,
+    "Saturday": 49,
+    "Wednesday": 32,
+    "Monday": 98,
+    "Sunday": 54,
+    "Thursday": 77,
     "Friday": 27
   },
   "jerk (split/push)": {
     "Tuesday": 26,
-    "Thursday": 153,
-    "Wednesday": 53,
-    "Saturday": 99,
-    "Sunday": 123,
-    "Friday": 31,
-    "Monday": 113
+    "Thursday": 144,
+    "Wednesday": 52,
+    "Saturday": 89,
+    "Sunday": 117,
+    "Friday": 29,
+    "Monday": 108
   },
   "power clean": {
-    "Friday": 24,
-    "Tuesday": 42,
-    "Saturday": 100,
-    "Sunday": 100,
-    "Monday": 86,
-    "Wednesday": 51,
-    "Thursday": 138
+    "Friday": 22,
+    "Tuesday": 41,
+    "Saturday": 96,
+    "Sunday": 92,
+    "Monday": 85,
+    "Wednesday": 47,
+    "Thursday": 129
   },
   "pull-up": {
-    "Friday": 62,
-    "Saturday": 190,
-    "Thursday": 154,
-    "Sunday": 161,
-    "Wednesday": 142,
-    "Monday": 186,
-    "Tuesday": 53
+    "Friday": 55,
+    "Saturday": 180,
+    "Thursday": 144,
+    "Sunday": 156,
+    "Wednesday": 137,
+    "Monday": 174,
+    "Tuesday": 48
   },
   "turkish get-up": {
-    "Saturday": 12,
+    "Saturday": 11,
     "Tuesday": 9,
     "Sunday": 7,
     "Monday": 11,
@@ -145,135 +145,135 @@
   },
   "overhead squat": {
     "Friday": 4,
-    "Saturday": 50,
-    "Wednesday": 41,
-    "Sunday": 52,
-    "Monday": 28,
-    "Thursday": 66,
-    "Tuesday": 24
+    "Saturday": 46,
+    "Wednesday": 38,
+    "Sunday": 47,
+    "Monday": 27,
+    "Thursday": 64,
+    "Tuesday": 22
   },
   "back squat": {
-    "Tuesday": 79,
-    "Sunday": 67,
-    "Wednesday": 288,
-    "Saturday": 157,
-    "Monday": 119,
+    "Tuesday": 77,
+    "Sunday": 64,
+    "Wednesday": 282,
+    "Saturday": 150,
+    "Monday": 109,
     "Friday": 21,
-    "Thursday": 44
+    "Thursday": 42
   },
   "run": {
-    "Saturday": 168,
-    "Sunday": 178,
-    "Wednesday": 122,
-    "Monday": 163,
-    "Thursday": 175,
-    "Friday": 82,
-    "Tuesday": 65
+    "Saturday": 152,
+    "Sunday": 164,
+    "Wednesday": 113,
+    "Monday": 153,
+    "Thursday": 151,
+    "Friday": 74,
+    "Tuesday": 59
   },
   "kettlebell snatch": {
     "Sunday": 3,
     "Saturday": 2,
     "Wednesday": 4,
-    "Thursday": 2,
     "Monday": 2,
+    "Thursday": 1,
     "Friday": 1
   },
   "dumbbell snatch": {
-    "Saturday": 20,
-    "Thursday": 9,
+    "Saturday": 18,
+    "Thursday": 7,
     "Sunday": 7,
-    "Wednesday": 10,
-    "Tuesday": 8,
+    "Wednesday": 9,
+    "Tuesday": 7,
     "Monday": 6,
-    "Friday": 9
+    "Friday": 7
   },
   "row (weighted)": {
     "Saturday": 17,
     "Thursday": 23,
-    "Monday": 58,
+    "Monday": 57,
     "Wednesday": 52,
-    "Sunday": 27,
-    "Tuesday": 20,
+    "Sunday": 26,
+    "Tuesday": 19,
     "Friday": 32
   },
   "front squat": {
-    "Saturday": 157,
-    "Wednesday": 138,
-    "Friday": 32,
-    "Sunday": 66,
-    "Monday": 69,
-    "Thursday": 55,
+    "Saturday": 154,
+    "Wednesday": 135,
+    "Friday": 31,
+    "Sunday": 65,
+    "Monday": 65,
+    "Thursday": 52,
     "Tuesday": 36
   },
   "wall ball": {
-    "Wednesday": 48,
-    "Monday": 39,
-    "Sunday": 39,
-    "Thursday": 40,
-    "Saturday": 79,
-    "Friday": 19,
-    "Tuesday": 15
+    "Wednesday": 44,
+    "Monday": 33,
+    "Sunday": 38,
+    "Thursday": 39,
+    "Saturday": 76,
+    "Friday": 17,
+    "Tuesday": 13
   },
   "muscle-up": {
-    "Monday": 48,
-    "Sunday": 30,
-    "Saturday": 69,
-    "Friday": 15,
-    "Thursday": 57,
+    "Monday": 46,
+    "Sunday": 29,
+    "Saturday": 66,
+    "Friday": 14,
+    "Thursday": 53,
     "Wednesday": 37,
-    "Tuesday": 22
+    "Tuesday": 20
   },
   "handstand push-up": {
-    "Monday": 58,
+    "Monday": 56,
     "Wednesday": 29,
-    "Saturday": 50,
-    "Sunday": 22,
-    "Thursday": 51,
-    "Tuesday": 21,
-    "Friday": 12
+    "Saturday": 44,
+    "Sunday": 21,
+    "Thursday": 50,
+    "Tuesday": 20,
+    "Friday": 11
   },
   "rope climb": {
     "Wednesday": 9,
-    "Sunday": 5,
+    "Sunday": 4,
     "Monday": 9,
     "Thursday": 7,
-    "Saturday": 12,
+    "Saturday": 10,
     "Tuesday": 4,
     "Friday": 3
   },
   "strict press": {
     "Saturday": 18,
     "Tuesday": 36,
-    "Monday": 24,
-    "Wednesday": 24,
+    "Monday": 21,
+    "Wednesday": 23,
     "Thursday": 19,
     "Friday": 12,
-    "Sunday": 3
+    "Sunday": 1
   },
   "row (erg)": {
-    "Saturday": 135,
-    "Sunday": 85,
-    "Thursday": 94,
-    "Monday": 86,
-    "Tuesday": 41,
-    "Wednesday": 86,
-    "Friday": 34
+    "Saturday": 129,
+    "Sunday": 81,
+    "Thursday": 91,
+    "Monday": 80,
+    "Tuesday": 38,
+    "Wednesday": 83,
+    "Friday": 32
   },
   "dumbbell thruster": {
-    "Wednesday": 12,
+    "Wednesday": 11,
     "Sunday": 9,
-    "Saturday": 26,
+    "Saturday": 24,
     "Thursday": 10,
-    "Friday": 5,
+    "Friday": 4,
     "Monday": 4,
-    "Tuesday": 2
+    "Tuesday": 1
   },
   "bench press": {
-    "Monday": 165,
+    "Monday": 160,
     "Wednesday": 89,
-    "Thursday": 71,
-    "Saturday": 30,
-    "Sunday": 61,
+    "Thursday": 67,
+    "Saturday": 26,
+    "Sunday": 59,
     "Tuesday": 48,
     "Friday": 34
   },
@@ -286,31 +286,28 @@
     "Friday": 1
   },
   "bike (assault/echo)": {
-    "Monday": 63,
-    "Thursday": 79,
-    "Wednesday": 62,
-    "Tuesday": 69,
-    "Saturday": 76,
-    "Friday": 81,
-    "Sunday": 61
+    "Monday": 61,
+    "Thursday": 76,
+    "Wednesday": 61,
+    "Tuesday": 67,
+    "Saturday": 75,
+    "Friday": 78,
+    "Sunday": 58
   },
   "toes-to-bar": {
-    "Monday": 36,
-    "Saturday": 48,
-    "Wednesday": 32,
-    "Thursday": 41,
-    "Friday": 23,
-    "Tuesday": 22,
-    "Sunday": 27
+    "Monday": 32,
+    "Saturday": 43,
+    "Wednesday": 28,
+    "Thursday": 33,
+    "Friday": 22,
+    "Tuesday": 20,
+    "Sunday": 25
   },
   "ski erg": {
     "Tuesday": 1,
     "Monday": 2,
-    "Thursday": 3,
-    "Sunday": 5,
-    "Saturday": 1
-  },
-  "clean and jerk": {
-    "Sunday": 2
+    "Thursday": 2,
+    "Saturday": 1,
+    "Sunday": 4
   }
 }

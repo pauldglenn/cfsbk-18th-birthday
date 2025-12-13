@@ -64,8 +64,12 @@ def movement_text_from_components(components: List[Dict]) -> str:
     future workouts (e.g., "tomorrow we have running").
     """
     skip_markers = ("tomorrow", "next week", "next day", "next cycle", "tomorrows")
+    workout_components = [
+        c for c in (components or []) if is_workout_component(c.get("component") or "")
+    ]
+    source_components = workout_components if workout_components else (components or [])
     lines: List[str] = []
-    for comp in components or []:
+    for comp in source_components:
         detail = comp.get("details") or ""
         # Drop blog extras after separator lines (e.g., trivia, links)
         if "___" in detail:
@@ -81,6 +85,15 @@ def movement_text_from_components(components: List[Dict]) -> str:
                 continue
             lines.append(line)
     return " ".join(lines)
+
+
+def is_workout_component(name: str) -> bool:
+    name_l = name.lower()
+    if component_tag(name):
+        return True
+    if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in"]):
+        return True
+    return False
 
 
 def is_rest_day(components: List[Dict], title: str = "") -> bool:
