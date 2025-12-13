@@ -74,20 +74,61 @@ def movement_text_from_components(components: List[Dict]) -> str:
     ]
     source_components = workout_components if workout_components else (components or [])
     lines: List[str] = []
+    promo_breaks = [
+        "pull for pride",
+        "east coast gambit",
+        "iron maidens",
+        "registration will open",
+        "next level weightlifting",
+        "subway series",
+    ]
+
     for comp in source_components:
         detail = comp.get("details") or ""
         # Drop blog extras after separator lines (e.g., trivia, links)
         if "___" in detail:
             detail = detail.split("___", 1)[0]
+        lc_detail = " ".join(detail.lower().replace("\xa0", " ").split())
+        cut_points = []
+        for marker in promo_breaks + ["post work to comments", "post loads to comments", "post load to comments", "post to comments", "exposure"]:
+            idx = lc_detail.find(marker)
+            if idx != -1:
+                cut_points.append(idx)
+        if cut_points:
+            cut_at = min(cut_points)
+            # map index from normalized to original best-effort by proportion
+            ratio = cut_at / max(len(lc_detail), 1)
+            cut_idx_orig = int(len(detail) * ratio)
+            detail = detail[:cut_idx_orig]
         for line in detail.split("\n"):
             if not line.strip():
                 continue
             lc = line.lower()
+            lc_norm = " ".join(lc.replace("\xa0", " ").split())
             if any(mark in lc for mark in skip_markers):
                 continue
             # Skip obvious non-workout trivia/questions like numbered Q lists
             if "trivia" in lc or (re.match(r"^\\d+\\.", lc.strip()) and "?" in line):
                 continue
+            promo_hit = False
+            for marker in promo_breaks:
+                if marker in lc_norm:
+                    promo_hit = True
+                    break
+            if promo_hit:
+                break
+            m = re.search(r"post\\s+.*comments", lc_norm)
+            if m:
+                cut_index = m.start()
+                lines.append(line[:cut_index].strip())
+                break
+            if "post" in lc_norm and "comments" in lc_norm:
+                cut_index = lc.lower().find("post")
+                lines.append(line[:cut_index].strip())
+                break
+            if "exposure" in lc_norm:
+                lines.append(line.split("exposure", 1)[0].strip())
+                break
             lines.append(line)
     return " ".join(lines)
 
