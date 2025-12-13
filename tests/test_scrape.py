@@ -10,7 +10,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scrape_cfsbk import derive_workout_date, parse_components
-from etl import extract_rep_scheme, movement_text_from_components
+from etl import (
+    extract_rep_scheme,
+    movement_text_from_components,
+    tag_movements,
+    load_movement_patterns,
+)
 
 
 def test_derive_workout_date_prefers_title():
@@ -54,3 +59,36 @@ def test_parse_components_fallback_when_missing_headings():
     comps = parse_components(soup)
     assert len(comps) == 1
     assert "Run 400m" in comps[0]["details"]
+
+
+def test_kettlebell_swings_not_lost():
+    title = "Tuesday 7.15.25"
+    comps = [
+        {
+            "component": "METCON",
+            "details": "3 Rounds for time:\n400 m Run\n24 Hand to Hand KB Swings (24/16kg; 12 per arm)\n12 Alternating Renegade Rows",
+        }
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "kettlebell swing" in tags
+    assert "run" in tags
+
+
+def test_deadlift_not_from_promo():
+    title = "WOD 6.20.19"
+    comps = [
+        {
+            "component": "WOD",
+            "details": (
+                "Every Minute on the Minute x 24: 1) 5 Wall Balls 2) 1 Hang Power Clean "
+                "Use a heavier load... Post work to comments. Exposure 3 of 6 "
+                "Cam and crew will compete in Pull for Pride, a Deadlift-only event to benefit AFC."
+            ),
+        }
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "deadlift" not in tags
+    assert "wall ball" in tags
+    assert "power clean" in tags
