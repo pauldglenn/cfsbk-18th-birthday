@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
 import yaml
+import requests
 
 from scrape_cfsbk import (
     fetch_posts,
@@ -27,6 +28,7 @@ ROOT = Path(__file__).parent
 RAW_DIR = ROOT / "data" / "raw"
 DERIVED_DIR = ROOT / "data" / "derived"
 CONFIG_DIR = ROOT / "config"
+COMMENTS_API = "https://crossfitsouthbrooklyn.com/wp-json/wp/v2/comments"
 
 
 def ensure_dirs() -> None:
@@ -75,15 +77,18 @@ def movement_text_from_components(components: List[Dict]) -> str:
     return " ".join(lines)
 
 
-def is_rest_day(components: List[Dict]) -> bool:
+def is_rest_day(components: List[Dict], title: str = "") -> bool:
     """
     Heuristic rest-day detector: if the combined component text mentions "rest day"
     and contains no rep schemes/numbers, treat as rest and skip movement tagging.
     """
+    if "rest day" in (title or "").lower():
+        return True
     text = " ".join((c.get("component") or "") + " " + (c.get("details") or "") for c in components or "").lower()
     if "rest day" not in text:
         return False
-    if re.search(r"\d", text):
+    # if it looks like a workout (numbers + for time etc), don't treat as rest
+    if re.search(r"\d", text) and ("for time" in text or "amrap" in text or "emom" in text):
         return False
     return True
 
@@ -157,24 +162,55 @@ def fetch_raw(max_pages: int | None) -> Path:
     return out_path
 
 
+def fetch_comment_counts(posts: List[Dict], pause: float = 0.05) -> Dict[int, int]:
+    """
+    Fetch comment counts per post via the WP comments API using X-WP-Total.
+    Keeps payload small by requesting per_page=1.
+    """
+    session = requests.Session()
+    counts: Dict[int, int] = {}
+    for post in posts:
+        pid = post.get("id")
+        if not pid:
+            continue
+        resp = session.get(
+            COMMENTS_API,
+            params={"post": pid, "per_page": 1},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            try:
+                counts[pid] = int(resp.headers.get("X-WP-Total", 0))
+            except Exception:
+                counts[pid] = 0
+        if pause:
+            time.sleep(pause)
+    return counts
+
+
 def load_raw_posts() -> Iterable[Dict]:
-    files = sorted(RAW_DIR.glob("posts-*.jsonl"), reverse=True)
-    if not files:
-        raise SystemExit("No raw files found in data/raw. Run `uv run python etl.py fetch` first.")
-    # Use the newest file; older files may contain partial downloads.
-    path = files[0]
+    latest = RAW_DIR / "latest.jsonl"
+    if latest.exists():
+        path = latest
+    else:
+        files = sorted(RAW_DIR.glob("posts-*.jsonl"), reverse=True)
+        if not files:
+            raise SystemExit("No raw files found in data/raw. Run `uv run python etl.py fetch` first.")
+        path = files[0]
     with path.open() as f:
         for line in f:
             yield json.loads(line)
 
 
-def build_canonical(raw_posts: Iterable[Dict]) -> List[Dict]:
+def build_canonical(raw_posts: Iterable[Dict], comment_counts: Dict[int, int] | None = None) -> List[Dict]:
     compiled_movements = load_movement_patterns()
     canonical: List[Dict] = []
     for post in raw_posts:
         base = process_post(post)
-        if is_rest_day(base.get("components") or []):
+        if is_rest_day(base.get("components") or [], base.get("title") or ""):
             base.update({"movements": [], "format": "", "component_tags": []})
+            if comment_counts:
+                base["comment_count"] = comment_counts.get(base.get("id"), 0)
             canonical.append(base)
             continue
         movement_text = movement_text_from_components(base.get("components") or [])
@@ -192,6 +228,7 @@ def build_canonical(raw_posts: Iterable[Dict]) -> List[Dict]:
                 "movements": movements,
                 "format": formats,
                 "component_tags": component_tags,
+                "comment_count": comment_counts.get(base.get("id"), 0) if comment_counts else 0,
             }
         )
         canonical.append(base)
@@ -329,15 +366,24 @@ def cmd_fetch(args: argparse.Namespace) -> None:
 
 def cmd_build(_: argparse.Namespace) -> None:
     raw = list(load_raw_posts())
-    canonical = build_canonical(raw)
+    comment_counts: Dict[int, int] | None = None
+    if getattr(_, "with_comments", False):
+        comment_counts = fetch_comment_counts(raw)
+    canonical = build_canonical(raw, comment_counts)
     aggregates = aggregate(canonical)
     write_artifacts(canonical, aggregates)
 
 
 def cmd_all(args: argparse.Namespace) -> None:
-    fetch_raw(max_pages=args.max_pages)
+    raw_path = fetch_raw(max_pages=args.max_pages)
     time.sleep(0.1)
-    cmd_build(args)
+    raw = list(load_raw_posts())
+    comment_counts: Dict[int, int] | None = None
+    if getattr(args, "with_comments", False):
+        comment_counts = fetch_comment_counts(raw)
+    canonical = build_canonical(raw, comment_counts)
+    aggregates = aggregate(canonical)
+    write_artifacts(canonical, aggregates)
 
 
 def main() -> None:
@@ -349,10 +395,12 @@ def main() -> None:
     p_fetch.set_defaults(func=cmd_fetch)
 
     p_build = sub.add_parser("build", help="Build canonical + aggregates from latest raw.")
+    p_build.add_argument("--with-comments", action="store_true", help="Fetch comment counts (hits API).")
     p_build.set_defaults(func=cmd_build)
 
     p_all = sub.add_parser("all", help="Fetch then build.")
     p_all.add_argument("--max-pages", type=int, default=None, help="Limit pages (testing).")
+    p_all.add_argument("--with-comments", action="store_true", help="Fetch comment counts (hits API).")
     p_all.set_defaults(func=cmd_all)
 
     args = parser.parse_args()

@@ -37,7 +37,9 @@ uv run python etl.py all
 Artifacts land in `data/derived/`:
 - `workouts.jsonl` (canonical with movements/format/component tags/seq_no)
 - `top_movements.json`, `top_pairs.json`, `yearly_counts.json`, `weekday_counts.json`
-- `movement_yearly.json`, `movement_weekday.json`, `search_index.json`, `data_version.json`
+- `movement_yearly.json`, `movement_weekday.json`, `movement_monthly.json`, `movement_calendar.json`
+- `search_index.json`, `data_version.json`
+- `comment_count` is included on each workout (fetched via the WP comments API)
 
 ## Frontend (React/Vite)
 Scaffold lives in `frontend/`.

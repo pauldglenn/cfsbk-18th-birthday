@@ -25,7 +25,17 @@ jobs:
         run: uv sync
 
       - name: Run ETL
-        run: uv run python etl.py all
+        run: |
+          uv run python etl.py fetch
+          # Copy newest raw to latest.jsonl
+          python - <<'PY'
+import shutil, pathlib, time
+raw_dir = pathlib.Path("data/raw")
+files = sorted(raw_dir.glob("posts-*.jsonl"), reverse=True)
+if files:
+    shutil.copy(files[0], raw_dir / "latest.jsonl")
+PY
+          uv run python etl.py build --with-comments
 
       - name: Commit updated data
         env:
@@ -33,7 +43,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/derived
+          git add data/derived data/raw/latest.jsonl
           if git diff --cached --quiet; then
             echo "No data changes."
             exit 0
