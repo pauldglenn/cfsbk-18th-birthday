@@ -1,9 +1,5 @@
 [
   {
-    "movement": "row (erg)",
-    "days": 2507
-  },
-  {
     "movement": "run",
     "days": 1715
   },
@@ -13,11 +9,11 @@
   },
   {
     "movement": "deadlift",
-    "days": 1346
+    "days": 1345
   },
   {
     "movement": "clean",
-    "days": 1117
+    "days": 1116
   },
   {
     "movement": "push-up",
@@ -32,12 +28,16 @@
     "days": 999
   },
   {
+    "movement": "row (erg)",
+    "days": 802
+  },
+  {
     "movement": "back squat",
-    "days": 731
+    "days": 730
   },
   {
     "movement": "jerk (split/push)",
-    "days": 727
+    "days": 726
   },
   {
     "movement": "bike (assault/echo)",
@@ -81,7 +81,7 @@
   },
   {
     "movement": "push press",
-    "days": 455
+    "days": 454
   },
   {
     "movement": "wall ball",
@@ -100,12 +100,12 @@
     "days": 354
   },
   {
-    "movement": "overhead squat",
-    "days": 306
+    "movement": "row (weighted)",
+    "days": 326
   },
   {
-    "movement": "row (weighted)",
-    "days": 264
+    "movement": "overhead squat",
+    "days": 306
   },
   {
     "movement": "strict press",
@@ -125,7 +125,7 @@
   },
   {
     "movement": "rope climb",
-    "days": 67
+    "days": 66
   },
   {
     "movement": "kettlebell snatch",
