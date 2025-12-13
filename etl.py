@@ -67,11 +67,17 @@ def movement_text_from_components(components: List[Dict]) -> str:
     lines: List[str] = []
     for comp in components or []:
         detail = comp.get("details") or ""
+        # Drop blog extras after separator lines (e.g., trivia, links)
+        if "___" in detail:
+            detail = detail.split("___", 1)[0]
         for line in detail.split("\n"):
             if not line.strip():
                 continue
             lc = line.lower()
             if any(mark in lc for mark in skip_markers):
+                continue
+            # Skip obvious non-workout trivia/questions
+            if "trivia" in lc or lc.strip().startswith(tuple(str(n) for n in range(1, 11))):
                 continue
             lines.append(line)
     return " ".join(lines)
