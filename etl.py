@@ -68,7 +68,22 @@ def movement_text_from_components(components: List[Dict]) -> str:
     Build a text blob for movement detection but drop lines that reference
     future workouts (e.g., "tomorrow we have running").
     """
-    skip_markers = ("tomorrow", "next week", "next day", "next cycle", "tomorrows", "training cycle")
+    skip_markers = (
+        "tomorrow",
+        "next week",
+        "next day",
+        "next cycle",
+        "tomorrows",
+        "training cycle",
+        "our new cycle starts",
+        "monday:",
+        "tuesday:",
+        "wednesday:",
+        "thursday:",
+        "friday:",
+        "saturday:",
+        "sunday:",
+    )
     workout_components = [
         c for c in (components or []) if is_workout_component(c.get("component") or "")
     ]
@@ -81,6 +96,7 @@ def movement_text_from_components(components: List[Dict]) -> str:
         "registration will open",
         "next level weightlifting",
         "subway series",
+        "our new cycle starts",
     ]
 
     for comp in source_components:
@@ -89,12 +105,12 @@ def movement_text_from_components(components: List[Dict]) -> str:
         if "___" in detail:
             detail = detail.split("___", 1)[0]
         lc_detail = " ".join(detail.lower().replace("\xa0", " ").split())
-        cut_points = []
-        for marker in promo_breaks + ["post work to comments", "post loads to comments", "post load to comments", "post to comments", "exposure"]:
-            idx = lc_detail.find(marker)
-            if idx != -1:
-                cut_points.append(idx)
-        if cut_points:
+    cut_points = []
+    for marker in promo_breaks + ["post work to comments", "post loads to comments", "post load to comments", "post to comments", "exposure"]:
+        idx = lc_detail.find(marker)
+        if idx != -1:
+            cut_points.append(idx)
+        if cut_points and min(cut_points) > 0:
             cut_at = min(cut_points)
             # map index from normalized to original best-effort by proportion
             ratio = cut_at / max(len(lc_detail), 1)
@@ -130,7 +146,11 @@ def movement_text_from_components(components: List[Dict]) -> str:
                 lines.append(line.split("exposure", 1)[0].strip())
                 break
             lines.append(line)
-    return " ".join(lines)
+    if lines:
+        return " ".join(lines)
+    if source_components:
+        return " ".join((c.get("details") or "") for c in source_components)
+    return ""
 
 
 def is_workout_component(name: str) -> bool:
@@ -151,23 +171,6 @@ def is_workout_component(name: str) -> bool:
     )
     if any(k in name_l for k in ignore):
         return False
-    movement_keys = [
-        "squat",
-        "bench",
-        "press",
-        "thruster",
-        "snatch",
-        "clean",
-        "deadlift",
-        "pull-up",
-        "push-up",
-        "row",
-        "run",
-        "burpee",
-        "dip",
-    ]
-    if any(k in name_l for k in movement_keys):
-        return True
     if component_tag(name):
         return True
     if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]):
