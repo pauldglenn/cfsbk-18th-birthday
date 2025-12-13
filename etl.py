@@ -53,7 +53,13 @@ def load_movement_patterns() -> List[Tuple[str, List[re.Pattern]]]:
 def tag_movements(text: str, compiled: List[Tuple[str, List[re.Pattern]]]) -> List[str]:
     found = []
     text_lower = text.lower()
+    instructional_clean_deadlift = (
+        "set up like a clean" in text_lower and "deadlift the bar up" in text_lower
+    )
     for name, regexes in compiled:
+        if name in {"clean", "deadlift"} and instructional_clean_deadlift:
+            # Avoid tagging instructional language for rows (not an actual clean/deadlift)
+            continue
         if name == "deadlift":
             # Skip deadlift tag if it's a clean/snatch deadlift
             if "clean deadlift" in text_lower or "snatch deadlift" in text_lower:
@@ -68,6 +74,7 @@ def movement_text_from_components(components: List[Dict]) -> str:
     Build a text blob for movement detection but drop lines that reference
     future workouts (e.g., "tomorrow we have running").
     """
+    apostrophe_replacements = str.maketrans({"’": "'", "‘": "'"})
     skip_markers = (
         "tomorrow",
         "next week",
@@ -117,11 +124,11 @@ def movement_text_from_components(components: List[Dict]) -> str:
             if not line.strip():
                 continue
             lc = line.lower()
-            lc_norm = " ".join(lc.replace("\xa0", " ").split())
+            lc_norm = " ".join(lc.replace("\xa0", " ").translate(apostrophe_replacements).split())
             if any(mark in lc for mark in skip_markers):
                 continue
             # Skip obvious non-workout trivia/questions like numbered Q lists
-            if "trivia" in lc or (re.match(r"^\\d+\\.", lc.strip()) and "?" in line):
+            if "trivia" in lc or (re.match(r"^\d+\.", lc.strip()) and "?" in line):
                 continue
             promo_hit = False
             for marker in promo_breaks:
@@ -130,7 +137,7 @@ def movement_text_from_components(components: List[Dict]) -> str:
                     break
             if promo_hit:
                 break
-            m = re.search(r"post\\s+.*comments", lc_norm)
+            m = re.search(r"post\s+.*comments", lc_norm)
             if m:
                 cut_index = m.start()
                 lines.append(line[:cut_index].strip())
@@ -139,11 +146,14 @@ def movement_text_from_components(components: List[Dict]) -> str:
                 cut_index = lc.lower().find("post")
                 lines.append(line[:cut_index].strip())
                 break
-            if re.search(r"weeks\\s+1-2", lc_norm):
+            if re.search(r"weeks\s+1-2", lc_norm):
                 break
             if "exposure" in lc_norm:
                 lines.append(line.split("exposure", 1)[0].strip())
                 break
+            # Drop link lists like "Yesterday's Whiteboard: Clean | Deadlifts..."
+            if "whiteboard" in lc_norm and "yesterday" in lc_norm:
+                continue
             lines.append(line)
     if lines:
         return " ".join(lines)
@@ -160,6 +170,7 @@ def is_workout_component(name: str) -> bool:
         "schedule",
         "news",
         "notes",
+        "recap",
         "monday",
         "tuesday",
         "wednesday",
@@ -171,6 +182,8 @@ def is_workout_component(name: str) -> bool:
     if any(k in name_l for k in ignore):
         return False
     if component_tag(name):
+        return True
+    if re.search(r"(press|squat|deadlift|clean|snatch|row|run|bike|burpee|swing|pull[- ]?up|push[- ]?up)", name_l):
         return True
     if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]):
         return True

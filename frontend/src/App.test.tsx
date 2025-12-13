@@ -73,8 +73,8 @@ describe("App scrollytelling interactions", () => {
     const bar = (await screen.findAllByRole("button", { name: /run/i }))[0];
     fireEvent.click(bar);
 
-    const yearCell = await screen.findByText("2025");
-    fireEvent.click(yearCell);
+    const yearButton = await screen.findByTitle(/2025:/);
+    fireEvent.click(yearButton);
 
     const monthCell = await screen.findByText("Nov");
     fireEvent.click(monthCell);

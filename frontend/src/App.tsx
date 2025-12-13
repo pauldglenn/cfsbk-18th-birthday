@@ -83,6 +83,118 @@ function TopPairs({ aggregates }: { aggregates: Aggregates }) {
   );
 }
 
+function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
+  const years = useMemo(() => Object.keys(aggregates.yearly_counts).map(Number).sort((a, b) => a - b).map(String), [aggregates]);
+  const [sortYear, setSortYear] = useState<string | null>(null);
+
+  const topByYear = useMemo(() => {
+    const movementYearly = aggregates.movement_yearly;
+    const map: Record<string, { movement: string; count: number; rank: number }[]> = {};
+    years.forEach((year) => {
+      const entries: { movement: string; count: number }[] = [];
+      Object.entries(movementYearly).forEach(([movement, counts]) => {
+        const c = counts[year];
+        if (c) entries.push({ movement, count: c });
+      });
+      entries.sort((a, b) => b.count - a.count || a.movement.localeCompare(b.movement));
+      map[year] = entries.slice(0, 5).map((item, idx) => ({ ...item, rank: idx + 1 }));
+    });
+    return map;
+  }, [aggregates.movement_yearly, years]);
+
+  const allMovements = useMemo(() => {
+    const seen = new Set<string>();
+    const order: string[] = [];
+    years.forEach((y) => {
+      topByYear[y]?.forEach((entry) => {
+        if (!seen.has(entry.movement)) {
+          seen.add(entry.movement);
+          order.push(entry.movement);
+        }
+      });
+    });
+    return order;
+  }, [topByYear, years]);
+
+  const movementOrder = useMemo(() => {
+    if (!sortYear || !topByYear[sortYear]) return allMovements;
+    const ranks = new Map(topByYear[sortYear]!.map((t) => [t.movement, t.rank]));
+    const fallbackOrder = new Map(allMovements.map((m, idx) => [m, idx]));
+    return [...allMovements].sort((a, b) => {
+      const ra = ranks.get(a) ?? 999;
+      const rb = ranks.get(b) ?? 999;
+      if (ra !== rb) return ra - rb;
+      return (fallbackOrder.get(a) ?? 0) - (fallbackOrder.get(b) ?? 0);
+    });
+  }, [allMovements, sortYear, topByYear]);
+
+  const rankColor = (rank: number) => {
+    if (rank === 1) return "#2563eb";
+    if (rank === 2) return "#1d4ed8";
+    if (rank === 3) return "#0ea5e9";
+    if (rank === 4) return "#22d3ee";
+    if (rank === 5) return "#38bdf8";
+    return "transparent";
+  };
+
+  return (
+    <div className="card trend-card">
+      <div className="trend-header">
+        <div>
+          <h3 className="trend-title">Top 5 movements by year</h3>
+          <p className="muted">Ranks show when a movement cracks the top five. Scroll to spot who stayed popular.</p>
+        </div>
+        <div className="legend">
+          {[1, 2, 3, 4, 5].map((r) => (
+            <span key={r} className="legend__item">
+              <span className="legend__swatch" style={{ background: rankColor(r) }} /> Rank {r}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="trend-table" role="table" aria-label="Top 5 movements by year">
+        <div className="trend-row trend-row--header" role="row">
+          <div className="trend-cell trend-cell--movement" role="columnheader">
+            Movement
+          </div>
+          {years.map((y) => (
+            <button
+              key={y}
+              className={`trend-cell trend-cell--header ${sortYear === y ? "trend-cell--active" : ""}`}
+              role="columnheader"
+              onClick={() => setSortYear(sortYear === y ? null : y)}
+              title="Click to sort by this year's ranks"
+            >
+              {y}
+            </button>
+          ))}
+        </div>
+        {movementOrder.map((movement) => (
+          <div key={movement} className="trend-row" role="row">
+            <div className="trend-cell trend-cell--movement" role="rowheader">
+              {movement}
+            </div>
+            {years.map((y) => {
+              const rank = topByYear[y]?.find((t) => t.movement === movement)?.rank || 0;
+              return (
+                <div
+                  key={`${movement}-${y}`}
+                  className={`trend-cell ${rank ? "trend-cell--hit" : "trend-cell--miss"}`}
+                  style={{ background: rank ? rankColor(rank) : undefined }}
+                  role="cell"
+                  title={rank ? `${movement} ranked #${rank} in ${y}` : `${movement} not in top 5 in ${y}`}
+                >
+                  {rank ? `#${rank}` : ""}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function QuickFinder({ search }: { search: SearchItem[] }) {
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
@@ -364,6 +476,10 @@ function App() {
         <Section id="movements" title="Top Movements">
           <p className="muted">Click a movement to expand its history by year.</p>
           <TopMovements aggregates={aggregates} />
+        </Section>
+
+        <Section id="top5-trends" title="Top 5: Then vs Now">
+          <TopFiveTrends aggregates={aggregates} />
         </Section>
 
         <Section id="pairs" title="Top Pairs">

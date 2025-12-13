@@ -91,7 +91,76 @@ def test_deadlift_not_from_promo():
     tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
     assert "deadlift" not in tags
     assert "wall ball" in tags
-    assert "power clean" in tags
+    assert "clean" in tags
+
+
+def test_instructional_clean_deadlift_not_tagged():
+    title = "Bench Press / Bent-Over Row | WOD 7.25.16"
+    comps = [
+        {
+            "component": "Bench Press / Bent-Over Row Superset",
+            "details": (
+                "1A) Barbell Bench Press\n"
+                "1B) Barbell Bent-Over Row\n"
+                "1) Set up like a Clean and Deadlift the bar up.\n"
+                "3 Rounds for Time: 15 Front Squats 95/65\n"
+                "15 Push Presses 95/65\n"
+                "15 Pull-Ups"
+            ),
+        }
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "clean" not in tags
+    assert "deadlift" not in tags
+    assert "bench press" in tags
+    assert "row (weighted)" in tags
+
+
+def test_yesterdays_whiteboard_link_not_tagged_as_clean():
+    title = "Push Press | WOD 1.25.16"
+    comps = [
+        {
+            "component": "Push Press",
+            "details": (
+                "Push Press 5-3-3-2-1-1-1\n"
+                "5 Rounds for Reps:\n"
+                "1 Minute Max Push Press at 70% of your heavy single\n"
+                "1 Minute Max Calories Rowed"
+            ),
+        },
+        {
+            "component": "The Return of the Monthly Egg CSA!",
+            "details": (
+                "Yesterday's Whiteboard: Clean | Deadlifts, Hang Power Cleans, Burpees, Kettlebell Swings, Toes-to-Bars"
+            ),
+        },
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "clean" not in tags
+    assert "push press" in tags
+    assert "row (erg)" in tags
+
+
+def test_recaps_with_wod_in_title_not_tagged():
+    title = "Push Press | WOD 1.25.16"
+    comps = [
+        {
+            "component": "Push Press",
+            "details": "Push Press 5-3-3-2-1-1-1\n5 Rounds for Reps: 1 Minute Max Push Press\n1 Minute Max Calories Rowed",
+        },
+        {
+            "component": "Wodapalooza 2016: A Recap",
+            "details": "The competition had events with Power Snatches, Thrusters, Deadlifts, and Clean and Jerks.",
+        },
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "clean" not in tags
+    assert "thruster" not in tags
+    assert "push press" in tags
+    assert "row (erg)" in tags
 
 
 def test_burpee_not_from_tomorrow_note():

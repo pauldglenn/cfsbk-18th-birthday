@@ -62,24 +62,16 @@
     - \bdeadlift
   tags: [weightlifting]
 
-- name: power clean
-  patterns:
-    - power clean
-  tags: [weightlifting]
-
 - name: clean
   patterns:
-    - (?<!power )clean
-  tags: [weightlifting]
-
-- name: power snatch
-  patterns:
-    - power snatch
+    - \bclean
+    - power clean
   tags: [weightlifting]
 
 - name: snatch
   patterns:
     - \bsnatch
+    - power snatch
   tags: [weightlifting]
 
 - name: clean and jerk
