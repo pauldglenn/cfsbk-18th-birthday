@@ -206,6 +206,15 @@ def derive_workout_date(post: Dict, fallback: str) -> str:
 
     # Prefer explicit date in title or slug (often the real workout date)
     date_from_title = parse_ymd(title) or parse_ymd(slug)
+    # If the parsed year is in the future relative to publish date, treat it as a typo and fall back
+    if date_from_title and fallback:
+        try:
+            pub_year = int(fallback[:4])
+            parsed_year = int(date_from_title[:4])
+            if parsed_year > pub_year:
+                date_from_title = None
+        except Exception:
+            pass
     if date_from_title:
         return date_from_title
 
