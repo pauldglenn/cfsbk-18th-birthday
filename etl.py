@@ -52,8 +52,13 @@ def load_movement_patterns() -> List[Tuple[str, List[re.Pattern]]]:
 
 def tag_movements(text: str, compiled: List[Tuple[str, List[re.Pattern]]]) -> List[str]:
     found = []
+    text_lower = text.lower()
     for name, regexes in compiled:
-        if any(r.search(text) for r in regexes):
+        if name == "deadlift":
+            # Skip deadlift tag if it's a clean/snatch deadlift
+            if "clean deadlift" in text_lower or "snatch deadlift" in text_lower:
+                continue
+        if any(r.search(text_lower) for r in regexes):
             found.append(name)
     return found
 
@@ -91,7 +96,7 @@ def is_workout_component(name: str) -> bool:
     name_l = name.lower()
     if component_tag(name):
         return True
-    if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in"]):
+    if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]):
         return True
     return False
 

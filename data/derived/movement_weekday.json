@@ -45,22 +45,13 @@
     "Thursday": 117
   },
   "deadlift": {
-    "Tuesday": 111,
-    "Sunday": 212,
-    "Saturday": 170,
-    "Monday": 218,
-    "Thursday": 164,
-    "Wednesday": 138,
-    "Friday": 86
-  },
-  "clean": {
-    "Friday": 45,
-    "Tuesday": 55,
-    "Sunday": 141,
-    "Wednesday": 101,
-    "Thursday": 185,
-    "Saturday": 117,
-    "Monday": 136
+    "Tuesday": 101,
+    "Sunday": 182,
+    "Saturday": 164,
+    "Monday": 202,
+    "Thursday": 122,
+    "Wednesday": 130,
+    "Friday": 83
   },
   "push-up": {
     "Friday": 45,
@@ -71,14 +62,14 @@
     "Monday": 152,
     "Wednesday": 113
   },
-  "power snatch": {
-    "Saturday": 41,
-    "Monday": 33,
-    "Wednesday": 32,
-    "Sunday": 84,
-    "Thursday": 85,
-    "Tuesday": 33,
-    "Friday": 15
+  "clean": {
+    "Friday": 45,
+    "Tuesday": 55,
+    "Sunday": 141,
+    "Wednesday": 101,
+    "Thursday": 185,
+    "Saturday": 117,
+    "Monday": 136
   },
   "lunge": {
     "Saturday": 51,
@@ -89,6 +80,15 @@
     "Monday": 79,
     "Tuesday": 30
   },
+  "power snatch": {
+    "Saturday": 41,
+    "Monday": 33,
+    "Wednesday": 32,
+    "Sunday": 84,
+    "Thursday": 85,
+    "Tuesday": 33,
+    "Friday": 15
+  },
   "snatch": {
     "Saturday": 106,
     "Sunday": 167,
@@ -98,15 +98,6 @@
     "Monday": 104,
     "Tuesday": 60
   },
-  "push press": {
-    "Tuesday": 38,
-    "Saturday": 49,
-    "Wednesday": 32,
-    "Monday": 98,
-    "Sunday": 54,
-    "Thursday": 77,
-    "Friday": 27
-  },
   "jerk (split/push)": {
     "Tuesday": 26,
     "Thursday": 144,
@@ -115,6 +106,15 @@
     "Sunday": 117,
     "Friday": 29,
     "Monday": 108
+  },
+  "push press": {
+    "Tuesday": 38,
+    "Saturday": 49,
+    "Wednesday": 32,
+    "Monday": 98,
+    "Sunday": 54,
+    "Thursday": 77,
+    "Friday": 27
   },
   "power clean": {
     "Friday": 22,
@@ -187,15 +187,6 @@
     "Monday": 6,
     "Friday": 7
   },
-  "row (weighted)": {
-    "Saturday": 17,
-    "Thursday": 23,
-    "Monday": 57,
-    "Wednesday": 52,
-    "Sunday": 26,
-    "Tuesday": 19,
-    "Friday": 32
-  },
   "front squat": {
     "Saturday": 154,
     "Wednesday": 135,
@@ -204,6 +195,15 @@
     "Monday": 65,
     "Thursday": 52,
     "Tuesday": 36
+  },
+  "row (weighted)": {
+    "Saturday": 17,
+    "Thursday": 23,
+    "Monday": 57,
+    "Wednesday": 52,
+    "Sunday": 26,
+    "Tuesday": 19,
+    "Friday": 32
   },
   "wall ball": {
     "Wednesday": 44,
