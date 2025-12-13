@@ -211,7 +211,7 @@ def derive_workout_date(post: Dict, fallback: str) -> str:
         try:
             pub_year = int(fallback[:4])
             parsed_year = int(date_from_title[:4])
-            if parsed_year > pub_year:
+            if parsed_year - pub_year > 2:
                 date_from_title = None
         except Exception:
             pass
