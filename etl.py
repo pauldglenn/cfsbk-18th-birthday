@@ -68,7 +68,7 @@ def movement_text_from_components(components: List[Dict]) -> str:
     Build a text blob for movement detection but drop lines that reference
     future workouts (e.g., "tomorrow we have running").
     """
-    skip_markers = ("tomorrow", "next week", "next day", "next cycle", "tomorrows")
+    skip_markers = ("tomorrow", "next week", "next day", "next cycle", "tomorrows", "training cycle")
     workout_components = [
         c for c in (components or []) if is_workout_component(c.get("component") or "")
     ]
@@ -94,6 +94,39 @@ def movement_text_from_components(components: List[Dict]) -> str:
 
 def is_workout_component(name: str) -> bool:
     name_l = name.lower()
+    ignore = (
+        "training cycle",
+        "upcoming",
+        "schedule",
+        "news",
+        "notes",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+    )
+    if any(k in name_l for k in ignore):
+        return False
+    movement_keys = [
+        "squat",
+        "bench",
+        "press",
+        "thruster",
+        "snatch",
+        "clean",
+        "deadlift",
+        "pull-up",
+        "push-up",
+        "row",
+        "run",
+        "burpee",
+        "dip",
+    ]
+    if any(k in name_l for k in movement_keys):
+        return True
     if component_tag(name):
         return True
     if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]):
