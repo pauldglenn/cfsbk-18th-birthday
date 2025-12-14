@@ -191,6 +191,7 @@ def is_workout_component(name: str) -> bool:
         "news",
         "notes",
         "recap",
+        "tomorrow",
         "monday",
         "tuesday",
         "wednesday",

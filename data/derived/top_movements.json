@@ -1,7 +1,7 @@
 [
   {
     "movement": "clean",
-    "days": 943
+    "days": 942
   },
   {
     "movement": "deadlift",
@@ -9,27 +9,27 @@
   },
   {
     "movement": "pull-up",
-    "days": 764
+    "days": 766
   },
   {
     "movement": "back squat",
-    "days": 686
+    "days": 685
   },
   {
     "movement": "snatch",
-    "days": 664
+    "days": 665
   },
   {
     "movement": "push-up",
-    "days": 648
+    "days": 650
   },
   {
     "movement": "run",
-    "days": 623
+    "days": 628
   },
   {
     "movement": "burpee",
-    "days": 533
+    "days": 535
   },
   {
     "movement": "front squat",
@@ -37,7 +37,7 @@
   },
   {
     "movement": "jerk (split/push)",
-    "days": 498
+    "days": 497
   },
   {
     "movement": "row (erg)",
@@ -53,15 +53,15 @@
   },
   {
     "movement": "push press",
-    "days": 375
+    "days": 376
   },
   {
     "movement": "double under",
-    "days": 355
+    "days": 356
   },
   {
     "movement": "box jump",
-    "days": 340
+    "days": 342
   },
   {
     "movement": "kettlebell swing",
@@ -81,11 +81,11 @@
   },
   {
     "movement": "wall ball",
-    "days": 230
+    "days": 231
   },
   {
     "movement": "row (weighted)",
-    "days": 223
+    "days": 224
   },
   {
     "movement": "muscle-up",
@@ -93,7 +93,7 @@
   },
   {
     "movement": "handstand push-up",
-    "days": 212
+    "days": 213
   },
   {
     "movement": "toes-to-bar",
