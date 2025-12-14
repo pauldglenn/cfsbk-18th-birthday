@@ -49,7 +49,7 @@ npm test -- --run
 # Fetch latest posts and build canonical + aggregates
 uv run python etl.py all
 
-# (Optional) Fetch full comment bodies and write comment analytics
+# (Optional) Fetch comment metadata and write comment analytics
 uv run python etl.py build --with-comment-analysis
 ```
 Artifacts land in `data/derived/`:
@@ -58,7 +58,7 @@ Artifacts land in `data/derived/`:
 - `movement_yearly.json`, `movement_weekday.json`, `movement_monthly.json`, `movement_calendar.json`
 - `search_index.json`, `data_version.json`
 - `comment_count` is included on each workout when running with `--with-comments` or `--with-comment-analysis` (hits the WP comments API)
-- `comments_analysis.json` is written when running with `--with-comment-analysis` (monthly totals, most-commented posts, top commenters, wordcloud)
+- `comments_analysis.json` is written when running with `--with-comment-analysis` (monthly totals, most-commented posts, top commenters)
 
 ## Frontend (React/Vite)
 Scaffold lives in `frontend/`.

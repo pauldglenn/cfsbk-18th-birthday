@@ -30,7 +30,7 @@ from cfa_etl.named_workouts import build_named_workouts
 
 
 def _build_with_comment_analysis(raw: list[dict]) -> None:
-    comments = list(fetch_all_comments(pause=0.05))
+    comments = list(fetch_all_comments(pause=0.0, include_content=False))
     counts: Dict[int, int] = {}
     for c in comments:
         pid = c.get("post_id")

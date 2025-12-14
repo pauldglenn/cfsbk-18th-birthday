@@ -60,11 +60,7 @@ const mockCommentsAnalysis = {
     },
   ],
   top_commenters: [
-    { name: "Pat", count: 2, topics: ["run", "wod"], sample_comments: ["Loved this workout."] },
-  ],
-  wordcloud: [
-    { word: "run", count: 2 },
-    { word: "wod", count: 1 },
+    { name: "Pat", count: 2 },
   ],
 };
 

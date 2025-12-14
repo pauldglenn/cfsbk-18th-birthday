@@ -19,7 +19,7 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
     );
   }
 
-  const { monthly, top_posts, top_commenters, wordcloud, total_comments } = analysis;
+  const { monthly, top_posts, top_commenters, total_comments } = analysis;
 
   const chart = useMemo(() => {
     const width = 900;
@@ -41,9 +41,6 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
   }, [monthly]);
 
   const [hover, setHover] = useState<HoverPoint>(null);
-
-  const topWords = useMemo(() => wordcloud.slice(0, 90), [wordcloud]);
-  const maxWord = topWords.length ? Math.max(...topWords.map((w) => w.count)) : 1;
 
   return (
     <div className="card comments-card">
@@ -125,40 +122,13 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
                 <div className="comments-leaderboard__rank">#{idx + 1}</div>
                 <div className="comments-leaderboard__main">
                   <div className="comments-leaderboard__name">{c.name}</div>
-                  <div className="muted">
-                    {numberWithCommas(c.count)} comments
-                    {c.topics.length ? ` · often: ${c.topics.slice(0, 4).join(", ")}` : ""}
-                  </div>
-                  {c.sample_comments.length > 0 && (
-                    <div className="comments-leaderboard__sample">“{c.sample_comments[0]}”</div>
-                  )}
+                  <div className="muted">{numberWithCommas(c.count)} comments</div>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="comments-card__panel comments-card__panel--full">
-          <div className="comments-card__panel-title">Wordcloud (all comments)</div>
-          <div className="wordcloud">
-            {topWords.map((w) => {
-              const size = 12 + Math.round((w.count / maxWord) * 26);
-              const opacity = 0.35 + (w.count / maxWord) * 0.65;
-              return (
-                <span
-                  key={w.word}
-                  className="wordcloud__word"
-                  style={{ fontSize: `${size}px`, opacity }}
-                  title={`${w.word}: ${w.count}`}
-                >
-                  {w.word}
-                </span>
-              );
-            })}
           </div>
         </div>
       </div>
     </div>
   );
 }
-

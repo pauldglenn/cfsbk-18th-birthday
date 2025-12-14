@@ -53,8 +53,6 @@ export type MostCommentedPost = {
 export type TopCommenter = {
   name: string;
   count: number;
-  topics: string[];
-  sample_comments: string[];
 };
 
 export type CommentsAnalysis = {
@@ -63,7 +61,6 @@ export type CommentsAnalysis = {
   monthly: CommentsMonthlyPoint[];
   top_posts: MostCommentedPost[];
   top_commenters: TopCommenter[];
-  wordcloud: { word: string; count: number }[];
 };
 
 export type DataBundle = {

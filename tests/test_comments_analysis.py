@@ -17,21 +17,18 @@ def test_build_comments_analysis_basic():
             "post_id": 123,
             "date": "2020-05-25",
             "author_name": "Alex",
-            "content_html": "<p>Brutal but fun. Great run!</p>",
         },
         {
             "id": 2,
             "post_id": 123,
             "date": "2020-06-01",
             "author_name": "Alex",
-            "content_html": "<p>Loved it. Pull-ups were tough.</p>",
         },
         {
             "id": 3,
             "post_id": 123,
             "date": "2020-06-02",
             "author_name": "Sam",
-            "content_html": "<p>Nice.</p>",
         },
     ]
 
@@ -43,4 +40,3 @@ def test_build_comments_analysis_basic():
     assert analysis["top_commenters"][0]["count"] == 2
     months = [m["month"] for m in analysis["monthly"]]
     assert months == ["2020-05", "2020-06"]
-

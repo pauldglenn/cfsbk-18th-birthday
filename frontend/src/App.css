@@ -805,14 +805,6 @@
   line-height: 1.35;
 }
 
-.wordcloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  align-items: baseline;
-}
-
-.wordcloud__word {
-  color: rgba(255, 255, 255, 0.92);
-  user-select: none;
+.comments-card__panel--full {
+  grid-column: 1 / -1;
 }

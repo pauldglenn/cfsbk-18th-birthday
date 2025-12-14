@@ -23,6 +23,7 @@ def fetch_all_comments(
     per_page: int = 100,
     max_pages: int | None = None,
     pause: float = 0.0,
+    include_content: bool = True,
     session: Optional[requests.Session] = None,
 ) -> Iterable[Dict]:
     """
@@ -38,14 +39,17 @@ def fetch_all_comments(
     page = 1
     total_pages: int | None = None
     while True:
+        params = {
+            "per_page": per_page,
+            "page": page,
+            "order": "asc",
+            "orderby": "date",
+        }
+        if not include_content:
+            params["_fields"] = "id,post,date,author_name"
         resp = sess.get(
             COMMENTS_API,
-            params={
-                "per_page": per_page,
-                "page": page,
-                "order": "asc",
-                "orderby": "date",
-            },
+            params=params,
             timeout=30,
         )
         if resp.status_code != 200:
@@ -62,7 +66,7 @@ def fetch_all_comments(
             break
 
         for item in data:
-            yield normalize_comment(item)
+            yield normalize_comment(item, include_content=include_content)
 
         page += 1
         if max_pages is not None and page > max_pages:
@@ -73,9 +77,11 @@ def fetch_all_comments(
             time.sleep(pause)
 
 
-def normalize_comment(raw: Dict) -> Dict:
-    content = raw.get("content") or {}
-    rendered = content.get("rendered") or ""
+def normalize_comment(raw: Dict, *, include_content: bool = True) -> Dict:
+    rendered = ""
+    if include_content:
+        content = raw.get("content") or {}
+        rendered = content.get("rendered") or ""
     return {
         "id": raw.get("id"),
         "post_id": raw.get("post"),
