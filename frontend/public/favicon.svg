@@ -17,6 +17,9 @@
     </filter>
   </defs>
 
+  <!-- Background -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="#0b0f19"/>
+
   <!-- Crossbones -->
   <g fill="#f5f7ff" filter="url(#shadow)" opacity="0.95">
     <g transform="translate(32 28) rotate(35)">
@@ -61,4 +64,3 @@
     <path d="M32 31c2 2.8 1.2 5.3 0 6.8-1.2-1.5-2-4 .0-6.8z" fill="url(#flame)"/>
   </g>
 </svg>
-
