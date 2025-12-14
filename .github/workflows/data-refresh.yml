@@ -55,4 +55,7 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh derived data"
+          # Avoid non-fast-forward failures if main advanced during the job
+          git fetch origin main
+          git rebase origin/main
           git push
