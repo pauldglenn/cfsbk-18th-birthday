@@ -27,7 +27,7 @@
   {
     "a": "deadlift",
     "b": "push-up",
-    "count": 154
+    "count": 155
   },
   {
     "a": "clean",
@@ -310,6 +310,11 @@
     "count": 69
   },
   {
+    "a": "deadlift",
+    "b": "front squat",
+    "count": 69
+  },
+  {
     "a": "clean",
     "b": "row (erg)",
     "count": 69
@@ -317,11 +322,6 @@
   {
     "a": "kettlebell swing",
     "b": "run",
-    "count": 68
-  },
-  {
-    "a": "deadlift",
-    "b": "front squat",
     "count": 68
   },
   {
@@ -395,6 +395,11 @@
     "count": 61
   },
   {
+    "a": "burpee",
+    "b": "double under",
+    "count": 61
+  },
+  {
     "a": "front squat",
     "b": "pull-up",
     "count": 61
@@ -408,11 +413,6 @@
     "a": "push-up",
     "b": "row (weighted)",
     "count": 61
-  },
-  {
-    "a": "burpee",
-    "b": "double under",
-    "count": 60
   },
   {
     "a": "clean",
@@ -520,13 +520,13 @@
     "count": 52
   },
   {
-    "a": "row (erg)",
-    "b": "thruster",
-    "count": 51
-  },
-  {
     "a": "front squat",
     "b": "push-up",
+    "count": 52
+  },
+  {
+    "a": "row (erg)",
+    "b": "thruster",
     "count": 51
   },
   {

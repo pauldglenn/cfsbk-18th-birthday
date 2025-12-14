@@ -8,15 +8,6 @@
     "Thursday": 32,
     "Tuesday": 4
   },
-  "double under": {
-    "Friday": 41,
-    "Saturday": 43,
-    "Sunday": 62,
-    "Wednesday": 67,
-    "Thursday": 56,
-    "Monday": 49,
-    "Tuesday": 38
-  },
   "kettlebell swing": {
     "Friday": 36,
     "Sunday": 54,
@@ -26,14 +17,14 @@
     "Thursday": 62,
     "Tuesday": 21
   },
-  "burpee": {
-    "Saturday": 146,
-    "Friday": 49,
-    "Sunday": 80,
-    "Tuesday": 43,
-    "Wednesday": 59,
-    "Monday": 54,
-    "Thursday": 104
+  "double under": {
+    "Friday": 41,
+    "Saturday": 43,
+    "Sunday": 63,
+    "Wednesday": 67,
+    "Thursday": 56,
+    "Monday": 49,
+    "Tuesday": 38
   },
   "box jump": {
     "Saturday": 85,
@@ -44,10 +35,19 @@
     "Thursday": 56,
     "Friday": 36
   },
+  "burpee": {
+    "Saturday": 146,
+    "Friday": 49,
+    "Sunday": 81,
+    "Tuesday": 43,
+    "Wednesday": 59,
+    "Monday": 54,
+    "Thursday": 104
+  },
   "deadlift": {
     "Tuesday": 85,
     "Sunday": 163,
-    "Saturday": 140,
+    "Saturday": 141,
     "Monday": 183,
     "Thursday": 97,
     "Wednesday": 103,
@@ -64,21 +64,12 @@
   },
   "push-up": {
     "Friday": 43,
-    "Saturday": 122,
+    "Saturday": 123,
     "Thursday": 105,
     "Tuesday": 62,
     "Sunday": 91,
     "Monday": 133,
     "Wednesday": 94
-  },
-  "snatch": {
-    "Saturday": 95,
-    "Sunday": 160,
-    "Wednesday": 68,
-    "Thursday": 175,
-    "Monday": 73,
-    "Friday": 39,
-    "Tuesday": 55
   },
   "lunge": {
     "Saturday": 48,
@@ -88,6 +79,15 @@
     "Thursday": 53,
     "Monday": 61,
     "Tuesday": 27
+  },
+  "snatch": {
+    "Saturday": 95,
+    "Sunday": 160,
+    "Wednesday": 68,
+    "Thursday": 175,
+    "Monday": 73,
+    "Friday": 39,
+    "Tuesday": 55
   },
   "jerk (split/push)": {
     "Tuesday": 21,
@@ -169,7 +169,7 @@
     "Friday": 10
   },
   "front squat": {
-    "Saturday": 148,
+    "Saturday": 149,
     "Wednesday": 135,
     "Friday": 37,
     "Sunday": 59,

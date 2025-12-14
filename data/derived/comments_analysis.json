@@ -1,0 +1,1010 @@
+{
+  "generated_at": "2025-12-14T19:19:28.720687Z",
+  "total_comments": 79242,
+  "monthly": [
+    {
+      "month": "2007-09",
+      "count": 6
+    },
+    {
+      "month": "2007-10",
+      "count": 9
+    },
+    {
+      "month": "2007-11",
+      "count": 5
+    },
+    {
+      "month": "2007-12",
+      "count": 0
+    },
+    {
+      "month": "2008-01",
+      "count": 21
+    },
+    {
+      "month": "2008-02",
+      "count": 47
+    },
+    {
+      "month": "2008-03",
+      "count": 94
+    },
+    {
+      "month": "2008-04",
+      "count": 157
+    },
+    {
+      "month": "2008-05",
+      "count": 493
+    },
+    {
+      "month": "2008-06",
+      "count": 505
+    },
+    {
+      "month": "2008-07",
+      "count": 478
+    },
+    {
+      "month": "2008-08",
+      "count": 382
+    },
+    {
+      "month": "2008-09",
+      "count": 346
+    },
+    {
+      "month": "2008-10",
+      "count": 306
+    },
+    {
+      "month": "2008-11",
+      "count": 377
+    },
+    {
+      "month": "2008-12",
+      "count": 344
+    },
+    {
+      "month": "2009-01",
+      "count": 443
+    },
+    {
+      "month": "2009-02",
+      "count": 369
+    },
+    {
+      "month": "2009-03",
+      "count": 443
+    },
+    {
+      "month": "2009-04",
+      "count": 486
+    },
+    {
+      "month": "2009-05",
+      "count": 740
+    },
+    {
+      "month": "2009-06",
+      "count": 760
+    },
+    {
+      "month": "2009-07",
+      "count": 742
+    },
+    {
+      "month": "2009-08",
+      "count": 692
+    },
+    {
+      "month": "2009-09",
+      "count": 962
+    },
+    {
+      "month": "2009-10",
+      "count": 983
+    },
+    {
+      "month": "2009-11",
+      "count": 720
+    },
+    {
+      "month": "2009-12",
+      "count": 777
+    },
+    {
+      "month": "2010-01",
+      "count": 692
+    },
+    {
+      "month": "2010-02",
+      "count": 664
+    },
+    {
+      "month": "2010-03",
+      "count": 683
+    },
+    {
+      "month": "2010-04",
+      "count": 621
+    },
+    {
+      "month": "2010-05",
+      "count": 648
+    },
+    {
+      "month": "2010-06",
+      "count": 575
+    },
+    {
+      "month": "2010-07",
+      "count": 459
+    },
+    {
+      "month": "2010-08",
+      "count": 441
+    },
+    {
+      "month": "2010-09",
+      "count": 467
+    },
+    {
+      "month": "2010-10",
+      "count": 532
+    },
+    {
+      "month": "2010-11",
+      "count": 695
+    },
+    {
+      "month": "2010-12",
+      "count": 573
+    },
+    {
+      "month": "2011-01",
+      "count": 765
+    },
+    {
+      "month": "2011-02",
+      "count": 453
+    },
+    {
+      "month": "2011-03",
+      "count": 505
+    },
+    {
+      "month": "2011-04",
+      "count": 611
+    },
+    {
+      "month": "2011-05",
+      "count": 637
+    },
+    {
+      "month": "2011-06",
+      "count": 710
+    },
+    {
+      "month": "2011-07",
+      "count": 980
+    },
+    {
+      "month": "2011-08",
+      "count": 1033
+    },
+    {
+      "month": "2011-09",
+      "count": 737
+    },
+    {
+      "month": "2011-10",
+      "count": 688
+    },
+    {
+      "month": "2011-11",
+      "count": 692
+    },
+    {
+      "month": "2011-12",
+      "count": 705
+    },
+    {
+      "month": "2012-01",
+      "count": 1017
+    },
+    {
+      "month": "2012-02",
+      "count": 1033
+    },
+    {
+      "month": "2012-03",
+      "count": 754
+    },
+    {
+      "month": "2012-04",
+      "count": 601
+    },
+    {
+      "month": "2012-05",
+      "count": 645
+    },
+    {
+      "month": "2012-06",
+      "count": 0
+    },
+    {
+      "month": "2012-07",
+      "count": 266
+    },
+    {
+      "month": "2012-08",
+      "count": 559
+    },
+    {
+      "month": "2012-09",
+      "count": 546
+    },
+    {
+      "month": "2012-10",
+      "count": 741
+    },
+    {
+      "month": "2012-11",
+      "count": 688
+    },
+    {
+      "month": "2012-12",
+      "count": 809
+    },
+    {
+      "month": "2013-01",
+      "count": 868
+    },
+    {
+      "month": "2013-02",
+      "count": 706
+    },
+    {
+      "month": "2013-03",
+      "count": 811
+    },
+    {
+      "month": "2013-04",
+      "count": 727
+    },
+    {
+      "month": "2013-05",
+      "count": 1052
+    },
+    {
+      "month": "2013-06",
+      "count": 864
+    },
+    {
+      "month": "2013-07",
+      "count": 789
+    },
+    {
+      "month": "2013-08",
+      "count": 798
+    },
+    {
+      "month": "2013-09",
+      "count": 694
+    },
+    {
+      "month": "2013-10",
+      "count": 640
+    },
+    {
+      "month": "2013-11",
+      "count": 781
+    },
+    {
+      "month": "2013-12",
+      "count": 710
+    },
+    {
+      "month": "2014-01",
+      "count": 951
+    },
+    {
+      "month": "2014-02",
+      "count": 732
+    },
+    {
+      "month": "2014-03",
+      "count": 903
+    },
+    {
+      "month": "2014-04",
+      "count": 746
+    },
+    {
+      "month": "2014-05",
+      "count": 618
+    },
+    {
+      "month": "2014-06",
+      "count": 574
+    },
+    {
+      "month": "2014-07",
+      "count": 562
+    },
+    {
+      "month": "2014-08",
+      "count": 602
+    },
+    {
+      "month": "2014-09",
+      "count": 645
+    },
+    {
+      "month": "2014-10",
+      "count": 676
+    },
+    {
+      "month": "2014-11",
+      "count": 524
+    },
+    {
+      "month": "2014-12",
+      "count": 539
+    },
+    {
+      "month": "2015-01",
+      "count": 694
+    },
+    {
+      "month": "2015-02",
+      "count": 589
+    },
+    {
+      "month": "2015-03",
+      "count": 837
+    },
+    {
+      "month": "2015-04",
+      "count": 597
+    },
+    {
+      "month": "2015-05",
+      "count": 473
+    },
+    {
+      "month": "2015-06",
+      "count": 476
+    },
+    {
+      "month": "2015-07",
+      "count": 452
+    },
+    {
+      "month": "2015-08",
+      "count": 485
+    },
+    {
+      "month": "2015-09",
+      "count": 464
+    },
+    {
+      "month": "2015-10",
+      "count": 542
+    },
+    {
+      "month": "2015-11",
+      "count": 525
+    },
+    {
+      "month": "2015-12",
+      "count": 544
+    },
+    {
+      "month": "2016-01",
+      "count": 744
+    },
+    {
+      "month": "2016-02",
+      "count": 605
+    },
+    {
+      "month": "2016-03",
+      "count": 637
+    },
+    {
+      "month": "2016-04",
+      "count": 590
+    },
+    {
+      "month": "2016-05",
+      "count": 731
+    },
+    {
+      "month": "2016-06",
+      "count": 650
+    },
+    {
+      "month": "2016-07",
+      "count": 508
+    },
+    {
+      "month": "2016-08",
+      "count": 571
+    },
+    {
+      "month": "2016-09",
+      "count": 543
+    },
+    {
+      "month": "2016-10",
+      "count": 442
+    },
+    {
+      "month": "2016-11",
+      "count": 419
+    },
+    {
+      "month": "2016-12",
+      "count": 406
+    },
+    {
+      "month": "2017-01",
+      "count": 430
+    },
+    {
+      "month": "2017-02",
+      "count": 61
+    },
+    {
+      "month": "2017-03",
+      "count": 341
+    },
+    {
+      "month": "2017-04",
+      "count": 394
+    },
+    {
+      "month": "2017-05",
+      "count": 372
+    },
+    {
+      "month": "2017-06",
+      "count": 395
+    },
+    {
+      "month": "2017-07",
+      "count": 454
+    },
+    {
+      "month": "2017-08",
+      "count": 470
+    },
+    {
+      "month": "2017-09",
+      "count": 564
+    },
+    {
+      "month": "2017-10",
+      "count": 472
+    },
+    {
+      "month": "2017-11",
+      "count": 449
+    },
+    {
+      "month": "2017-12",
+      "count": 426
+    },
+    {
+      "month": "2018-01",
+      "count": 689
+    },
+    {
+      "month": "2018-02",
+      "count": 636
+    },
+    {
+      "month": "2018-03",
+      "count": 616
+    },
+    {
+      "month": "2018-04",
+      "count": 386
+    },
+    {
+      "month": "2018-05",
+      "count": 376
+    },
+    {
+      "month": "2018-06",
+      "count": 266
+    },
+    {
+      "month": "2018-07",
+      "count": 322
+    },
+    {
+      "month": "2018-08",
+      "count": 362
+    },
+    {
+      "month": "2018-09",
+      "count": 210
+    },
+    {
+      "month": "2018-10",
+      "count": 266
+    },
+    {
+      "month": "2018-11",
+      "count": 213
+    },
+    {
+      "month": "2018-12",
+      "count": 260
+    },
+    {
+      "month": "2019-01",
+      "count": 284
+    },
+    {
+      "month": "2019-02",
+      "count": 224
+    },
+    {
+      "month": "2019-03",
+      "count": 294
+    },
+    {
+      "month": "2019-04",
+      "count": 168
+    },
+    {
+      "month": "2019-05",
+      "count": 120
+    },
+    {
+      "month": "2019-06",
+      "count": 94
+    },
+    {
+      "month": "2019-07",
+      "count": 122
+    },
+    {
+      "month": "2019-08",
+      "count": 101
+    },
+    {
+      "month": "2019-09",
+      "count": 43
+    },
+    {
+      "month": "2019-10",
+      "count": 64
+    },
+    {
+      "month": "2019-11",
+      "count": 37
+    },
+    {
+      "month": "2019-12",
+      "count": 34
+    },
+    {
+      "month": "2020-01",
+      "count": 45
+    },
+    {
+      "month": "2020-02",
+      "count": 35
+    },
+    {
+      "month": "2020-03",
+      "count": 417
+    },
+    {
+      "month": "2020-04",
+      "count": 274
+    },
+    {
+      "month": "2020-05",
+      "count": 135
+    },
+    {
+      "month": "2020-06",
+      "count": 152
+    },
+    {
+      "month": "2020-07",
+      "count": 104
+    },
+    {
+      "month": "2020-08",
+      "count": 85
+    },
+    {
+      "month": "2020-09",
+      "count": 63
+    },
+    {
+      "month": "2020-10",
+      "count": 32
+    },
+    {
+      "month": "2020-11",
+      "count": 75
+    },
+    {
+      "month": "2020-12",
+      "count": 59
+    },
+    {
+      "month": "2021-01",
+      "count": 17
+    },
+    {
+      "month": "2021-02",
+      "count": 25
+    },
+    {
+      "month": "2021-03",
+      "count": 61
+    },
+    {
+      "month": "2021-04",
+      "count": 53
+    },
+    {
+      "month": "2021-05",
+      "count": 39
+    },
+    {
+      "month": "2021-06",
+      "count": 31
+    },
+    {
+      "month": "2021-07",
+      "count": 24
+    },
+    {
+      "month": "2021-08",
+      "count": 23
+    },
+    {
+      "month": "2021-09",
+      "count": 22
+    },
+    {
+      "month": "2021-10",
+      "count": 32
+    },
+    {
+      "month": "2021-11",
+      "count": 11
+    },
+    {
+      "month": "2021-12",
+      "count": 8
+    },
+    {
+      "month": "2022-01",
+      "count": 15
+    },
+    {
+      "month": "2022-02",
+      "count": 17
+    },
+    {
+      "month": "2022-03",
+      "count": 31
+    },
+    {
+      "month": "2022-04",
+      "count": 19
+    },
+    {
+      "month": "2022-05",
+      "count": 14
+    },
+    {
+      "month": "2022-06",
+      "count": 10
+    },
+    {
+      "month": "2022-07",
+      "count": 7
+    },
+    {
+      "month": "2022-08",
+      "count": 13
+    },
+    {
+      "month": "2022-09",
+      "count": 27
+    },
+    {
+      "month": "2022-10",
+      "count": 13
+    },
+    {
+      "month": "2022-11",
+      "count": 8
+    },
+    {
+      "month": "2022-12",
+      "count": 3
+    },
+    {
+      "month": "2023-01",
+      "count": 14
+    },
+    {
+      "month": "2023-02",
+      "count": 12
+    },
+    {
+      "month": "2023-03",
+      "count": 8
+    },
+    {
+      "month": "2023-04",
+      "count": 3
+    },
+    {
+      "month": "2023-05",
+      "count": 31
+    },
+    {
+      "month": "2023-06",
+      "count": 9
+    },
+    {
+      "month": "2023-07",
+      "count": 13
+    },
+    {
+      "month": "2023-08",
+      "count": 13
+    },
+    {
+      "month": "2023-09",
+      "count": 9
+    },
+    {
+      "month": "2023-10",
+      "count": 5
+    },
+    {
+      "month": "2023-11",
+      "count": 5
+    },
+    {
+      "month": "2023-12",
+      "count": 0
+    },
+    {
+      "month": "2024-01",
+      "count": 5
+    },
+    {
+      "month": "2024-02",
+      "count": 7
+    },
+    {
+      "month": "2024-03",
+      "count": 9
+    },
+    {
+      "month": "2024-04",
+      "count": 9
+    },
+    {
+      "month": "2024-05",
+      "count": 10
+    },
+    {
+      "month": "2024-06",
+      "count": 5
+    },
+    {
+      "month": "2024-07",
+      "count": 0
+    },
+    {
+      "month": "2024-08",
+      "count": 11
+    },
+    {
+      "month": "2024-09",
+      "count": 18
+    },
+    {
+      "month": "2024-10",
+      "count": 8
+    },
+    {
+      "month": "2024-11",
+      "count": 2
+    },
+    {
+      "month": "2024-12",
+      "count": 8
+    },
+    {
+      "month": "2025-01",
+      "count": 2
+    },
+    {
+      "month": "2025-02",
+      "count": 2
+    },
+    {
+      "month": "2025-03",
+      "count": 4
+    },
+    {
+      "month": "2025-04",
+      "count": 11
+    },
+    {
+      "month": "2025-05",
+      "count": 3
+    },
+    {
+      "month": "2025-06",
+      "count": 13
+    },
+    {
+      "month": "2025-07",
+      "count": 5
+    },
+    {
+      "month": "2025-08",
+      "count": 10
+    },
+    {
+      "month": "2025-09",
+      "count": 7
+    },
+    {
+      "month": "2025-10",
+      "count": 4
+    },
+    {
+      "month": "2025-11",
+      "count": 2
+    },
+    {
+      "month": "2025-12",
+      "count": 3
+    }
+  ],
+  "top_posts": [
+    {
+      "id": 3746,
+      "date": "2016-05-27",
+      "title": "Rest Day",
+      "link": "https://crossfitsouthbrooklyn.com/workout-of-the-day/2016/05/27/2016527rest-day-html.html/",
+      "comment_count": 168,
+      "summary": "Workout: Lots of fitness happening in this great photo by Thomas H."
+    },
+    {
+      "id": 2016,
+      "date": "2013-05-07",
+      "title": "Rest Day",
+      "link": "https://crossfitsouthbrooklyn.com/workout-of-the-day/2013/05/07/201357rest-day-html.html/",
+      "comment_count": 110,
+      "summary": "Jezebel Response: Yesterday Jezebel ran a blog post including portions of an email dialogue between Coach Margie, someone who recently graduated our Foundations program and me. Unfortunately, the article seemed to have a heavy bias against CrossFit and there was no attempt to contact us for the article. Normally I avoid internet drama like the plague, but given the extreme manner in which I, the p"
+    },
+    {
+      "id": 1869,
+      "date": "2012-12-11",
+      "title": "Rest Day",
+      "link": "https://crossfitsouthbrooklyn.com/workout-of-the-day/2012/12/11/20121211rest-day-html.html/",
+      "comment_count": 107,
+      "summary": "Workout: Fish out of Water!"
+    },
+    {
+      "id": 4715,
+      "date": "2017-09-02",
+      "title": "Back Squat Test | &#8220;Helen for Houston&#8221;",
+      "link": "https://crossfitsouthbrooklyn.com/workout-of-the-day/2017/09/02/back-squat-test-helen-for-houston.html/",
+      "comment_count": 86,
+      "summary": "Back Squat Test: Performance 1-1-1-1-1 Fitness 3-3-3-3-3 Warm up and establish a new 1RM or 3RM. No tempo today! Post loads to comments. _____________________ | “Helen for Houston”: 3 Rounds for Time: 400m Run 21 Kettlebell Swings, 1.5/1 pood 12 Pull-Ups Post time and Rx to comments. | Helen for Houston: For today workout, we’re teaming up with our friends at beyond the whiteboard to support their"
+    },
+    {
+      "id": 2015,
+      "date": "2013-05-06",
+      "title": "Press",
+      "link": "https://crossfitsouthbrooklyn.com/workout-of-the-day/2013/05/06/201356press-html.html/",
+      "comment_count": 80,
+      "summary": "Workout: Fitness: 3×5 Across Perform your third 3×5 of Pressing for the cycle. Add 5lbs from last week’s weight. Performance: 5/3/1 (1 week) 75%x1 85%x1 95%x1+ Post loads to comments. Press e3/6 ____________________ As Many Rounds As Possible In 10 Minutes Of: 25 Kettlebell Swings, 72/53 10 Handstand Push-Ups or Dumbbell Presses Post time and Rx to comments."
+    }
+  ],
+  "top_commenters": [
+    {
+      "name": "Stella",
+      "count": 3144
+    },
+    {
+      "name": "Fox",
+      "count": 2728
+    },
+    {
+      "name": "David Osorio",
+      "count": 1908
+    },
+    {
+      "name": "Samir Chopra",
+      "count": 1385
+    },
+    {
+      "name": "crossfitsbk@gmail.com",
+      "count": 1116
+    },
+    {
+      "name": "Charlie",
+      "count": 1112
+    },
+    {
+      "name": "Margie",
+      "count": 1027
+    },
+    {
+      "name": "Peter",
+      "count": 967
+    },
+    {
+      "name": "michele",
+      "count": 948
+    },
+    {
+      "name": "Allie B",
+      "count": 913
+    },
+    {
+      "name": "JakeL",
+      "count": 782
+    },
+    {
+      "name": "Whit H",
+      "count": 773
+    },
+    {
+      "name": "Noah",
+      "count": 759
+    },
+    {
+      "name": "Lauren",
+      "count": 757
+    },
+    {
+      "name": "K HarpZ",
+      "count": 755
+    },
+    {
+      "name": "Dan L",
+      "count": 751
+    },
+    {
+      "name": "lady fox",
+      "count": 726
+    },
+    {
+      "name": "Sameer Parekh",
+      "count": 714
+    },
+    {
+      "name": "Laurel",
+      "count": 639
+    },
+    {
+      "name": "KLove",
+      "count": 623
+    }
+  ]
+}
