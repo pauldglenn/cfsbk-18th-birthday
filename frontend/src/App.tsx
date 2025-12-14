@@ -85,7 +85,6 @@ function TopPairs({ aggregates }: { aggregates: Aggregates }) {
 
 function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
   const years = useMemo(() => Object.keys(aggregates.yearly_counts).map(Number).sort((a, b) => a - b).map(String), [aggregates]);
-  const [sortYear, setSortYear] = useState<string | null>(null);
 
   const topByYear = useMemo(() => {
     const movementYearly = aggregates.movement_yearly;
@@ -102,94 +101,43 @@ function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
     return map;
   }, [aggregates.movement_yearly, years]);
 
-  const allMovements = useMemo(() => {
-    const seen = new Set<string>();
-    const order: string[] = [];
-    years.forEach((y) => {
-      topByYear[y]?.forEach((entry) => {
-        if (!seen.has(entry.movement)) {
-          seen.add(entry.movement);
-          order.push(entry.movement);
-        }
-      });
-    });
-    return order;
-  }, [topByYear, years]);
-
-  const movementOrder = useMemo(() => {
-    if (!sortYear || !topByYear[sortYear]) return allMovements;
-    const ranks = new Map(topByYear[sortYear]!.map((t) => [t.movement, t.rank]));
-    const fallbackOrder = new Map(allMovements.map((m, idx) => [m, idx]));
-    return [...allMovements].sort((a, b) => {
-      const ra = ranks.get(a) ?? 999;
-      const rb = ranks.get(b) ?? 999;
-      if (ra !== rb) return ra - rb;
-      return (fallbackOrder.get(a) ?? 0) - (fallbackOrder.get(b) ?? 0);
-    });
-  }, [allMovements, sortYear, topByYear]);
-
-  const rankColor = (rank: number) => {
-    if (rank === 1) return "#2563eb";
-    if (rank === 2) return "#1d4ed8";
-    if (rank === 3) return "#0ea5e9";
-    if (rank === 4) return "#22d3ee";
-    if (rank === 5) return "#38bdf8";
-    return "transparent";
-  };
-
   return (
     <div className="card trend-card">
       <div className="trend-header">
         <div>
           <h3 className="trend-title">Top 5 movements by year</h3>
-          <p className="muted">Ranks show when a movement cracks the top five. Scroll to spot who stayed popular.</p>
-        </div>
-        <div className="legend">
-          {[1, 2, 3, 4, 5].map((r) => (
-            <span key={r} className="legend__item">
-              <span className="legend__swatch" style={{ background: rankColor(r) }} /> Rank {r}
-            </span>
-          ))}
+          <p className="muted">Mobile-friendly cards show each year’s top five and how ranks changed vs. the prior year.</p>
         </div>
       </div>
-      <div className="trend-table" role="table" aria-label="Top 5 movements by year">
-        <div className="trend-row trend-row--header" role="row">
-          <div className="trend-cell trend-cell--movement" role="columnheader">
-            Movement
-          </div>
-          {years.map((y) => (
-            <button
-              key={y}
-              className={`trend-cell trend-cell--header ${sortYear === y ? "trend-cell--active" : ""}`}
-              role="columnheader"
-              onClick={() => setSortYear(sortYear === y ? null : y)}
-              title="Click to sort by this year's ranks"
-            >
-              {y}
-            </button>
-          ))}
-        </div>
-        {movementOrder.map((movement) => (
-          <div key={movement} className="trend-row" role="row">
-            <div className="trend-cell trend-cell--movement" role="rowheader">
-              {movement}
+      <div className="trend-cards">
+        {years.map((year, idx) => {
+          const entries = topByYear[year] || [];
+          const prev = idx > 0 ? topByYear[years[idx - 1]] || [] : [];
+          const prevRanks = new Map(prev.map((e) => [e.movement, e.rank]));
+          return (
+            <div key={year} className="trend-card__year">
+              <div className="trend-card__year-header">
+                <div className="trend-card__year-title">{year}</div>
+                <div className="trend-card__year-sub">Top 5</div>
+              </div>
+              <ol className="trend-list">
+                {entries.map((item) => {
+                  const prevRank = prevRanks.get(item.movement);
+                  const delta = prevRank ? prevRank - item.rank : null;
+                  const trend =
+                    delta === null ? "new" : delta > 0 ? `↑${delta}` : delta < 0 ? `↓${Math.abs(delta)}` : "•";
+                  return (
+                    <li key={item.movement} className="trend-list__item">
+                      <span className={`trend-list__badge rank-${item.rank}`}>#{item.rank}</span>
+                      <span className="trend-list__name">{item.movement}</span>
+                      <span className="trend-list__trend">{trend}</span>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
-            {years.map((y) => {
-              const rank = topByYear[y]?.find((t) => t.movement === movement)?.rank || 0;
-              return (
-                <div
-                  key={`${movement}-${y}`}
-                  className={`trend-cell ${rank ? "trend-cell--hit" : "trend-cell--miss"}`}
-                  style={{ background: rank ? rankColor(rank) : undefined }}
-                  role="cell"
-                  title={rank ? `${movement} ranked #${rank} in ${y}` : `${movement} not in top 5 in ${y}`}
-                >
-                  {rank ? `#${rank}` : ""}
-                </div>
-              );
-            })}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

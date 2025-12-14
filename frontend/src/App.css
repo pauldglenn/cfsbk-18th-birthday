@@ -413,73 +413,90 @@
   border-radius: 10px;
 }
 
-.legend__swatch {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  display: inline-block;
+.trend-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
-.trend-table {
-  min-width: 640px;
+.trend-card__year {
+  background: #0b1220;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.trend-card__year-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.trend-card__year-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.trend-card__year-sub {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.trend-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+
+.trend-list__item {
+  display: grid;
+  grid-template-columns: 50px 1fr 40px;
+  align-items: center;
   gap: 6px;
 }
 
-.trend-row {
-  display: grid;
-  grid-template-columns: 180px repeat(auto-fit, minmax(40px, 1fr));
-  gap: 4px;
-}
-
-.trend-row--header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.trend-cell {
-  padding: 8px 6px;
-  background: #0b1220;
-  border: 1px solid #1f2937;
+.trend-list__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
   border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  color: #e2e8f0;
-  font-size: 13px;
-}
-
-.trend-cell--movement {
-  text-align: left;
-  position: sticky;
-  left: 0;
-  z-index: 2;
-  background: #0b1220;
-}
-
-.trend-cell--header {
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.trend-cell--header:hover {
-  border-color: #2563eb;
-  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
-}
-
-.trend-cell--active {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 1px #2563eb inset;
-}
-
-.trend-cell--hit {
+  font-weight: 700;
   color: #0b1220;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-.trend-cell--miss {
-  color: #94a3b8;
+.rank-1 {
+  background: #2563eb;
+}
+
+.rank-2 {
+  background: #1d4ed8;
+}
+
+.rank-3 {
+  background: #0ea5e9;
+}
+
+.rank-4 {
+  background: #22d3ee;
+}
+
+.rank-5 {
+  background: #38bdf8;
+}
+
+.trend-list__name {
+  text-transform: capitalize;
+}
+
+.trend-list__trend {
+  text-align: right;
+  color: #cbd5f5;
+  font-variant-numeric: tabular-nums;
 }
 
 .loading,
@@ -557,26 +574,22 @@
     grid-template-columns: repeat(7, minmax(32px, 1fr));
   }
 
-  .trend-card {
-    overflow-x: auto;
+  .trend-cards {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
   }
 
-  .trend-table {
-    min-width: unset;
-    width: max-content;
+  .trend-list__item {
+    grid-template-columns: 44px 1fr 34px;
+    gap: 4px;
   }
 
-  .trend-row {
-    grid-template-columns: 140px repeat(auto-fit, minmax(40px, 1fr));
-  }
-
-  .trend-cell {
+  .trend-list__badge {
+    padding: 5px 6px;
     font-size: 12px;
-    padding: 6px 4px;
   }
 
-  .legend {
-    width: 100%;
-    justify-content: flex-start;
+  .trend-card__year {
+    padding: 10px;
   }
 }
