@@ -5,7 +5,7 @@ import { numberWithCommas } from "../utils/format";
 import type { SearchItem } from "../types";
 
 export function Milestones({ total, search }: { total: number; search: SearchItem[] }) {
-  const targets = [1000, 2500, 5000, total].filter((n, i, arr) => arr.indexOf(n) === i);
+  const targets = [1, 500, 1000, 2500, 5000, total].filter((n, i, arr) => arr.indexOf(n) === i);
 
   const byWorkoutNo = new Map<number, SearchItem>();
   for (const item of search) {
@@ -20,7 +20,7 @@ export function Milestones({ total, search }: { total: number; search: SearchIte
       <div className="pill-row">
         {targets.map((m) => {
           const entry = byWorkoutNo.get(m);
-          const label = m === total ? `Latest (#${m})` : `${numberWithCommas(m)}th`;
+          const label = m === total ? `Latest (#${m})` : ordinal(m);
           const disabled = !entry;
           const active = open === m;
           return (
@@ -63,4 +63,19 @@ export function Milestones({ total, search }: { total: number; search: SearchIte
       )}
     </div>
   );
+}
+
+function ordinal(n: number) {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${numberWithCommas(n)}th`;
+  switch (n % 10) {
+    case 1:
+      return `${numberWithCommas(n)}st`;
+    case 2:
+      return `${numberWithCommas(n)}nd`;
+    case 3:
+      return `${numberWithCommas(n)}rd`;
+    default:
+      return `${numberWithCommas(n)}th`;
+  }
 }

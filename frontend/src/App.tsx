@@ -88,12 +88,12 @@ function App() {
           <TopPairs aggregates={aggregates} />
         </Section>
 
-        <Section id="finder" title="Quick Finder">
-          <QuickFinder search={searchIndex} />
-        </Section>
-
         <Section id="comments" title="Comments">
           <CommentsAnalysisCard analysis={commentsAnalysis} />
+        </Section>
+
+        <Section id="finder" title="Quick Finder">
+          <QuickFinder search={searchIndex} />
         </Section>
       </div>
     </div>
