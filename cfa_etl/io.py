@@ -74,7 +74,12 @@ def load_raw_posts() -> Iterable[Dict]:
             yield json.loads(line)
 
 
-def write_artifacts(canonical: List[Dict], aggregates: Dict[str, Dict]) -> None:
+def write_artifacts(
+    canonical: List[Dict],
+    aggregates: Dict[str, Dict],
+    *,
+    comments_analysis: Dict | None = None,
+) -> None:
     ensure_dirs()
     canonical_path = DERIVED_DIR / "workouts.jsonl"
     with canonical_path.open("w", encoding="utf-8") as f:
@@ -116,6 +121,10 @@ def write_artifacts(canonical: List[Dict], aggregates: Dict[str, Dict]) -> None:
     with named_path.open("w", encoding="utf-8") as f:
         json.dump(build_named_workouts(canonical), f, ensure_ascii=False, indent=2)
 
+    if comments_analysis is not None:
+        comments_path = DERIVED_DIR / "comments_analysis.json"
+        with comments_path.open("w", encoding="utf-8") as f:
+            json.dump(comments_analysis, f, ensure_ascii=False, indent=2)
+
     print(f"Wrote canonical -> {canonical_path}")
     print(f"Wrote aggregates -> {DERIVED_DIR}")
-

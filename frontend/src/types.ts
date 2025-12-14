@@ -39,9 +39,37 @@ export type NamedWorkouts = {
   girls: NamedWorkout[];
 };
 
+export type CommentsMonthlyPoint = { month: string; count: number };
+
+export type MostCommentedPost = {
+  id: number;
+  date: string;
+  title: string;
+  link: string;
+  comment_count: number;
+  summary: string;
+};
+
+export type TopCommenter = {
+  name: string;
+  count: number;
+  topics: string[];
+  sample_comments: string[];
+};
+
+export type CommentsAnalysis = {
+  generated_at: string;
+  total_comments: number;
+  monthly: CommentsMonthlyPoint[];
+  top_posts: MostCommentedPost[];
+  top_commenters: TopCommenter[];
+  wordcloud: { word: string; count: number }[];
+};
+
 export type DataBundle = {
   version: string;
   aggregates: Aggregates;
   search: SearchItem[];
   namedWorkouts: NamedWorkouts;
+  commentsAnalysis: CommentsAnalysis | null;
 };

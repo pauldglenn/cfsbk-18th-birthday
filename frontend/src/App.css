@@ -682,3 +682,137 @@
     padding: 10px;
   }
 }
+
+/* Comments */
+.comments-card__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .comments-card__grid {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+  }
+
+  .comments-card__panel--full {
+    grid-column: 1 / -1;
+  }
+}
+
+.comments-card__panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.comments-card__panel-title {
+  font-weight: 650;
+  margin-bottom: 10px;
+}
+
+.comments-chart__svg {
+  width: 100%;
+  height: 140px;
+}
+
+.comments-chart__path {
+  fill: none;
+  stroke: rgba(37, 99, 235, 0.95);
+  stroke-width: 2;
+}
+
+.comments-chart__dot {
+  fill: rgba(37, 99, 235, 1);
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.5;
+}
+
+.comments-chart__vline {
+  stroke: rgba(255, 255, 255, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.comments-chart__hover {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comments-top-posts {
+  display: grid;
+  gap: 10px;
+}
+
+.comments-top-posts__item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.comments-top-posts__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.comments-top-posts__title {
+  font-weight: 650;
+  margin-bottom: 4px;
+}
+
+.comments-top-posts__summary {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.comments-leaderboard {
+  display: grid;
+  gap: 10px;
+}
+
+.comments-leaderboard__row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.comments-leaderboard__rank {
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.comments-leaderboard__name {
+  font-weight: 650;
+}
+
+.comments-leaderboard__sample {
+  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.35;
+}
+
+.wordcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: baseline;
+}
+
+.wordcloud__word {
+  color: rgba(255, 255, 255, 0.92);
+  user-select: none;
+}

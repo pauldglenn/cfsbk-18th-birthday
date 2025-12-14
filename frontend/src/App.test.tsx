@@ -42,6 +42,32 @@ const mockNamed = {
   girls: [],
 };
 
+const mockCommentsAnalysis = {
+  generated_at: "2025-12-14T00:00:00Z",
+  total_comments: 3,
+  monthly: [
+    { month: "2025-10", count: 1 },
+    { month: "2025-11", count: 2 },
+  ],
+  top_posts: [
+    {
+      id: 1,
+      date: "2025-11-08",
+      title: "Saturday 11.8.25",
+      link: "http://example.com",
+      comment_count: 2,
+      summary: "Run 400m",
+    },
+  ],
+  top_commenters: [
+    { name: "Pat", count: 2, topics: ["run", "wod"], sample_comments: ["Loved this workout."] },
+  ],
+  wordcloud: [
+    { word: "run", count: 2 },
+    { word: "wod", count: 1 },
+  ],
+};
+
 describe("App scrollytelling interactions", () => {
   let fetchSpy: any;
 
@@ -59,6 +85,7 @@ describe("App scrollytelling interactions", () => {
         url.includes("movement_calendar") ? mockAggregates.movement_calendar :
         url.includes("search_index") ? mockSearch :
         url.includes("named_workouts") ? mockNamed :
+        url.includes("comments_analysis") ? mockCommentsAnalysis :
         [];
       return {
         ok: true,

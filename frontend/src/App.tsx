@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { loadDataBundle } from "./dataLoader";
-import type { Aggregates, SearchItem, NamedWorkouts } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis } from "./types";
 import { Milestones } from "./components/Milestones";
+import { CommentsAnalysisCard } from "./components/CommentsAnalysisCard";
 import { NamedWorkoutCard } from "./components/NamedWorkoutCard";
 import { QuickFinder } from "./components/QuickFinder";
 import { Section } from "./components/Section";
@@ -18,15 +19,17 @@ function App() {
   const [aggregates, setAggregates] = useState<Aggregates | null>(null);
   const [searchIndex, setSearchIndex] = useState<SearchItem[]>([]);
   const [namedWorkouts, setNamedWorkouts] = useState<NamedWorkouts | null>(null);
+  const [commentsAnalysis, setCommentsAnalysis] = useState<CommentsAnalysis | null>(null);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setStatus("loading");
     loadDataBundle()
-      .then(({ aggregates, search, namedWorkouts }) => {
+      .then(({ aggregates, search, namedWorkouts, commentsAnalysis }) => {
         setAggregates(aggregates);
         setSearchIndex(search);
         setNamedWorkouts(namedWorkouts);
+        setCommentsAnalysis(commentsAnalysis);
         setStatus("ready");
       })
       .catch((err) => {
@@ -87,6 +90,10 @@ function App() {
 
         <Section id="finder" title="Quick Finder">
           <QuickFinder search={searchIndex} />
+        </Section>
+
+        <Section id="comments" title="Comments">
+          <CommentsAnalysisCard analysis={commentsAnalysis} />
         </Section>
       </div>
     </div>

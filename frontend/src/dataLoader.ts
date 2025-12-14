@@ -1,10 +1,19 @@
-import type { Aggregates, SearchItem, NamedWorkouts } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis } from "./types";
 
 const BASE = `${import.meta.env.BASE_URL}data/derived`;
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(path);
   if (!res.ok) {
+    throw new Error(`Failed to fetch ${path}: ${res.status}`);
+  }
+  return res.json();
+}
+
+async function fetchJsonOptional<T>(path: string): Promise<T | null> {
+  const res = await fetch(path);
+  if (!res.ok) {
+    if (res.status === 404) return null;
     throw new Error(`Failed to fetch ${path}: ${res.status}`);
   }
   return res.json();
@@ -45,11 +54,16 @@ export async function loadNamedWorkouts(): Promise<NamedWorkouts> {
   return fetchJson(`${BASE}/named_workouts.json`);
 }
 
+export async function loadCommentsAnalysis(): Promise<CommentsAnalysis | null> {
+  return fetchJsonOptional(`${BASE}/comments_analysis.json`);
+}
+
 export async function loadDataBundle() {
-  const [aggregates, search, namedWorkouts] = await Promise.all([
+  const [aggregates, search, namedWorkouts, commentsAnalysis] = await Promise.all([
     loadAggregates(),
     loadSearchIndex(),
     loadNamedWorkouts(),
+    loadCommentsAnalysis(),
   ]);
-  return { aggregates, search, namedWorkouts };
+  return { aggregates, search, namedWorkouts, commentsAnalysis };
 }

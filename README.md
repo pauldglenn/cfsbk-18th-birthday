@@ -48,13 +48,17 @@ npm test -- --run
 ```bash
 # Fetch latest posts and build canonical + aggregates
 uv run python etl.py all
+
+# (Optional) Fetch full comment bodies and write comment analytics
+uv run python etl.py build --with-comment-analysis
 ```
 Artifacts land in `data/derived/`:
 - `workouts.jsonl` (canonical with movements/format/component tags/seq_no)
 - `top_movements.json`, `top_pairs.json`, `yearly_counts.json`, `weekday_counts.json`
 - `movement_yearly.json`, `movement_weekday.json`, `movement_monthly.json`, `movement_calendar.json`
 - `search_index.json`, `data_version.json`
-- `comment_count` is included on each workout (fetched via the WP comments API)
+- `comment_count` is included on each workout when running with `--with-comments` or `--with-comment-analysis` (hits the WP comments API)
+- `comments_analysis.json` is written when running with `--with-comment-analysis` (monthly totals, most-commented posts, top commenters, wordcloud)
 
 ## Frontend (React/Vite)
 Scaffold lives in `frontend/`.

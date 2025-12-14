@@ -35,7 +35,7 @@ files = sorted(raw_dir.glob("posts-*.jsonl"), reverse=True)
 if files:
     shutil.copy(files[0], raw_dir / "latest.jsonl")
 PY
-          uv run python etl.py build --with-comments
+          uv run python etl.py build --with-comment-analysis
 
       - name: Commit updated data
         env:

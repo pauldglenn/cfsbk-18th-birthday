@@ -7,6 +7,8 @@ but the implementation lives in `cfa_etl/*` to keep the codebase maintainable.
 
 from .aggregates import aggregate
 from .canonical import build_canonical
+from .comments import fetch_all_comments
+from .comments_analysis import build_comments_analysis
 from .io import ensure_dirs, fetch_comment_counts, fetch_raw, load_raw_posts, write_artifacts
 from .movements import (
     component_tag,
@@ -23,11 +25,13 @@ from .named_workouts import build_named_workouts
 __all__ = [
     "aggregate",
     "build_canonical",
+    "build_comments_analysis",
     "build_named_workouts",
     "component_tag",
     "detect_format",
     "ensure_dirs",
     "extract_rep_scheme",
+    "fetch_all_comments",
     "fetch_comment_counts",
     "fetch_raw",
     "is_rest_day",
@@ -38,4 +42,3 @@ __all__ = [
     "tag_movements",
     "write_artifacts",
 ]
-
