@@ -118,6 +118,16 @@
   font-weight: 600;
 }
 
+.pill--clickable {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pill--clickable:hover {
+  border-color: rgba(37, 99, 235, 0.7);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.15);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

@@ -63,7 +63,7 @@ function App() {
             <p className="muted">
               Scroll to explore: milestones, top movements, common pairings, and search across all {numberWithCommas(total)} workouts.
             </p>
-            <Milestones total={total} />
+            <Milestones total={total} search={searchIndex} />
           </div>
         </header>
 

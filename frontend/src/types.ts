@@ -16,6 +16,8 @@ export type MovementDayEntry = { day: number; date: string; title: string; summa
 
 export type SearchItem = {
   id: number;
+  seq_no?: number;
+  milestones?: string[];
   date: string;
   title: string;
   link: string;

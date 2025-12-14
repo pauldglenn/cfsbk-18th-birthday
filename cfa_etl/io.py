@@ -98,6 +98,8 @@ def write_artifacts(
     search_data = [
         {
             "id": item.get("id"),
+            "seq_no": item.get("seq_no"),
+            "milestones": item.get("milestones") or [],
             "date": item.get("date"),
             "title": item.get("title"),
             "link": item.get("link"),
