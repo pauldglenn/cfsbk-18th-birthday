@@ -462,7 +462,12 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
     girl_patterns = compile_name_patterns(GIRL_NAMES)
 
     for item in canonical:
-        candidate_fields = [item.get("title") or ""] + [c.get("component") or "" for c in item.get("components") or []]
+        workout_components = [
+            c.get("component") or ""
+            for c in item.get("components") or []
+            if is_workout_component(c.get("component") or "")
+        ]
+        candidate_fields = [item.get("title") or ""] + workout_components
         fields = [f.lower() for f in candidate_fields if f]
         matches_hero = [
             name for name, pat in hero_patterns if any(pat.search(f) for f in fields)
