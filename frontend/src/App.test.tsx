@@ -28,6 +28,7 @@ const mockSearch = [
   {
     id: 1,
     seq_no: 2,
+    workout_no: 2,
     milestones: ["2th workout"],
     date: "2025-11-08",
     title: "Saturday 11.8.25",

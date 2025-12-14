@@ -24,11 +24,12 @@ def build_canonical(
     for post in raw_posts:
         base = process_post(post)
         if is_rest_day(base.get("components") or [], base.get("title") or ""):
-            base.update({"movements": [], "format": "", "component_tags": []})
+            base.update({"movements": [], "format": "", "component_tags": [], "is_rest_day": True})
             if comment_counts:
                 base["comment_count"] = comment_counts.get(base.get("id"), 0)
             canonical.append(base)
             continue
+        base["is_rest_day"] = False
 
         movement_text = movement_text_from_components(base.get("components") or [])
         movement_source = f"{base.get('title') or ''} {movement_text}".strip()
@@ -53,10 +54,22 @@ def build_canonical(
         canonical.append(base)
 
     canonical.sort(key=lambda x: (x.get("date") or "", x.get("id") or 0))
+
+    # seq_no counts all posts; workout_no counts only non-rest-day workouts
+    workout_no = 0
     for idx, item in enumerate(canonical, start=1):
         item["seq_no"] = idx
-        if idx in {1000, 2500, 5000} or idx == len(canonical):
-            item.setdefault("milestones", []).append(f"{idx}th workout")
+        if not item.get("is_rest_day"):
+            workout_no += 1
+            item["workout_no"] = workout_no
+        else:
+            item["workout_no"] = None
+
+    total_workouts = workout_no
+    milestone_targets = {1000, 2500, 5000, total_workouts}
+    for item in canonical:
+        wn = item.get("workout_no")
+        if isinstance(wn, int) and wn in milestone_targets:
+            item.setdefault("milestones", []).append(f"{wn}th workout")
 
     return canonical
-

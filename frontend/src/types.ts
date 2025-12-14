@@ -17,6 +17,7 @@ export type MovementDayEntry = { day: number; date: string; title: string; summa
 export type SearchItem = {
   id: number;
   seq_no?: number;
+  workout_no?: number | null;
   milestones?: string[];
   date: string;
   title: string;

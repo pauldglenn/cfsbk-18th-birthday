@@ -46,7 +46,7 @@ function App() {
   }
   if (!aggregates || !namedWorkouts) return null;
 
-  const total = Object.values(aggregates.yearly_counts).reduce((a, b) => a + b, 0);
+  const total = Math.max(0, ...searchIndex.map((s) => (typeof s.workout_no === "number" ? s.workout_no : 0)));
 
   return (
     <div className="page">

@@ -244,3 +244,42 @@ def test_burpee_not_from_tomorrow_note():
     tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
     assert "burpee" not in tags
     assert "deadlift" in tags
+
+
+def test_workout_no_skips_rest_days_for_milestones():
+    from cfa_etl.canonical import build_canonical
+
+    raw_posts = [
+        {
+            "id": 1,
+            "date": "2020-01-01T12:00:00",
+            "link": "https://example.com/1",
+            "slug": "wod-1",
+            "title": {"rendered": "WOD 1.1.20"},
+            "content": {"rendered": "<p><strong>Workout</strong></p><p>For Time: 10 Burpees</p>"},
+        },
+        {
+            "id": 2,
+            "date": "2020-01-02T12:00:00",
+            "link": "https://example.com/2",
+            "slug": "rest",
+            "title": {"rendered": "Rest Day"},
+            "content": {"rendered": "<p>Rest Day</p>"},
+        },
+        {
+            "id": 3,
+            "date": "2020-01-03T12:00:00",
+            "link": "https://example.com/3",
+            "slug": "wod-3",
+            "title": {"rendered": "WOD 1.3.20"},
+            "content": {"rendered": "<p><strong>Workout</strong></p><p>For Time: 10 Burpees</p>"},
+        },
+    ]
+    canonical = build_canonical(raw_posts)
+    w1 = next(i for i in canonical if i["id"] == 1)
+    r = next(i for i in canonical if i["id"] == 2)
+    w3 = next(i for i in canonical if i["id"] == 3)
+    assert w1["workout_no"] == 1
+    assert r["is_rest_day"] is True
+    assert r["workout_no"] is None
+    assert w3["workout_no"] == 2

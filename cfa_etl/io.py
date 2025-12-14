@@ -99,6 +99,7 @@ def write_artifacts(
         {
             "id": item.get("id"),
             "seq_no": item.get("seq_no"),
+            "workout_no": item.get("workout_no"),
             "milestones": item.get("milestones") or [],
             "date": item.get("date"),
             "title": item.get("title"),
@@ -114,9 +115,11 @@ def write_artifacts(
         json.dump(search_data, f, ensure_ascii=False)
 
     version_path = DERIVED_DIR / "data_version.json"
+    total_workouts = sum(1 for item in canonical if not item.get("is_rest_day"))
     version = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
-        "total_workouts": len(canonical),
+        "total_workouts": total_workouts,
+        "total_posts": len(canonical),
     }
     with version_path.open("w", encoding="utf-8") as f:
         json.dump(version, f, indent=2)
