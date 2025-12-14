@@ -336,6 +336,8 @@
 }
 
 .year-chart {
+  --year-chart-width: 100vw;
+
   display: flex;
   gap: 10px;
   align-items: flex-end;
@@ -346,9 +348,16 @@
   box-sizing: border-box;
 
   /* Expand to fill viewport horizontally (break out of container) */
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--year-chart-width);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@supports (width: 100dvw) {
+  .year-chart {
+    --year-chart-width: 100dvw;
+  }
 }
 
 .year-chart__item {
