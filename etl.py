@@ -33,7 +33,7 @@ HERO_NAMES = [
     "murph", "dt", "chad", "holleyman", "badger", "nate", "randy", "griff", "hidalgo", "jerry", "bull",
     "glen", "josh", "michael", "whitten", "jt", "lumberjack 20", "victoria", "mcghee", "abbate", "white",
     "kalsu", "manion", "morrison", "tommy v", "coe", "wittman", "mccluskey", "nick", "small", "roy",
-    "gator", "garrett", "carse", "riley", "danny", "lorenza", "zeitoun", "murphy", "bo", "ship",
+    "gator", "garrett", "carse", "riley", "danny", "lorenza", "zeitoun", "murphy", "ship",
     "hansel", "jared", "peggy", "rhodesian", "tk", "tyler", "wood", "ryan", "camelot", "helm", "brenton",
 ]
 GIRL_NAMES = [
@@ -41,6 +41,14 @@ GIRL_NAMES = [
     "linda", "mary", "nancy", "annie", "christine", "eva", "gwen", "hope", "nicole", "cindy", "kelly",
     "lynne", "amanda", "maggie", "lila", "ingrid", "lyla", "grace", "tiff", "vera", "ariane",
 ]
+
+def compile_name_patterns(names: List[str]) -> List[Tuple[str, re.Pattern]]:
+    patterns = []
+    for name in names:
+        escaped = re.escape(name).replace("\\ ", r"\s+")
+        pat = re.compile(rf"\b{escaped}\b", re.IGNORECASE)
+        patterns.append((name.title(), pat))
+    return patterns
 
 
 def ensure_dirs() -> None:
@@ -450,18 +458,13 @@ def itertools_pairs(seq: List[str]):
 def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
     hero_hits = defaultdict(list)
     girl_hits = defaultdict(list)
-
-    def match_names(names: List[str], text: str) -> List[str]:
-        hits = []
-        for name in names:
-            if name in text:
-                hits.append(name)
-        return hits
+    hero_patterns = compile_name_patterns(HERO_NAMES)
+    girl_patterns = compile_name_patterns(GIRL_NAMES)
 
     for item in canonical:
         text = ((item.get("title") or "") + " " + " ".join((c.get("details") or "") for c in item.get("components") or [])).lower()
-        matches_hero = match_names(HERO_NAMES, text)
-        matches_girl = match_names(GIRL_NAMES, text)
+        matches_hero = [name for name, pat in hero_patterns if pat.search(text)]
+        matches_girl = [name for name, pat in girl_patterns if pat.search(text)]
         summary = extract_rep_scheme(item.get("components") or [])
         entry = {
             "date": item.get("date"),
@@ -480,7 +483,7 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
             entries_sorted = sorted(entries, key=lambda e: e.get("date") or "", reverse=True)
             data.append(
                 {
-                    "name": name.title(),
+                    "name": name,
                     "count": len(entries_sorted),
                     "latest_date": entries_sorted[0].get("date"),
                     "latest_link": entries_sorted[0].get("link"),
