@@ -499,7 +499,9 @@
   .story-container {
     height: auto;
     max-height: none;
+    overflow-y: visible;
     scroll-snap-type: none;
+    scroll-behavior: auto;
   }
 
   .hero {
