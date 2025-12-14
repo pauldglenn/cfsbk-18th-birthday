@@ -339,10 +339,16 @@
   display: flex;
   gap: 10px;
   align-items: flex-end;
-  padding: 8px 0 2px;
+  padding: 10px 16px 4px;
   margin-top: 12px;
   overflow-x: auto;
   overscroll-behavior-x: contain;
+  box-sizing: border-box;
+
+  /* Expand to fill viewport horizontally (break out of container) */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .year-chart__item {
