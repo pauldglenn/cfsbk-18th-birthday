@@ -335,6 +335,63 @@
   margin-bottom: 8px;
 }
 
+.year-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.year-bar {
+  display: grid;
+  grid-template-columns: 64px 1fr 52px;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #1f2937;
+  background: #0f172a;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.year-bar:hover {
+  border-color: #2563eb;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.15);
+}
+
+.year-bar--active {
+  border-color: rgba(37, 99, 235, 0.95);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.22);
+}
+
+.year-bar__year {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.year-bar__track {
+  height: 12px;
+  background: #0b1220;
+  border-radius: 999px;
+  border: 1px solid #1f2937;
+  overflow: hidden;
+}
+
+.year-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #22d3ee);
+  border-radius: 999px;
+}
+
+.year-bar__value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #cbd5f5;
+}
+
 .months {
   margin-top: 12px;
 }

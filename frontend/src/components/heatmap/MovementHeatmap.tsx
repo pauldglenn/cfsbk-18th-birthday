@@ -29,27 +29,27 @@ export function MovementHeatmap({ movement, aggregates }: { movement: string; ag
         <h3>{movement}</h3>
         <span className="muted">Occurrences by year</span>
       </div>
-      <div className="heatmap">
+      <div className="year-bars">
         {years.map((y, idx) => {
           const val = values[idx];
-          const intensity = Math.round((val / max) * 100);
+          const pct = (val / max) * 100;
+          const active = yearOpen === y;
           return (
             <button
               key={y}
-              className={`heatmap-cell ${yearOpen === y ? "heatmap-cell--active" : ""}`}
+              className={`year-bar ${active ? "year-bar--active" : ""}`}
               title={`${y}: ${val}`}
               onClick={() => {
-                const next = yearOpen === y ? null : y;
+                const next = active ? null : y;
                 setYearOpen(next);
                 setMonthOpen(null);
               }}
             >
-              <div
-                className="heatmap-block"
-                style={{ background: `rgba(37, 99, 235, ${0.15 + (intensity / 100) * 0.85})` }}
-              />
-              <div className="heatmap-year">{y}</div>
-              <div className="heatmap-value">{val}</div>
+              <div className="year-bar__year">{y}</div>
+              <div className="year-bar__track" aria-hidden="true">
+                <div className="year-bar__fill" style={{ width: `${pct}%` }} />
+              </div>
+              <div className="year-bar__value">{val}</div>
             </button>
           );
         })}
@@ -66,4 +66,3 @@ export function MovementHeatmap({ movement, aggregates }: { movement: string; ag
     </div>
   );
 }
-
