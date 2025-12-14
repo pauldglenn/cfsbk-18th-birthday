@@ -10,6 +10,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scrape_cfsbk import derive_workout_date, parse_components
+from scrape_cfsbk import process_post
 from etl import (
     extract_rep_scheme,
     movement_text_from_components,
@@ -59,6 +60,19 @@ def test_parse_components_fallback_when_missing_headings():
     comps = parse_components(soup)
     assert len(comps) == 1
     assert "Run 400m" in comps[0]["details"]
+
+
+def test_process_post_unescapes_title_entities():
+    post = {
+        "id": 999,
+        "title": {"rendered": "Front Squat / Jerk | &#8220;Annie&#8221;"},
+        "slug": "front-squat-jerk-annie",
+        "link": "https://example.com/workout-of-the-day/2012/01/01/front-squat-jerk-annie.html/",
+        "date": "2012-01-01T12:00:00",
+        "content": {"rendered": "<div><p><strong>Workout</strong></p><p>For Time: 50 DU</p></div>"},
+    }
+    item = process_post(post)
+    assert "“Annie”" in item["title"]
 
 
 def test_kettlebell_swings_not_lost():

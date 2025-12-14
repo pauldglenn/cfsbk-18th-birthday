@@ -8,6 +8,7 @@ object per line with the date, title, cycle info, and component text.
 """
 
 import argparse
+import html
 import json
 import re
 import time
@@ -191,12 +192,13 @@ def process_post(post: Dict) -> Dict:
     soup = BeautifulSoup(content_html, "html.parser")
     text_blob = soup.get_text(" ", strip=True)
     post_date = (post.get("date") or "")[:10]
+    title_rendered = (post.get("title", {}) or {}).get("rendered") or ""
 
     return {
         "id": post.get("id"),
         "post_date": post_date,
         "date": derive_workout_date(post, post_date),
-        "title": post.get("title", {}).get("rendered"),
+        "title": html.unescape(title_rendered),
         "link": post.get("link"),
         "cycle_info": extract_cycle_info(text_blob),
         "components": parse_components(soup),

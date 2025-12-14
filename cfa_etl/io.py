@@ -11,6 +11,7 @@ import requests
 from scrape_cfsbk import fetch_posts
 
 from .comments import DEFAULT_HEADERS
+from .movements import extract_rep_scheme
 from .named_workouts import build_named_workouts
 from .paths import COMMENTS_API, DERIVED_DIR, RAW_DIR
 
@@ -104,6 +105,7 @@ def write_artifacts(
             "date": item.get("date"),
             "title": item.get("title"),
             "link": item.get("link"),
+            "summary": extract_rep_scheme(item.get("components") or []),
             "movements": item.get("movements"),
             "component_tags": item.get("component_tags"),
             "format": item.get("format"),

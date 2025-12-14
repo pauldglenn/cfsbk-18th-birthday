@@ -123,9 +123,76 @@
   cursor: pointer;
 }
 
+.pill:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.pill--active {
+  border-color: rgba(37, 99, 235, 0.85);
+  background: rgba(37, 99, 235, 0.18);
+}
+
 .pill--clickable:hover {
   border-color: rgba(37, 99, 235, 0.7);
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.15);
+}
+
+.milestone-expander {
+  margin-top: 14px;
+  text-align: left;
+  border: 1px solid #1f2937;
+  border-radius: 14px;
+  background: #0b1220;
+  padding: 14px;
+}
+
+.milestone-expander__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.milestone-expander__title {
+  font-weight: 750;
+}
+
+.milestone-expander__summary {
+  margin-top: 10px;
+  color: rgba(226, 232, 240, 0.92);
+  line-height: 1.35;
+  font-size: 14px;
+}
+
+.milestone-expander__chips {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn--ghost {
+  background: transparent;
 }
 
 .grid {

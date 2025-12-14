@@ -33,6 +33,7 @@ const mockSearch = [
     date: "2025-11-08",
     title: "Saturday 11.8.25",
     link: "http://example.com",
+    summary: "Run 400m",
     movements: ["run"],
     component_tags: ["conditioning"],
     format: "for time",

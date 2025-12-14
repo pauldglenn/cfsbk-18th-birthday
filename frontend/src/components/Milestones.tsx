@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { numberWithCommas } from "../utils/format";
 
 import type { SearchItem } from "../types";
@@ -10,24 +12,55 @@ export function Milestones({ total, search }: { total: number; search: SearchIte
     if (typeof item.workout_no === "number") byWorkoutNo.set(item.workout_no, item);
   }
 
+  const [open, setOpen] = useState<number | null>(null);
+  const openEntry = open ? byWorkoutNo.get(open) : null;
+
   return (
-    <div className="pill-row">
-      {targets.map((m) => {
-        const entry = byWorkoutNo.get(m);
-        const label = m === total ? `Latest (#${m})` : `${numberWithCommas(m)}th`;
-        if (!entry?.link) {
+    <div className="milestones">
+      <div className="pill-row">
+        {targets.map((m) => {
+          const entry = byWorkoutNo.get(m);
+          const label = m === total ? `Latest (#${m})` : `${numberWithCommas(m)}th`;
+          const disabled = !entry;
+          const active = open === m;
           return (
-            <span key={m} className="pill">
+            <button
+              key={m}
+              type="button"
+              className={`pill pill--clickable ${active ? "pill--active" : ""}`}
+              disabled={disabled}
+              onClick={() => setOpen(active ? null : m)}
+              title={disabled ? "No workout found" : entry?.title}
+            >
               {label}
-            </span>
+            </button>
           );
-        }
-        return (
-          <a key={m} className="pill pill--clickable" href={entry.link} target="_blank" rel="noreferrer" title={entry.title}>
-            {label}
-          </a>
-        );
-      })}
+        })}
+      </div>
+
+      {openEntry && (
+        <div className="milestone-expander">
+          <div className="milestone-expander__header">
+            <div>
+              <div className="milestone-expander__title">{openEntry.title}</div>
+              <div className="muted">{openEntry.date}</div>
+            </div>
+            <a className="btn btn--ghost" href={openEntry.link} target="_blank" rel="noreferrer">
+              Open blog post
+            </a>
+          </div>
+          {openEntry.summary && <div className="milestone-expander__summary">{openEntry.summary}</div>}
+          {openEntry.movements?.length ? (
+            <div className="milestone-expander__chips">
+              {openEntry.movements.slice(0, 8).map((m) => (
+                <span key={m} className="chip">
+                  {m}
+                </span>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }

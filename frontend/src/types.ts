@@ -22,6 +22,7 @@ export type SearchItem = {
   date: string;
   title: string;
   link: string;
+  summary?: string;
   movements: string[];
   component_tags: string[];
   format: string;
