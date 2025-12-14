@@ -1,4 +1,13 @@
 {
+  "double under": {
+    "Friday": 40,
+    "Saturday": 43,
+    "Sunday": 62,
+    "Wednesday": 67,
+    "Thursday": 56,
+    "Monday": 49,
+    "Tuesday": 38
+  },
   "kettlebell swing": {
     "Friday": 36,
     "Sunday": 54,
@@ -17,14 +26,14 @@
     "Thursday": 32,
     "Tuesday": 4
   },
-  "double under": {
-    "Friday": 40,
-    "Saturday": 43,
-    "Sunday": 62,
-    "Wednesday": 67,
+  "box jump": {
+    "Saturday": 84,
+    "Sunday": 64,
+    "Tuesday": 29,
+    "Wednesday": 35,
+    "Monday": 37,
     "Thursday": 56,
-    "Monday": 49,
-    "Tuesday": 38
+    "Friday": 35
   },
   "burpee": {
     "Saturday": 145,
@@ -34,15 +43,6 @@
     "Wednesday": 58,
     "Monday": 54,
     "Thursday": 104
-  },
-  "box jump": {
-    "Saturday": 84,
-    "Sunday": 64,
-    "Tuesday": 29,
-    "Wednesday": 35,
-    "Monday": 37,
-    "Thursday": 56,
-    "Friday": 35
   },
   "deadlift": {
     "Tuesday": 85,
@@ -168,15 +168,6 @@
     "Thursday": 6,
     "Friday": 10
   },
-  "front squat": {
-    "Saturday": 148,
-    "Wednesday": 135,
-    "Friday": 37,
-    "Sunday": 59,
-    "Monday": 54,
-    "Thursday": 50,
-    "Tuesday": 33
-  },
   "row (weighted)": {
     "Saturday": 16,
     "Thursday": 22,
@@ -185,6 +176,15 @@
     "Tuesday": 19,
     "Sunday": 25,
     "Friday": 38
+  },
+  "front squat": {
+    "Saturday": 148,
+    "Wednesday": 135,
+    "Friday": 37,
+    "Sunday": 59,
+    "Monday": 54,
+    "Thursday": 50,
+    "Tuesday": 33
   },
   "wall ball": {
     "Wednesday": 38,
