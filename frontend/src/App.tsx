@@ -110,18 +110,22 @@ const HERO_WORKOUTS: HeroConfig[] = [
   { name: "Grace", aliases: [/grace\b/i] },
 ];
 
+type HeroDetail = { name: string; count: number; latestDate?: string; latestLink?: string; dates: string[] };
+
 function HeroWorkouts({ search }: { search: SearchItem[] }) {
   const heroes = useMemo(() => {
-    const hits: { name: string; count: number; latestDate?: string; latestLink?: string }[] = [];
+    const hits: HeroDetail[] = [];
     HERO_WORKOUTS.forEach((hero) => {
       const matches = search.filter((w) => hero.aliases.some((r) => r.test(w.title)));
       if (!matches.length) return;
-      const latest = matches.slice().sort((a, b) => (a.date > b.date ? -1 : 1))[0];
+      const sorted = matches.slice().sort((a, b) => (a.date > b.date ? -1 : 1));
+      const latest = sorted[0];
       hits.push({
         name: hero.name,
-        count: matches.length,
+        count: sorted.length,
         latestDate: latest.date,
         latestLink: latest.link,
+        dates: sorted.map((m) => m.date),
       });
     });
     return hits.sort((a, b) => b.count - a.count || (b.latestDate || "").localeCompare(a.latestDate || ""));
@@ -139,15 +143,34 @@ function HeroWorkouts({ search }: { search: SearchItem[] }) {
       </div>
       <div className="hero-card__list">
         {heroes.map((h) => (
-          <div key={h.name} className="hero-card__item">
-            <div className="hero-card__name">{h.name}</div>
-            <div className="hero-card__count">{h.count} runs</div>
-            {h.latestDate && (
-              <a className="hero-card__link" href={h.latestLink} target="_blank" rel="noreferrer">
-                Last on {h.latestDate}
-              </a>
-            )}
-          </div>
+          <details key={h.name} className="hero-card__item">
+            <summary className="hero-card__summary">
+              <div className="hero-card__name">{h.name}</div>
+              <div className="hero-card__count">{h.count} runs</div>
+              {h.latestDate && (
+                <span className="hero-card__latest">
+                  Last on {h.latestDate}
+                </span>
+              )}
+            </summary>
+            <div className="hero-card__body">
+              <div className="hero-card__dates">
+                <div className="muted">Dates run</div>
+                <div className="hero-card__chips">
+                  {h.dates.map((d) => (
+                    <span key={d} className="chip chip--ghost">
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {h.latestLink && (
+                <a className="hero-card__link" href={h.latestLink} target="_blank" rel="noreferrer">
+                  View most recent post
+                </a>
+              )}
+            </div>
+          </details>
         ))}
       </div>
     </div>

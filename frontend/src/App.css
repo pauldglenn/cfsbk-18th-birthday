@@ -516,10 +516,8 @@
   background: #0f172a;
   border: 1px solid #1f2937;
   border-radius: 12px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  padding: 0;
+  overflow: hidden;
 }
 
 .hero-card__name {
@@ -540,6 +538,45 @@
 
 .hero-card__link:hover {
   text-decoration: underline;
+}
+
+.hero-card__summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.hero-card__item[open] > .hero-card__summary {
+  border-bottom: 1px solid #1f2937;
+  background: #0b1220;
+}
+
+.hero-card__body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip--ghost {
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #e2e8f0;
+}
+
+.hero-card__latest {
+  color: #cbd5f5;
+  font-size: 13px;
 }
 
 .loading,
