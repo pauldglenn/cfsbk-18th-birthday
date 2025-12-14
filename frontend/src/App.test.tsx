@@ -91,7 +91,7 @@ describe("App scrollytelling interactions", () => {
         ok: true,
         headers: { get: () => "application/json" },
         json: async () => body,
-      } as Response;
+      } as unknown as Response;
     });
   });
 
