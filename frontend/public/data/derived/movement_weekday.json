@@ -1,12 +1,12 @@
 {
-  "thruster": {
-    "Friday": 13,
-    "Saturday": 89,
-    "Wednesday": 23,
-    "Sunday": 52,
-    "Monday": 31,
-    "Thursday": 32,
-    "Tuesday": 4
+  "kettlebell swing": {
+    "Friday": 36,
+    "Sunday": 54,
+    "Wednesday": 41,
+    "Monday": 47,
+    "Saturday": 67,
+    "Thursday": 62,
+    "Tuesday": 21
   },
   "double under": {
     "Friday": 41,
@@ -17,14 +17,14 @@
     "Monday": 49,
     "Tuesday": 38
   },
-  "kettlebell swing": {
-    "Friday": 36,
-    "Sunday": 54,
-    "Wednesday": 41,
-    "Monday": 47,
-    "Saturday": 67,
-    "Thursday": 62,
-    "Tuesday": 21
+  "thruster": {
+    "Friday": 13,
+    "Saturday": 89,
+    "Wednesday": 23,
+    "Sunday": 52,
+    "Monday": 31,
+    "Thursday": 32,
+    "Tuesday": 4
   },
   "burpee": {
     "Saturday": 146,

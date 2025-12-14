@@ -184,6 +184,7 @@ def movement_text_from_components(components: List[Dict]) -> str:
 
 def is_workout_component(name: str) -> bool:
     name_l = name.lower()
+    name_norm = re.sub(r"[^\w\s]", " ", name_l)
     ignore = (
         "training cycle",
         "upcoming",
@@ -200,13 +201,16 @@ def is_workout_component(name: str) -> bool:
         "saturday",
         "sunday",
     )
-    if any(k in name_l for k in ignore):
+    if any(k in name_norm for k in ignore):
         return False
     if component_tag(name):
         return True
-    if re.search(r"(press|squat|deadlift|clean|snatch|row|run|bike|burpee|swing|pull[- ]?up|push[- ]?up)", name_l):
+    if re.search(r"(press|squat|deadlift|clean|snatch|row|run|bike|burpee|swing|pull[- ]?up|push[- ]?up)", name_norm):
         return True
-    if any(k in name_l for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]):
+    if any(
+        k in name_norm
+        for k in ["wod", "workout", "metcon", "conditioning", "cash out", "buy in", "cash-out", "cashout"]
+    ):
         return True
     return False
 
