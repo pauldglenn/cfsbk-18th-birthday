@@ -7,11 +7,6 @@ export function TopPairs({ aggregates }: { aggregates: Aggregates }) {
   const top20 = aggregates.top_pairs.slice(0, 20);
   const [openKey, setOpenKey] = useState<string | null>(null);
 
-  const totalDays = useMemo(
-    () => Object.values(aggregates.yearly_counts).reduce((a, b) => a + b, 0),
-    [aggregates.yearly_counts]
-  );
-
   const movementTotalDays = useMemo(() => {
     const cache = new Map<string, number>();
     return (movement: string) => {
@@ -75,7 +70,6 @@ export function TopPairs({ aggregates }: { aggregates: Aggregates }) {
         const aDays = movementTotalDays(p.a);
         const bDays = movementTotalDays(p.b);
         const together = shared?.length ?? 0;
-        const jaccard = aDays + bDays - together > 0 ? pct(together, aDays + bDays - together) : "0%";
         return (
           <div key={`${p.a}-${p.b}-${idx}`} className="pair-item">
             <button type="button" className={`chip-row pair-row ${open ? "pair-row--open" : ""}`} onClick={() => setOpenKey(open ? null : key)}>
@@ -89,8 +83,7 @@ export function TopPairs({ aggregates }: { aggregates: Aggregates }) {
                 <div className="pair-expander__meta muted">
                   {numberWithCommas(together)} days together · {numberWithCommas(aDays)} days with {p.a} · {numberWithCommas(bDays)} days with {p.b}
                   {" · "}
-                  overlap: {pct(together, aDays)} of {p.a}, {pct(together, bDays)} of {p.b} · jaccard {jaccard}
-                  {totalDays ? ` · across ${numberWithCommas(totalDays)} total days` : ""}
+                  overlap: {pct(together, aDays)} of {p.a}, {pct(together, bDays)} of {p.b}
                 </div>
                 <div className="pair-expander__list">
                   {shared.slice(0, 60).map((e, i) => (
