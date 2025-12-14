@@ -163,6 +163,25 @@ def test_recaps_with_wod_in_title_not_tagged():
     assert "row (erg)" in tags
 
 
+def test_named_workouts_include_grace_and_murph_counts():
+    from etl import build_named_workouts
+
+    # Load canonical from derived data for integration check
+    import json
+    from pathlib import Path
+
+    canonical = [json.loads(line) for line in (Path(__file__).resolve().parents[1] / "data" / "derived" / "workouts.jsonl").read_text().splitlines()]
+    named = build_named_workouts(canonical)
+
+    grace = next((w for w in named["girls"] if w["name"].lower() == "grace"), None)
+    assert grace is not None
+    assert any(occ["date"] == "2025-11-13" for occ in grace["occurrences"])
+
+    murph = next((w for w in named["heroes"] if w["name"].lower() == "murph"), None)
+    assert murph is not None
+    assert murph["count"] == 17
+
+
 def test_burpee_not_from_tomorrow_note():
     title = "Floater Strength"
     comps = [

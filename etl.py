@@ -466,20 +466,55 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
     hero_patterns = compile_name_patterns(HERO_NAMES)
     girl_patterns = compile_name_patterns(GIRL_NAMES)
 
+    ignores = (
+        "training cycle",
+        "upcoming",
+        "schedule",
+        "news",
+        "notes",
+        "recap",
+        "tomorrow",
+    )
+
     for item in canonical:
-        workout_components = [
-            c.get("component") or ""
-            for c in item.get("components") or []
-            if is_workout_component(c.get("component") or "")
-        ]
-        candidate_fields = [item.get("title") or ""] + workout_components
-        fields = [f.lower() for f in candidate_fields if f]
-        matches_hero = [
-            name for name, pat in hero_patterns if any(pat.search(f) for f in fields)
-        ]
-        matches_girl = [
-            name for name, pat in girl_patterns if any(pat.search(f) for f in fields)
-        ]
+        title_l = (item.get("title") or "").lower()
+        component_names: List[str] = []
+        for comp in item.get("components") or []:
+            name = (comp.get("component") or "").lower()
+            if not name:
+                continue
+            if any(ig in name for ig in ignores):
+                continue
+            component_names.append(name)
+
+        def normalize_name(text: str) -> str:
+            return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+        normalized_components = [normalize_name(n) for n in component_names]
+
+        matches_hero = []
+        for name, pat in hero_patterns:
+            name_norm = normalize_name(name)
+            title_hit = bool(pat.search(title_l))
+            comp_hit = any(normalize_name(c) == name_norm for c in component_names)
+            if not (title_hit or comp_hit):
+                continue
+            if name_norm == "murph" and not title_hit:
+                summary_l = summary.lower()
+                if not (
+                    ("pull" in summary_l and "push" in summary_l and "squat" in summary_l)
+                    or "1 mile" in summary_l
+                    or "1-mile" in summary_l
+                ):
+                    continue
+            matches_hero.append(name)
+
+        matches_girl = []
+        for name, pat in girl_patterns:
+            name_norm = normalize_name(name)
+            if pat.search(title_l) or any(normalize_name(c) == name_norm for c in component_names):
+                matches_girl.append(name)
+
         summary = extract_rep_scheme(item.get("components") or [])
         entry = {
             "date": item.get("date"),
@@ -488,6 +523,14 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
             "summary": summary,
         }
         for m in matches_hero:
+            if normalize_name(m) == "murph":
+                summary_l = summary.lower()
+                if not (
+                    ("pull" in summary_l and "push" in summary_l and "squat" in summary_l)
+                    or "1 mile" in summary_l
+                    or "1-mile" in summary_l
+                ):
+                    continue
             hero_hits[m].append(entry)
         for m in matches_girl:
             girl_hits[m].append(entry)
@@ -506,6 +549,22 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
                 }
             )
         return sorted(data, key=lambda x: (-x["count"], x["name"]))
+
+    # Ensure Murph captures all Memorial Day posts that explicitly include "murph" in the title
+    murph_entries = []
+    for item in canonical:
+        if "murph" in (item.get("title") or "").lower():
+            summary = extract_rep_scheme(item.get("components") or [])
+            murph_entries.append(
+                {
+                    "date": item.get("date"),
+                    "title": item.get("title"),
+                    "link": item.get("link"),
+                    "summary": summary,
+                }
+            )
+    if murph_entries:
+        hero_hits["Murph"] = murph_entries
 
     return {"heroes": build_list(hero_hits), "girls": build_list(girl_hits)}
 
