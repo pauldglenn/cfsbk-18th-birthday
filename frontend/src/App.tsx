@@ -96,6 +96,18 @@ const HERO_WORKOUTS: HeroConfig[] = [
   { name: "Hidalgo", aliases: [/hidalgo/i] },
   { name: "Jerry", aliases: [/jerry\b/i] },
   { name: "Bull", aliases: [/bull\b/i] },
+  { name: "Glen", aliases: [/glen\b/i] },
+  { name: "Josh", aliases: [/josh\b/i] },
+  { name: "Michael", aliases: [/michael\b/i] },
+  { name: "Whitten", aliases: [/whitten/i] },
+  { name: "J.T.", aliases: [/^j\.?t\.?$/i, /\bj\.?t\.?\b/i] },
+  { name: "Lumberjack 20", aliases: [/lumberjack\s*20/i] },
+  { name: "Victoria", aliases: [/victoria\b/i] },
+  { name: "McGhee", aliases: [/mcghee/i] },
+  { name: "Abbate", aliases: [/abbate/i] },
+  { name: "White", aliases: [/^white$/i, /\bwhite\b/i] },
+  // Common benchmark often treated like a hero day at affiliates
+  { name: "Grace", aliases: [/grace\b/i] },
 ];
 
 function HeroWorkouts({ search }: { search: SearchItem[] }) {
