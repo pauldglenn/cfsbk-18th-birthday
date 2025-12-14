@@ -182,6 +182,56 @@ def test_named_workouts_include_grace_and_murph_counts():
     assert murph["count"] == 17
 
 
+def test_named_workouts_skip_tomorrow_components():
+    from etl import build_named_workouts
+
+    canonical = [
+        {
+            "date": "2020-05-24",
+            "title": "WOD 5.24.20",
+            "link": "https://example.com/tomorrow",
+            "components": [
+                {"component": "Tomorrow: Memorial Day \"Murph\"", "details": "promo copy"},
+                {"component": "Workout", "details": "Not murph"},
+            ],
+        },
+        {
+            "date": "2020-05-25",
+            "title": "\"Murph\"",
+            "link": "https://example.com/murph",
+            "components": [
+                {"component": "Workout", "details": "1 Mile Run 100 Pull-Ups 200 Push-Ups 300 Squats 1 Mile Run"},
+            ],
+        },
+    ]
+    named = build_named_workouts(canonical)
+    murph = next((w for w in named["heroes"] if w["name"].lower() == "murph"), None)
+    assert murph is not None
+    assert murph["count"] == 1
+    assert murph["occurrences"][0]["date"] == "2020-05-25"
+
+
+def test_named_workouts_captures_grace_component_quotes():
+    from etl import build_named_workouts
+
+    canonical = [
+        {
+            "date": "2025-11-13",
+            "title": "Thursday 11.13.25",
+            "link": "https://example.com/grace",
+            "components": [
+                {"component": "STRENGTH", "details": "Other work"},
+                {"component": "“GRACE”", "details": "For Time: 30 Clean and Jerks"},
+            ],
+        }
+    ]
+    named = build_named_workouts(canonical)
+    grace = next((w for w in named["girls"] if w["name"].lower() == "grace"), None)
+    assert grace is not None
+    assert grace["count"] == 1
+    assert grace["occurrences"][0]["date"] == "2025-11-13"
+
+
 def test_burpee_not_from_tomorrow_note():
     title = "Floater Strength"
     comps = [

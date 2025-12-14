@@ -29,6 +29,21 @@ After generating `movement_counts.csv` (from the analysis snippet), plot the top
 uv run python visualize_movements.py --input movement_counts.csv --top 20 --output movement_counts.png
 ```
 
+## Named workouts (Heroes & Girls)
+- The ETL emits `data/derived/named_workouts.json` capturing Hero WODs and Girl benchmarks (occurrences, counts, latest date/link, summaries).
+- Matching uses workout titles and component headings (ignores “tomorrow”/promo components) with word-boundary regexes to avoid false positives.
+- In the frontend, these appear as expandable cards with the workout text and clickable dates to the source blog posts.
+
+## Tests
+```bash
+# Backend/tests
+uv run pytest
+
+# Frontend tests
+cd frontend
+npm test -- --run
+```
+
 ## ETL pipeline
 ```bash
 # Fetch latest posts and build canonical + aggregates
