@@ -113,7 +113,7 @@ describe("App scrollytelling interactions", () => {
     const monthCell = await screen.findByText("Nov");
     fireEvent.click(monthCell);
 
-    const dayCell = await screen.findByText("8");
+    const dayCell = await screen.findByRole("button", { name: /^8$/ });
     expect(dayCell).toBeInTheDocument();
   });
 });

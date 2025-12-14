@@ -28,4 +28,3 @@ export function TopMovements({ aggregates }: { aggregates: Aggregates }) {
     </div>
   );
 }
-

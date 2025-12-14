@@ -1,12 +1,17 @@
 import { useMemo } from "react";
 
 import type { Aggregates } from "../types";
+import { MovementBumpChart } from "./MovementBumpChart";
+
+const SHOW_BUMP_CHART = false;
 
 export function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
   const years = useMemo(
     () => Object.keys(aggregates.yearly_counts).map(Number).sort((a, b) => a - b).map(String),
     [aggregates]
   );
+
+  const top10Movements = useMemo(() => aggregates.top_movements.slice(0, 10).map((m) => m.movement), [aggregates.top_movements]);
 
   const topByYear = useMemo(() => {
     const movementYearly = aggregates.movement_yearly;
@@ -62,7 +67,7 @@ export function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
           );
         })}
       </div>
+      {SHOW_BUMP_CHART && <MovementBumpChart aggregates={aggregates} movements={top10Movements} topN={10} />}
     </div>
   );
 }
-
