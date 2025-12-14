@@ -30,7 +30,9 @@ from cfa_etl.named_workouts import build_named_workouts
 
 
 def _build_with_comment_analysis(raw: list[dict]) -> None:
-    comments = list(fetch_all_comments(pause=0.0, include_content=False))
+    print("[etl] Fetching comments (metadata-only) for analytics…")
+    comments = list(fetch_all_comments(pause=0.0, include_content=False, log_progress=True, log_every_pages=25))
+    print(f"[etl] Fetched {len(comments)} comments; aggregating…")
     counts: Dict[int, int] = {}
     for c in comments:
         pid = c.get("post_id")
@@ -38,9 +40,13 @@ def _build_with_comment_analysis(raw: list[dict]) -> None:
             continue
         pid_int = int(pid)
         counts[pid_int] = counts.get(pid_int, 0) + 1
+    print(f"[etl] Building canonical for {len(raw)} posts…")
     canonical = build_canonical(raw, counts)
+    print("[etl] Building aggregates…")
     aggregates = aggregate(canonical)
+    print("[etl] Building comment analysis…")
     comments_analysis = build_comments_analysis(canonical, comments)
+    print("[etl] Writing artifacts…")
     write_artifacts(canonical, aggregates, comments_analysis=comments_analysis)
 
 

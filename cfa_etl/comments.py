@@ -24,6 +24,8 @@ def fetch_all_comments(
     max_pages: int | None = None,
     pause: float = 0.0,
     include_content: bool = True,
+    log_progress: bool = False,
+    log_every_pages: int = 25,
     session: Optional[requests.Session] = None,
 ) -> Iterable[Dict]:
     """
@@ -38,6 +40,11 @@ def fetch_all_comments(
 
     page = 1
     total_pages: int | None = None
+    fetched = 0
+    started = time.monotonic()
+    if log_progress:
+        mode = "full" if include_content else "metadata-only"
+        print(f"[comments] Fetching {mode} comments via WP API (per_page={per_page})…")
     while True:
         params = {
             "per_page": per_page,
@@ -66,7 +73,14 @@ def fetch_all_comments(
             break
 
         for item in data:
+            fetched += 1
             yield normalize_comment(item, include_content=include_content)
+
+        if log_progress and (page == 1 or page % max(log_every_pages, 1) == 0):
+            elapsed = max(time.monotonic() - started, 0.001)
+            rate = fetched / elapsed
+            tp = total_pages if total_pages is not None else "?"
+            print(f"[comments] page {page}/{tp} · fetched {fetched} · {rate:.1f}/s")
 
         page += 1
         if max_pages is not None and page > max_pages:
@@ -75,6 +89,11 @@ def fetch_all_comments(
             break
         if pause:
             time.sleep(pause)
+
+    if log_progress:
+        elapsed = max(time.monotonic() - started, 0.001)
+        rate = fetched / elapsed
+        print(f"[comments] done · fetched {fetched} in {elapsed:.1f}s · {rate:.1f}/s")
 
 
 def normalize_comment(raw: Dict, *, include_content: bool = True) -> Dict:

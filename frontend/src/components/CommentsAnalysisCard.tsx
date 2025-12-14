@@ -19,7 +19,7 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
     );
   }
 
-  const { monthly, top_posts, top_commenters, total_comments } = analysis;
+  const { monthly, top_commenters, total_comments } = analysis;
 
   const chart = useMemo(() => {
     const width = 900;
@@ -96,21 +96,6 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
                 <span className="muted">{numberWithCommas(hover.count)} comments</span>
               </div>
             )}
-          </div>
-        </div>
-
-        <div className="comments-card__panel">
-          <div className="comments-card__panel-title">Most commented posts</div>
-          <div className="comments-top-posts">
-            {top_posts.map((p) => (
-              <a key={p.id} className="comments-top-posts__item" href={p.link} target="_blank" rel="noreferrer">
-                <div className="comments-top-posts__title">{p.title}</div>
-                <div className="muted">
-                  {p.date || "—"} · {numberWithCommas(p.comment_count)} comments
-                </div>
-                {p.summary && <div className="comments-top-posts__summary">{p.summary}</div>}
-              </a>
-            ))}
           </div>
         </div>
 

@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-from collections import Counter, defaultdict
+from collections import Counter
 from datetime import datetime, timezone
 from typing import Dict, Iterable, List, Tuple
-
-from bs4 import BeautifulSoup
 
 from .movements import extract_rep_scheme
 
