@@ -574,6 +574,15 @@
   color: #e2e8f0;
 }
 
+.hero-card__date-link {
+  text-decoration: none;
+}
+
+.hero-card__date-link:hover {
+  border-color: #60a5fa;
+  color: #bfdbfe;
+}
+
 .hero-card__latest {
   color: #cbd5f5;
   font-size: 13px;
