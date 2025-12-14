@@ -499,6 +499,49 @@
   font-variant-numeric: tabular-nums;
 }
 
+.hero-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.hero-card__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.hero-card__item {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-card__name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.hero-card__count {
+  color: #cbd5f5;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-card__link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.hero-card__link:hover {
+  text-decoration: underline;
+}
+
 .loading,
 .error {
   padding: 48px;

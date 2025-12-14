@@ -83,6 +83,65 @@ function TopPairs({ aggregates }: { aggregates: Aggregates }) {
   );
 }
 
+type HeroConfig = { name: string; aliases: RegExp[] };
+const HERO_WORKOUTS: HeroConfig[] = [
+  { name: "Murph", aliases: [/murph/i] },
+  { name: "DT", aliases: [/^dt$/i, /\bdt\b/i] },
+  { name: "Chad", aliases: [/chad\b/i, /1000\s*step-ups/i] },
+  { name: "Holleyman", aliases: [/holleyman/i] },
+  { name: "Badger", aliases: [/badger/i] },
+  { name: "Nate", aliases: [/^nate$/i, /\bnate\b/i] },
+  { name: "Randy", aliases: [/randy\b/i] },
+  { name: "Griff", aliases: [/griff\b/i] },
+  { name: "Hidalgo", aliases: [/hidalgo/i] },
+  { name: "Jerry", aliases: [/jerry\b/i] },
+  { name: "Bull", aliases: [/bull\b/i] },
+];
+
+function HeroWorkouts({ search }: { search: SearchItem[] }) {
+  const heroes = useMemo(() => {
+    const hits: { name: string; count: number; latestDate?: string; latestLink?: string }[] = [];
+    HERO_WORKOUTS.forEach((hero) => {
+      const matches = search.filter((w) => hero.aliases.some((r) => r.test(w.title)));
+      if (!matches.length) return;
+      const latest = matches.slice().sort((a, b) => (a.date > b.date ? -1 : 1))[0];
+      hits.push({
+        name: hero.name,
+        count: matches.length,
+        latestDate: latest.date,
+        latestLink: latest.link,
+      });
+    });
+    return hits.sort((a, b) => b.count - a.count || (b.latestDate || "").localeCompare(a.latestDate || ""));
+  }, [search]);
+
+  if (!heroes.length) return null;
+
+  return (
+    <div className="card hero-card">
+      <div className="hero-card__header">
+        <div>
+          <h3 className="trend-title">Hero Workouts</h3>
+          <p className="muted">Most common Hero WODs at CFSBK and the most recent time they were programmed.</p>
+        </div>
+      </div>
+      <div className="hero-card__list">
+        {heroes.map((h) => (
+          <div key={h.name} className="hero-card__item">
+            <div className="hero-card__name">{h.name}</div>
+            <div className="hero-card__count">{h.count} runs</div>
+            {h.latestDate && (
+              <a className="hero-card__link" href={h.latestLink} target="_blank" rel="noreferrer">
+                Last on {h.latestDate}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function TopFiveTrends({ aggregates }: { aggregates: Aggregates }) {
   const years = useMemo(() => Object.keys(aggregates.yearly_counts).map(Number).sort((a, b) => a - b).map(String), [aggregates]);
 
@@ -428,6 +487,10 @@ function App() {
 
         <Section id="top5-trends" title="Top 5: Then vs Now">
           <TopFiveTrends aggregates={aggregates} />
+        </Section>
+
+        <Section id="heroes" title="Hero Workouts">
+          <HeroWorkouts search={searchIndex} />
         </Section>
 
         <Section id="pairs" title="Top Pairs">
