@@ -7,6 +7,16 @@ import requests
 
 from .paths import COMMENTS_API
 
+DEFAULT_HEADERS = {
+    # WP Engine blocks the default python-requests UA on some endpoints.
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json,text/plain;q=0.9,*/*;q=0.8",
+}
+
 
 def fetch_all_comments(
     *,
@@ -23,6 +33,7 @@ def fetch_all_comments(
     - Requests minimal fields by normalizing output.
     """
     sess = session or requests.Session()
+    sess.headers.update(DEFAULT_HEADERS)
 
     page = 1
     total_pages: int | None = None
@@ -72,4 +83,3 @@ def normalize_comment(raw: Dict) -> Dict:
         "author_name": raw.get("author_name") or "Anonymous",
         "content_html": rendered,
     }
-

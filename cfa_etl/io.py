@@ -10,6 +10,7 @@ import requests
 
 from scrape_cfsbk import fetch_posts
 
+from .comments import DEFAULT_HEADERS
 from .named_workouts import build_named_workouts
 from .paths import COMMENTS_API, DERIVED_DIR, RAW_DIR
 
@@ -40,6 +41,7 @@ def fetch_comment_counts(posts: List[Dict], pause: float = 0.05) -> Dict[int, in
     Keeps payload small by requesting per_page=1.
     """
     session = requests.Session()
+    session.headers.update(DEFAULT_HEADERS)
     counts: Dict[int, int] = {}
     for post in posts:
         pid = post.get("id")
