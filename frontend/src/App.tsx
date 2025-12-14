@@ -111,8 +111,8 @@ function NamedWorkoutCard({ title, items }: { title: string; items: NamedWorkout
               <div className="hero-card__dates">
                 <div className="muted">Dates run</div>
                 <div className="hero-card__chips">
-                  {h.occurrences.map((occ) => (
-                    <span key={occ.date} className="chip chip--ghost">
+                  {h.occurrences.map((occ, idx) => (
+                    <span key={`${occ.date}-${idx}`} className="chip chip--ghost">
                       {occ.date}
                     </span>
                   ))}
