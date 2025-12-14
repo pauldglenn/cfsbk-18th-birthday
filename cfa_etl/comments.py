@@ -24,8 +24,13 @@ def fetch_all_comments(
     max_pages: int | None = None,
     pause: float = 0.0,
     include_content: bool = True,
+    order: str = "asc",
+    orderby: str = "date",
     log_progress: bool = False,
     log_every_pages: int = 25,
+    max_retries: int = 6,
+    retry_backoff_s: float = 1.0,
+    retry_backoff_max_s: float = 30.0,
     session: Optional[requests.Session] = None,
 ) -> Iterable[Dict]:
     """
@@ -49,17 +54,31 @@ def fetch_all_comments(
         params = {
             "per_page": per_page,
             "page": page,
-            "order": "asc",
-            "orderby": "date",
+            "order": order,
+            "orderby": orderby,
         }
         if not include_content:
             params["_fields"] = "id,post,date,author_name"
-        resp = sess.get(
-            COMMENTS_API,
-            params=params,
-            timeout=30,
-        )
-        if resp.status_code != 200:
+        attempt = 0
+        backoff = retry_backoff_s
+        while True:
+            resp = sess.get(
+                COMMENTS_API,
+                params=params,
+                timeout=30,
+            )
+            if resp.status_code == 200:
+                break
+            if resp.status_code in {429, 500, 502, 503, 504} and attempt < max_retries:
+                attempt += 1
+                sleep_for = min(backoff, retry_backoff_max_s)
+                if log_progress:
+                    print(
+                        f"[comments] page {page} got {resp.status_code}; retry {attempt}/{max_retries} in {sleep_for:.1f}s"
+                    )
+                time.sleep(sleep_for)
+                backoff *= 2
+                continue
             raise RuntimeError(f"Failed to fetch comments page={page}: {resp.status_code}")
 
         if total_pages is None:

@@ -31,7 +31,16 @@ from cfa_etl.named_workouts import build_named_workouts
 
 def _build_with_comment_analysis(raw: list[dict]) -> None:
     print("[etl] Fetching comments (metadata-only) for analytics…")
-    comments = list(fetch_all_comments(pause=0.0, include_content=False, log_progress=True, log_every_pages=25))
+    comments = list(
+        fetch_all_comments(
+            pause=0.0,
+            include_content=False,
+            orderby="id",
+            order="asc",
+            log_progress=True,
+            log_every_pages=25,
+        )
+    )
     print(f"[etl] Fetched {len(comments)} comments; aggregating…")
     counts: Dict[int, int] = {}
     for c in comments:
