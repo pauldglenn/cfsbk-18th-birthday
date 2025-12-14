@@ -29,15 +29,17 @@ export function MovementHeatmap({ movement, aggregates }: { movement: string; ag
         <h3>{movement}</h3>
         <span className="muted">Occurrences by year</span>
       </div>
-      <div className="year-bars">
+      <div className="year-chart" role="list" aria-label="Yearly history">
         {years.map((y, idx) => {
           const val = values[idx];
-          const pct = (val / max) * 100;
+          const pct = Math.max(0, Math.min(100, (val / max) * 100));
           const active = yearOpen === y;
           return (
             <button
               key={y}
-              className={`year-bar ${active ? "year-bar--active" : ""}`}
+              type="button"
+              role="listitem"
+              className={`year-chart__item ${active ? "year-chart__item--active" : ""}`}
               title={`${y}: ${val}`}
               onClick={() => {
                 const next = active ? null : y;
@@ -45,11 +47,11 @@ export function MovementHeatmap({ movement, aggregates }: { movement: string; ag
                 setMonthOpen(null);
               }}
             >
-              <div className="year-bar__year">{y}</div>
-              <div className="year-bar__track" aria-hidden="true">
-                <div className="year-bar__fill" style={{ width: `${pct}%` }} />
+              <div className="year-chart__bar-wrap" aria-hidden="true">
+                <div className="year-chart__bar" style={{ height: `${pct}%` }} />
               </div>
-              <div className="year-bar__value">{val}</div>
+              <div className="year-chart__year">{y}</div>
+              <div className="year-chart__value">{val}</div>
             </button>
           );
         })}
