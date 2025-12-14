@@ -89,6 +89,7 @@ describe("App scrollytelling interactions", () => {
         [];
       return {
         ok: true,
+        headers: { get: () => "application/json" },
         json: async () => body,
       } as Response;
     });

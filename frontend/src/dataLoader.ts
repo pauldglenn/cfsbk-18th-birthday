@@ -7,6 +7,12 @@ async function fetchJson<T>(path: string): Promise<T> {
   if (!res.ok) {
     throw new Error(`Failed to fetch ${path}: ${res.status}`);
   }
+  const contentType = res.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    // Vite dev server can return index.html (200) for missing assets; surface a clearer error.
+    const text = await res.text();
+    throw new Error(`Expected JSON from ${path} but got ${contentType}: ${text.slice(0, 120)}`);
+  }
   return res.json();
 }
 
@@ -15,6 +21,10 @@ async function fetchJsonOptional<T>(path: string): Promise<T | null> {
   if (!res.ok) {
     if (res.status === 404) return null;
     throw new Error(`Failed to fetch ${path}: ${res.status}`);
+  }
+  const contentType = res.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    return null;
   }
   return res.json();
 }
