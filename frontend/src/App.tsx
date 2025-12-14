@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { loadDataBundle } from "./dataLoader";
-import type { Aggregates, SearchItem } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts, NamedWorkout } from "./types";
 
 type Status = "idle" | "loading" | "ready" | "error";
 
@@ -83,89 +83,43 @@ function TopPairs({ aggregates }: { aggregates: Aggregates }) {
   );
 }
 
-type HeroConfig = { name: string; aliases: RegExp[] };
-const HERO_WORKOUTS: HeroConfig[] = [
-  { name: "Murph", aliases: [/murph/i] },
-  { name: "DT", aliases: [/^dt$/i, /\bdt\b/i] },
-  { name: "Chad", aliases: [/chad\b/i, /1000\s*step-ups/i] },
-  { name: "Holleyman", aliases: [/holleyman/i] },
-  { name: "Badger", aliases: [/badger/i] },
-  { name: "Nate", aliases: [/^nate$/i, /\bnate\b/i] },
-  { name: "Randy", aliases: [/randy\b/i] },
-  { name: "Griff", aliases: [/griff\b/i] },
-  { name: "Hidalgo", aliases: [/hidalgo/i] },
-  { name: "Jerry", aliases: [/jerry\b/i] },
-  { name: "Bull", aliases: [/bull\b/i] },
-  { name: "Glen", aliases: [/glen\b/i] },
-  { name: "Josh", aliases: [/josh\b/i] },
-  { name: "Michael", aliases: [/michael\b/i] },
-  { name: "Whitten", aliases: [/whitten/i] },
-  { name: "J.T.", aliases: [/^j\.?t\.?$/i, /\bj\.?t\.?\b/i] },
-  { name: "Lumberjack 20", aliases: [/lumberjack\s*20/i] },
-  { name: "Victoria", aliases: [/victoria\b/i] },
-  { name: "McGhee", aliases: [/mcghee/i] },
-  { name: "Abbate", aliases: [/abbate/i] },
-  { name: "White", aliases: [/^white$/i, /\bwhite\b/i] },
-  // Common benchmark often treated like a hero day at affiliates
-  { name: "Grace", aliases: [/grace\b/i] },
-];
-
-type HeroDetail = { name: string; count: number; latestDate?: string; latestLink?: string; dates: string[] };
-
-function HeroWorkouts({ search }: { search: SearchItem[] }) {
-  const heroes = useMemo(() => {
-    const hits: HeroDetail[] = [];
-    HERO_WORKOUTS.forEach((hero) => {
-      const matches = search.filter((w) => hero.aliases.some((r) => r.test(w.title)));
-      if (!matches.length) return;
-      const sorted = matches.slice().sort((a, b) => (a.date > b.date ? -1 : 1));
-      const latest = sorted[0];
-      hits.push({
-        name: hero.name,
-        count: sorted.length,
-        latestDate: latest.date,
-        latestLink: latest.link,
-        dates: sorted.map((m) => m.date),
-      });
-    });
-    return hits.sort((a, b) => b.count - a.count || (b.latestDate || "").localeCompare(a.latestDate || ""));
-  }, [search]);
-
-  if (!heroes.length) return null;
-
+function NamedWorkoutCard({ title, items }: { title: string; items: NamedWorkout[] | undefined }) {
+  if (!items || !items.length) return null;
   return (
     <div className="card hero-card">
       <div className="hero-card__header">
         <div>
-          <h3 className="trend-title">Hero Workouts</h3>
-          <p className="muted">Most common Hero WODs at CFSBK and the most recent time they were programmed.</p>
+          <h3 className="trend-title">{title}</h3>
+          <p className="muted">Tap to see the workout and when it was programmed.</p>
         </div>
       </div>
       <div className="hero-card__list">
-        {heroes.map((h) => (
+        {items.map((h) => (
           <details key={h.name} className="hero-card__item">
             <summary className="hero-card__summary">
               <div className="hero-card__name">{h.name}</div>
               <div className="hero-card__count">{h.count} runs</div>
-              {h.latestDate && (
-                <span className="hero-card__latest">
-                  Last on {h.latestDate}
-                </span>
-              )}
+              {h.latest_date && <span className="hero-card__latest">Last on {h.latest_date}</span>}
             </summary>
             <div className="hero-card__body">
+              {h.occurrences.length > 0 && (
+                <div className="hero-card__workout">
+                  <div className="muted">Workout</div>
+                  <div>{h.occurrences[0].summary || "No summary available"}</div>
+                </div>
+              )}
               <div className="hero-card__dates">
                 <div className="muted">Dates run</div>
                 <div className="hero-card__chips">
-                  {h.dates.map((d) => (
-                    <span key={d} className="chip chip--ghost">
-                      {d}
+                  {h.occurrences.map((occ) => (
+                    <span key={occ.date} className="chip chip--ghost">
+                      {occ.date}
                     </span>
                   ))}
                 </div>
               </div>
-              {h.latestLink && (
-                <a className="hero-card__link" href={h.latestLink} target="_blank" rel="noreferrer">
+              {h.latest_link && (
+                <a className="hero-card__link" href={h.latest_link} target="_blank" rel="noreferrer">
                   View most recent post
                 </a>
               )}
@@ -470,14 +424,16 @@ function App() {
   const [status, setStatus] = useState<Status>("idle");
   const [aggregates, setAggregates] = useState<Aggregates | null>(null);
   const [searchIndex, setSearchIndex] = useState<SearchItem[]>([]);
+  const [namedWorkouts, setNamedWorkouts] = useState<NamedWorkouts | null>(null);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setStatus("loading");
     loadDataBundle()
-      .then(({ aggregates, search }) => {
+      .then(({ aggregates, search, namedWorkouts }) => {
         setAggregates(aggregates);
         setSearchIndex(search);
+        setNamedWorkouts(namedWorkouts);
         setStatus("ready");
       })
       .catch((err) => {
@@ -492,7 +448,7 @@ function App() {
   if (status === "error") {
     return <div className="error">Error: {error}</div>;
   }
-  if (!aggregates) return null;
+  if (!aggregates || !namedWorkouts) return null;
 
   const total = Object.values(aggregates.yearly_counts).reduce((a, b) => a + b, 0);
 
@@ -525,7 +481,11 @@ function App() {
         </Section>
 
         <Section id="heroes" title="Hero Workouts">
-          <HeroWorkouts search={searchIndex} />
+          <NamedWorkoutCard title="Hero Workouts" items={namedWorkouts.heroes} />
+        </Section>
+
+        <Section id="girls" title="The Girls">
+          <NamedWorkoutCard title="The Girls" items={namedWorkouts.girls} />
         </Section>
 
         <Section id="pairs" title="Top Pairs">

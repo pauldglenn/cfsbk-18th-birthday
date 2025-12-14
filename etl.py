@@ -29,6 +29,18 @@ RAW_DIR = ROOT / "data" / "raw"
 DERIVED_DIR = ROOT / "data" / "derived"
 CONFIG_DIR = ROOT / "config"
 COMMENTS_API = "https://crossfitsouthbrooklyn.com/wp-json/wp/v2/comments"
+HERO_NAMES = [
+    "murph", "dt", "chad", "holleyman", "badger", "nate", "randy", "griff", "hidalgo", "jerry", "bull",
+    "glen", "josh", "michael", "whitten", "jt", "lumberjack 20", "victoria", "mcghee", "abbate", "white",
+    "kalsu", "manion", "morrison", "tommy v", "coe", "wittman", "mccluskey", "nick", "small", "roy",
+    "gator", "garrett", "carse", "riley", "danny", "lorenza", "zeitoun", "murphy", "bo", "ship",
+    "hansel", "jared", "peggy", "rhodesian", "tk", "tyler", "wood", "ryan", "camelot", "helm", "brenton",
+]
+GIRL_NAMES = [
+    "angie", "barbara", "chelsea", "diane", "elizabeth", "fran", "helen", "isabel", "jackie", "karen",
+    "linda", "mary", "nancy", "annie", "christine", "eva", "gwen", "hope", "nicole", "cindy", "kelly",
+    "lynne", "amanda", "maggie", "lila", "ingrid", "lyla", "grace", "tiff", "vera", "ariane",
+]
 
 
 def ensure_dirs() -> None:
@@ -435,6 +447,51 @@ def itertools_pairs(seq: List[str]):
     return itertools.combinations(seq, 2)
 
 
+def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
+    hero_hits = defaultdict(list)
+    girl_hits = defaultdict(list)
+
+    def match_names(names: List[str], text: str) -> List[str]:
+        hits = []
+        for name in names:
+            if name in text:
+                hits.append(name)
+        return hits
+
+    for item in canonical:
+        text = ((item.get("title") or "") + " " + " ".join((c.get("details") or "") for c in item.get("components") or [])).lower()
+        matches_hero = match_names(HERO_NAMES, text)
+        matches_girl = match_names(GIRL_NAMES, text)
+        summary = extract_rep_scheme(item.get("components") or [])
+        entry = {
+            "date": item.get("date"),
+            "title": item.get("title"),
+            "link": item.get("link"),
+            "summary": summary,
+        }
+        for m in matches_hero:
+            hero_hits[m].append(entry)
+        for m in matches_girl:
+            girl_hits[m].append(entry)
+
+    def build_list(hit_map: Dict[str, List[Dict]]) -> List[Dict]:
+        data = []
+        for name, entries in hit_map.items():
+            entries_sorted = sorted(entries, key=lambda e: e.get("date") or "", reverse=True)
+            data.append(
+                {
+                    "name": name.title(),
+                    "count": len(entries_sorted),
+                    "latest_date": entries_sorted[0].get("date"),
+                    "latest_link": entries_sorted[0].get("link"),
+                    "occurrences": entries_sorted,
+                }
+            )
+        return sorted(data, key=lambda x: (-x["count"], x["name"]))
+
+    return {"heroes": build_list(hero_hits), "girls": build_list(girl_hits)}
+
+
 def write_artifacts(canonical: List[Dict], aggregates: Dict[str, Dict]) -> None:
     ensure_dirs()
     canonical_path = DERIVED_DIR / "workouts.jsonl"
@@ -470,6 +527,10 @@ def write_artifacts(canonical: List[Dict], aggregates: Dict[str, Dict]) -> None:
     }
     with version_path.open("w", encoding="utf-8") as f:
         json.dump(version, f, indent=2)
+    # Named workout collections (Hero WODs + Girls)
+    named_path = DERIVED_DIR / "named_workouts.json"
+    with named_path.open("w", encoding="utf-8") as f:
+        json.dump(build_named_workouts(canonical), f, ensure_ascii=False, indent=2)
     print(f"Wrote canonical -> {canonical_path}")
     print(f"Wrote aggregates -> {DERIVED_DIR}")
 

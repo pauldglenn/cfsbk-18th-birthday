@@ -37,6 +37,11 @@ const mockSearch = [
   },
 ];
 
+const mockNamed = {
+  heroes: [],
+  girls: [],
+};
+
 describe("App scrollytelling interactions", () => {
   let fetchSpy: any;
 
@@ -53,6 +58,7 @@ describe("App scrollytelling interactions", () => {
         url.includes("movement_monthly") ? mockAggregates.movement_monthly :
         url.includes("movement_calendar") ? mockAggregates.movement_calendar :
         url.includes("search_index") ? mockSearch :
+        url.includes("named_workouts") ? mockNamed :
         [];
       return {
         ok: true,

@@ -25,8 +25,23 @@ export type SearchItem = {
   cycle_info: string[];
 };
 
+export type NamedWorkoutOccurrence = { date: string; title: string; link: string; summary: string };
+export type NamedWorkout = {
+  name: string;
+  count: number;
+  latest_date?: string;
+  latest_link?: string;
+  occurrences: NamedWorkoutOccurrence[];
+};
+
+export type NamedWorkouts = {
+  heroes: NamedWorkout[];
+  girls: NamedWorkout[];
+};
+
 export type DataBundle = {
   version: string;
   aggregates: Aggregates;
   search: SearchItem[];
+  namedWorkouts: NamedWorkouts;
 };

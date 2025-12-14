@@ -1,4 +1,4 @@
-import type { Aggregates, SearchItem } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts } from "./types";
 
 const BASE = `${import.meta.env.BASE_URL}data/derived`;
 
@@ -41,7 +41,15 @@ export async function loadSearchIndex(): Promise<SearchItem[]> {
   return fetchJson(`${BASE}/search_index.json`);
 }
 
+export async function loadNamedWorkouts(): Promise<NamedWorkouts> {
+  return fetchJson(`${BASE}/named_workouts.json`);
+}
+
 export async function loadDataBundle() {
-  const [aggregates, search] = await Promise.all([loadAggregates(), loadSearchIndex()]);
-  return { aggregates, search };
+  const [aggregates, search, namedWorkouts] = await Promise.all([
+    loadAggregates(),
+    loadSearchIndex(),
+    loadNamedWorkouts(),
+  ]);
+  return { aggregates, search, namedWorkouts };
 }
