@@ -5,13 +5,16 @@ on:
   schedule:
     - cron: "0 6 * * *" # daily at 06:00 UTC
 
+permissions:
+  contents: write
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -45,6 +48,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/derived data/raw/latest.jsonl
           if git diff --cached --quiet; then
             echo "No data changes."
