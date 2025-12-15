@@ -880,6 +880,11 @@
     "count": 33
   },
   {
+    "a": "push press",
+    "b": "toes-to-bar",
+    "count": 33
+  },
+  {
     "a": "kettlebell swing",
     "b": "snatch",
     "count": 32
@@ -912,11 +917,6 @@
   {
     "a": "overhead squat",
     "b": "run",
-    "count": 32
-  },
-  {
-    "a": "push press",
-    "b": "toes-to-bar",
     "count": 32
   },
   {
