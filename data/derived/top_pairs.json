@@ -357,7 +357,7 @@
   {
     "a": "bench press",
     "b": "row (erg)",
-    "count": 65
+    "count": 66
   },
   {
     "a": "burpee",
@@ -800,6 +800,11 @@
     "count": 36
   },
   {
+    "a": "jerk (split/push)",
+    "b": "row (erg)",
+    "count": 36
+  },
+  {
     "a": "back squat",
     "b": "row (weighted)",
     "count": 36
@@ -812,11 +817,6 @@
   {
     "a": "box jump",
     "b": "toes-to-bar",
-    "count": 35
-  },
-  {
-    "a": "jerk (split/push)",
-    "b": "row (erg)",
     "count": 35
   },
   {
