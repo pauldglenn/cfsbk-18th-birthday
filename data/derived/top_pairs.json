@@ -30,13 +30,13 @@
     "count": 155
   },
   {
-    "a": "clean",
-    "b": "front squat",
-    "count": 151
-  },
-  {
     "a": "muscle-up",
     "b": "pull-up",
+    "count": 152
+  },
+  {
+    "a": "clean",
+    "b": "front squat",
     "count": 151
   },
   {
@@ -237,7 +237,7 @@
   {
     "a": "double under",
     "b": "pull-up",
-    "count": 77
+    "count": 78
   },
   {
     "a": "deadlift",
