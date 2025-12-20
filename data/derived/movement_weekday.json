@@ -1,13 +1,4 @@
 {
-  "kettlebell swing": {
-    "Friday": 36,
-    "Sunday": 54,
-    "Wednesday": 41,
-    "Monday": 47,
-    "Saturday": 67,
-    "Thursday": 62,
-    "Tuesday": 21
-  },
   "double under": {
     "Friday": 42,
     "Saturday": 43,
@@ -16,6 +7,15 @@
     "Thursday": 56,
     "Monday": 49,
     "Tuesday": 38
+  },
+  "kettlebell swing": {
+    "Friday": 36,
+    "Sunday": 54,
+    "Wednesday": 41,
+    "Monday": 47,
+    "Saturday": 67,
+    "Thursday": 62,
+    "Tuesday": 21
   },
   "thruster": {
     "Friday": 13,
@@ -26,6 +26,15 @@
     "Thursday": 32,
     "Tuesday": 4
   },
+  "burpee": {
+    "Saturday": 147,
+    "Friday": 49,
+    "Sunday": 81,
+    "Tuesday": 43,
+    "Wednesday": 59,
+    "Monday": 54,
+    "Thursday": 104
+  },
   "box jump": {
     "Saturday": 85,
     "Sunday": 64,
@@ -34,15 +43,6 @@
     "Monday": 37,
     "Thursday": 56,
     "Friday": 36
-  },
-  "burpee": {
-    "Saturday": 146,
-    "Friday": 49,
-    "Sunday": 81,
-    "Tuesday": 43,
-    "Wednesday": 59,
-    "Monday": 54,
-    "Thursday": 104
   },
   "deadlift": {
     "Tuesday": 85,
@@ -53,15 +53,6 @@
     "Wednesday": 103,
     "Friday": 90
   },
-  "clean": {
-    "Friday": 64,
-    "Tuesday": 71,
-    "Sunday": 180,
-    "Wednesday": 89,
-    "Saturday": 170,
-    "Thursday": 230,
-    "Monday": 138
-  },
   "push-up": {
     "Friday": 43,
     "Saturday": 123,
@@ -70,6 +61,15 @@
     "Sunday": 91,
     "Monday": 133,
     "Wednesday": 94
+  },
+  "clean": {
+    "Friday": 64,
+    "Tuesday": 71,
+    "Sunday": 180,
+    "Wednesday": 89,
+    "Saturday": 170,
+    "Thursday": 230,
+    "Monday": 138
   },
   "lunge": {
     "Saturday": 48,
@@ -168,15 +168,6 @@
     "Thursday": 6,
     "Friday": 10
   },
-  "front squat": {
-    "Saturday": 149,
-    "Wednesday": 135,
-    "Friday": 37,
-    "Sunday": 59,
-    "Monday": 54,
-    "Thursday": 50,
-    "Tuesday": 33
-  },
   "row (weighted)": {
     "Saturday": 16,
     "Thursday": 22,
@@ -186,13 +177,22 @@
     "Sunday": 26,
     "Friday": 38
   },
+  "front squat": {
+    "Saturday": 149,
+    "Wednesday": 135,
+    "Friday": 37,
+    "Sunday": 59,
+    "Monday": 54,
+    "Thursday": 50,
+    "Tuesday": 33
+  },
   "wall ball": {
     "Wednesday": 38,
     "Monday": 28,
     "Sunday": 32,
     "Thursday": 32,
     "Friday": 17,
-    "Saturday": 72,
+    "Saturday": 73,
     "Tuesday": 12
   },
   "row (erg)": {
@@ -268,7 +268,7 @@
     "Monday": 55,
     "Wednesday": 58,
     "Tuesday": 64,
-    "Saturday": 71,
+    "Saturday": 72,
     "Thursday": 68,
     "Friday": 84,
     "Sunday": 62

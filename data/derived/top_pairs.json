@@ -200,6 +200,11 @@
     "count": 85
   },
   {
+    "a": "bike (assault/echo)",
+    "b": "burpee",
+    "count": 84
+  },
+  {
     "a": "box jump",
     "b": "kettlebell swing",
     "count": 83
@@ -207,11 +212,6 @@
   {
     "a": "burpee",
     "b": "row (erg)",
-    "count": 83
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "burpee",
     "count": 83
   },
   {
@@ -362,7 +362,7 @@
   {
     "a": "burpee",
     "b": "wall ball",
-    "count": 64
+    "count": 65
   },
   {
     "a": "box jump",
@@ -805,6 +805,11 @@
     "count": 36
   },
   {
+    "a": "bike (assault/echo)",
+    "b": "wall ball",
+    "count": 36
+  },
+  {
     "a": "back squat",
     "b": "row (weighted)",
     "count": 36
@@ -832,11 +837,6 @@
   {
     "a": "muscle-up",
     "b": "row (erg)",
-    "count": 35
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "wall ball",
     "count": 35
   },
   {
