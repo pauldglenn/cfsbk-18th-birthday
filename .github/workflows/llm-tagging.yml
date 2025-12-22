@@ -50,16 +50,12 @@ jobs:
           if [ ! -f data/raw/latest.jsonl ]; then
             echo "Missing data/raw/latest.jsonl; fetching posts…"
             uv run python etl.py fetch
-            python - <<'PY'
-            import shutil
-            import pathlib
-
-            raw_dir = pathlib.Path("data/raw")
-            files = sorted(raw_dir.glob("posts-*.jsonl"), reverse=True)
-            if not files:
-                raise SystemExit("No posts-*.jsonl files found after fetch")
-            shutil.copy(files[0], raw_dir / "latest.jsonl")
-            PY
+            latest="$(ls -1t data/raw/posts-*.jsonl 2>/dev/null | head -n 1)"
+            if [ -z "${latest}" ]; then
+              echo "No posts-*.jsonl files found after fetch"
+              exit 1
+            fi
+            cp "${latest}" data/raw/latest.jsonl
           fi
 
           if [ ! -f data/derived/search_index.json ]; then
