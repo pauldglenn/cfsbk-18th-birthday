@@ -2,1001 +2,1001 @@
   {
     "a": "clean",
     "b": "jerk (split/push)",
-    "count": 372
+    "count": 490
   },
   {
     "a": "pull-up",
     "b": "push-up",
-    "count": 204
+    "count": 327
   },
   {
-    "a": "handstand push-up",
-    "b": "push-up",
-    "count": 185
+    "a": "pull-up",
+    "b": "run",
+    "count": 303
   },
   {
     "a": "clean",
     "b": "deadlift",
-    "count": 166
-  },
-  {
-    "a": "pull-up",
-    "b": "run",
-    "count": 155
-  },
-  {
-    "a": "deadlift",
-    "b": "push-up",
-    "count": 154
-  },
-  {
-    "a": "clean",
-    "b": "front squat",
-    "count": 151
-  },
-  {
-    "a": "muscle-up",
-    "b": "pull-up",
-    "count": 151
-  },
-  {
-    "a": "burpee",
-    "b": "pull-up",
-    "count": 140
-  },
-  {
-    "a": "overhead squat",
-    "b": "snatch",
-    "count": 140
-  },
-  {
-    "a": "clean",
-    "b": "push-up",
-    "count": 139
-  },
-  {
-    "a": "clean",
-    "b": "pull-up",
-    "count": 128
-  },
-  {
-    "a": "clean",
-    "b": "run",
-    "count": 125
-  },
-  {
-    "a": "push-up",
-    "b": "run",
-    "count": 125
+    "count": 300
   },
   {
     "a": "burpee",
     "b": "clean",
-    "count": 122
+    "count": 292
+  },
+  {
+    "a": "clean",
+    "b": "run",
+    "count": 291
+  },
+  {
+    "a": "handstand push-up",
+    "b": "push-up",
+    "count": 276
+  },
+  {
+    "a": "clean",
+    "b": "pull-up",
+    "count": 275
+  },
+  {
+    "a": "deadlift",
+    "b": "push-up",
+    "count": 271
+  },
+  {
+    "a": "clean",
+    "b": "push-up",
+    "count": 263
   },
   {
     "a": "burpee",
+    "b": "deadlift",
+    "count": 259
+  },
+  {
+    "a": "burpee",
+    "b": "pull-up",
+    "count": 256
+  },
+  {
+    "a": "deadlift",
+    "b": "run",
+    "count": 249
+  },
+  {
+    "a": "muscle-up",
+    "b": "pull-up",
+    "count": 247
+  },
+  {
+    "a": "clean",
+    "b": "front squat",
+    "count": 240
+  },
+  {
+    "a": "push-up",
+    "b": "run",
+    "count": 238
+  },
+  {
+    "a": "burpee",
+    "b": "run",
+    "count": 232
+  },
+  {
+    "a": "pull-up",
+    "b": "snatch",
+    "count": 224
+  },
+  {
+    "a": "deadlift",
+    "b": "pull-up",
+    "count": 224
+  },
+  {
+    "a": "deadlift",
+    "b": "snatch",
+    "count": 219
+  },
+  {
+    "a": "clean",
+    "b": "snatch",
+    "count": 206
+  },
+  {
+    "a": "run",
+    "b": "snatch",
+    "count": 205
+  },
+  {
+    "a": "back squat",
+    "b": "deadlift",
+    "count": 200
+  },
+  {
+    "a": "burpee",
+    "b": "snatch",
+    "count": 198
+  },
+  {
+    "a": "burpee",
+    "b": "kettlebell swing",
+    "count": 198
+  },
+  {
+    "a": "clean",
+    "b": "double under",
+    "count": 196
+  },
+  {
+    "a": "pull-up",
+    "b": "row (erg)",
+    "count": 195
+  },
+  {
+    "a": "pull-up",
+    "b": "thruster",
+    "count": 192
+  },
+  {
+    "a": "burpee",
+    "b": "push-up",
+    "count": 192
+  },
+  {
+    "a": "box jump",
+    "b": "burpee",
+    "count": 191
+  },
+  {
+    "a": "box jump",
+    "b": "deadlift",
+    "count": 187
+  },
+  {
+    "a": "overhead squat",
+    "b": "snatch",
+    "count": 183
+  },
+  {
+    "a": "back squat",
+    "b": "run",
+    "count": 182
+  },
+  {
+    "a": "row (erg)",
+    "b": "run",
+    "count": 181
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "pull-up",
+    "count": 180
+  },
+  {
+    "a": "double under",
+    "b": "pull-up",
+    "count": 178
+  },
+  {
+    "a": "deadlift",
+    "b": "double under",
+    "count": 178
+  },
+  {
+    "a": "burpee",
+    "b": "row (erg)",
+    "count": 175
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "push-up",
+    "count": 174
+  },
+  {
+    "a": "back squat",
+    "b": "pull-up",
+    "count": 173
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "run",
+    "count": 171
+  },
+  {
+    "a": "clean",
+    "b": "row (erg)",
+    "count": 170
+  },
+  {
+    "a": "deadlift",
+    "b": "jerk (split/push)",
+    "count": 165
+  },
+  {
+    "a": "back squat",
+    "b": "clean",
+    "count": 163
+  },
+  {
+    "a": "deadlift",
+    "b": "row (erg)",
+    "count": 163
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "run",
+    "count": 161
+  },
+  {
+    "a": "box jump",
+    "b": "kettlebell swing",
+    "count": 158
+  },
+  {
+    "a": "back squat",
+    "b": "front squat",
+    "count": 158
+  },
+  {
+    "a": "push-up",
+    "b": "snatch",
+    "count": 156
+  },
+  {
+    "a": "deadlift",
+    "b": "front squat",
+    "count": 156
+  },
+  {
+    "a": "clean",
+    "b": "push press",
+    "count": 153
+  },
+  {
+    "a": "back squat",
+    "b": "snatch",
+    "count": 152
+  },
+  {
+    "a": "push-up",
+    "b": "sit-up",
+    "count": 151
+  },
+  {
+    "a": "double under",
+    "b": "snatch",
+    "count": 150
+  },
+  {
+    "a": "burpee",
+    "b": "double under",
+    "count": 149
+  },
+  {
+    "a": "front squat",
+    "b": "pull-up",
+    "count": 147
+  },
+  {
+    "a": "jerk (split/push)",
+    "b": "run",
+    "count": 143
+  },
+  {
+    "a": "back squat",
+    "b": "burpee",
+    "count": 142
+  },
+  {
+    "a": "double under",
+    "b": "push-up",
+    "count": 141
+  },
+  {
+    "a": "bench press",
+    "b": "deadlift",
+    "count": 140
+  },
+  {
+    "a": "burpee",
+    "b": "jerk (split/push)",
+    "count": 139
+  },
+  {
+    "a": "front squat",
+    "b": "run",
+    "count": 139
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "pull-up",
+    "count": 139
+  },
+  {
+    "a": "jerk (split/push)",
+    "b": "pull-up",
+    "count": 138
+  },
+  {
+    "a": "push-up",
+    "b": "row (erg)",
+    "count": 138
+  },
+  {
+    "a": "box jump",
+    "b": "pull-up",
+    "count": 135
+  },
+  {
+    "a": "clean",
+    "b": "kettlebell swing",
+    "count": 135
+  },
+  {
+    "a": "back squat",
+    "b": "double under",
+    "count": 135
+  },
+  {
+    "a": "lunge",
+    "b": "push-up",
+    "count": 134
+  },
+  {
+    "a": "deadlift",
+    "b": "kettlebell swing",
+    "count": 134
+  },
+  {
+    "a": "burpee",
+    "b": "thruster",
+    "count": 133
+  },
+  {
+    "a": "back squat",
+    "b": "row (erg)",
+    "count": 132
+  },
+  {
+    "a": "front squat",
+    "b": "push-up",
+    "count": 132
+  },
+  {
+    "a": "box jump",
+    "b": "row (erg)",
+    "count": 132
+  },
+  {
+    "a": "back squat",
+    "b": "push-up",
+    "count": 130
+  },
+  {
+    "a": "clean",
+    "b": "muscle-up",
+    "count": 128
+  },
+  {
+    "a": "deadlift",
+    "b": "push press",
+    "count": 128
+  },
+  {
+    "a": "deadlift",
+    "b": "sit-up",
+    "count": 127
+  },
+  {
+    "a": "pull-up",
+    "b": "push press",
+    "count": 127
+  },
+  {
+    "a": "box jump",
+    "b": "clean",
+    "count": 127
+  },
+  {
+    "a": "bench press",
+    "b": "push-up",
+    "count": 126
+  },
+  {
+    "a": "muscle-up",
+    "b": "push-up",
+    "count": 124
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "clean",
+    "count": 124
+  },
+  {
+    "a": "clean",
+    "b": "thruster",
+    "count": 121
+  },
+  {
+    "a": "box jump",
     "b": "push-up",
     "count": 120
   },
   {
-    "a": "pull-up",
-    "b": "thruster",
-    "count": 118
-  },
-  {
-    "a": "bike (assault/echo)",
+    "a": "box jump",
     "b": "run",
-    "count": 118
+    "count": 120
   },
   {
     "a": "burpee",
+    "b": "front squat",
+    "count": 120
+  },
+  {
+    "a": "box jump",
+    "b": "snatch",
+    "count": 119
+  },
+  {
+    "a": "bench press",
+    "b": "run",
+    "count": 117
+  },
+  {
+    "a": "bench press",
+    "b": "pull-up",
+    "count": 117
+  },
+  {
+    "a": "box jump",
+    "b": "wall ball",
+    "count": 115
+  },
+  {
+    "a": "jerk (split/push)",
+    "b": "snatch",
+    "count": 115
+  },
+  {
+    "a": "row (erg)",
+    "b": "wall ball",
+    "count": 115
+  },
+  {
+    "a": "run",
+    "b": "wall ball",
+    "count": 114
+  },
+  {
+    "a": "bike (assault/echo)",
     "b": "deadlift",
     "count": 114
   },
   {
-    "a": "deadlift",
-    "b": "run",
+    "a": "clean",
+    "b": "sit-up",
     "count": 113
-  },
-  {
-    "a": "deadlift",
-    "b": "pull-up",
-    "count": 111
-  },
-  {
-    "a": "clean",
-    "b": "push press",
-    "count": 110
-  },
-  {
-    "a": "back squat",
-    "b": "front squat",
-    "count": 110
-  },
-  {
-    "a": "pull-up",
-    "b": "row (erg)",
-    "count": 107
-  },
-  {
-    "a": "deadlift",
-    "b": "snatch",
-    "count": 103
-  },
-  {
-    "a": "box jump",
-    "b": "burpee",
-    "count": 101
-  },
-  {
-    "a": "burpee",
-    "b": "run",
-    "count": 99
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "pull-up",
-    "count": 99
-  },
-  {
-    "a": "back squat",
-    "b": "deadlift",
-    "count": 97
-  },
-  {
-    "a": "burpee",
-    "b": "kettlebell swing",
-    "count": 97
-  },
-  {
-    "a": "bench press",
-    "b": "deadlift",
-    "count": 97
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "push-up",
-    "count": 96
-  },
-  {
-    "a": "box jump",
-    "b": "deadlift",
-    "count": 94
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "pull-up",
-    "count": 94
-  },
-  {
-    "a": "clean",
-    "b": "snatch",
-    "count": 93
-  },
-  {
-    "a": "row (erg)",
-    "b": "run",
-    "count": 91
-  },
-  {
-    "a": "burpee",
-    "b": "snatch",
-    "count": 89
-  },
-  {
-    "a": "jerk (split/push)",
-    "b": "push press",
-    "count": 87
-  },
-  {
-    "a": "pull-up",
-    "b": "snatch",
-    "count": 87
-  },
-  {
-    "a": "deadlift",
-    "b": "jerk (split/push)",
-    "count": 85
-  },
-  {
-    "a": "box jump",
-    "b": "kettlebell swing",
-    "count": 83
-  },
-  {
-    "a": "burpee",
-    "b": "row (erg)",
-    "count": 83
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "burpee",
-    "count": 83
-  },
-  {
-    "a": "deadlift",
-    "b": "double under",
-    "count": 81
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "clean",
-    "count": 80
-  },
-  {
-    "a": "bench press",
-    "b": "push-up",
-    "count": 79
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "deadlift",
-    "count": 79
-  },
-  {
-    "a": "double under",
-    "b": "pull-up",
-    "count": 77
-  },
-  {
-    "a": "deadlift",
-    "b": "row (erg)",
-    "count": 76
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "push-up",
-    "count": 76
-  },
-  {
-    "a": "back squat",
-    "b": "snatch",
-    "count": 75
-  },
-  {
-    "a": "front squat",
-    "b": "jerk (split/push)",
-    "count": 75
-  },
-  {
-    "a": "deadlift",
-    "b": "push press",
-    "count": 75
-  },
-  {
-    "a": "box jump",
-    "b": "pull-up",
-    "count": 74
-  },
-  {
-    "a": "lunge",
-    "b": "push-up",
-    "count": 71
-  },
-  {
-    "a": "burpee",
-    "b": "thruster",
-    "count": 71
-  },
-  {
-    "a": "back squat",
-    "b": "clean",
-    "count": 70
-  },
-  {
-    "a": "push-up",
-    "b": "snatch",
-    "count": 69
-  },
-  {
-    "a": "run",
-    "b": "snatch",
-    "count": 69
-  },
-  {
-    "a": "box jump",
-    "b": "wall ball",
-    "count": 69
-  },
-  {
-    "a": "pull-up",
-    "b": "push press",
-    "count": 69
-  },
-  {
-    "a": "deadlift",
-    "b": "handstand push-up",
-    "count": 69
-  },
-  {
-    "a": "clean",
-    "b": "row (erg)",
-    "count": 69
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "run",
-    "count": 68
-  },
-  {
-    "a": "deadlift",
-    "b": "front squat",
-    "count": 68
-  },
-  {
-    "a": "box jump",
-    "b": "row (erg)",
-    "count": 68
-  },
-  {
-    "a": "row (erg)",
-    "b": "wall ball",
-    "count": 68
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "row (erg)",
-    "count": 68
-  },
-  {
-    "a": "handstand push-up",
-    "b": "pull-up",
-    "count": 66
-  },
-  {
-    "a": "muscle-up",
-    "b": "push-up",
-    "count": 66
-  },
-  {
-    "a": "push-up",
-    "b": "row (erg)",
-    "count": 66
-  },
-  {
-    "a": "bench press",
-    "b": "row (erg)",
-    "count": 65
-  },
-  {
-    "a": "burpee",
-    "b": "wall ball",
-    "count": 64
-  },
-  {
-    "a": "box jump",
-    "b": "push-up",
-    "count": 63
-  },
-  {
-    "a": "back squat",
-    "b": "bench press",
-    "count": 63
-  },
-  {
-    "a": "box jump",
-    "b": "push press",
-    "count": 62
-  },
-  {
-    "a": "back squat",
-    "b": "run",
-    "count": 62
-  },
-  {
-    "a": "bench press",
-    "b": "pull-up",
-    "count": 62
-  },
-  {
-    "a": "lunge",
-    "b": "pull-up",
-    "count": 61
-  },
-  {
-    "a": "front squat",
-    "b": "pull-up",
-    "count": 61
-  },
-  {
-    "a": "run",
-    "b": "wall ball",
-    "count": 61
-  },
-  {
-    "a": "push-up",
-    "b": "row (weighted)",
-    "count": 61
-  },
-  {
-    "a": "burpee",
-    "b": "double under",
-    "count": 60
-  },
-  {
-    "a": "clean",
-    "b": "double under",
-    "count": 60
-  },
-  {
-    "a": "double under",
-    "b": "push-up",
-    "count": 60
-  },
-  {
-    "a": "bench press",
-    "b": "row (weighted)",
-    "count": 60
-  },
-  {
-    "a": "dumbbell snatch",
-    "b": "snatch",
-    "count": 59
-  },
-  {
-    "a": "bench press",
-    "b": "bike (assault/echo)",
-    "count": 59
-  },
-  {
-    "a": "push press",
-    "b": "push-up",
-    "count": 57
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "snatch",
-    "count": 57
-  },
-  {
-    "a": "burpee",
-    "b": "lunge",
-    "count": 56
-  },
-  {
-    "a": "lunge",
-    "b": "run",
-    "count": 56
-  },
-  {
-    "a": "clean",
-    "b": "muscle-up",
-    "count": 56
-  },
-  {
-    "a": "back squat",
-    "b": "pull-up",
-    "count": 56
-  },
-  {
-    "a": "deadlift",
-    "b": "row (weighted)",
-    "count": 56
   },
   {
     "a": "dumbbell thruster",
     "b": "thruster",
-    "count": 55
+    "count": 113
+  },
+  {
+    "a": "double under",
+    "b": "run",
+    "count": 112
+  },
+  {
+    "a": "burpee",
+    "b": "wall ball",
+    "count": 112
   },
   {
     "a": "bike (assault/echo)",
-    "b": "box jump",
-    "count": 55
+    "b": "burpee",
+    "count": 112
   },
   {
-    "a": "push press",
+    "a": "double under",
+    "b": "kettlebell swing",
+    "count": 111
+  },
+  {
+    "a": "front squat",
     "b": "snatch",
-    "count": 54
+    "count": 111
   },
   {
     "a": "bench press",
-    "b": "run",
-    "count": 54
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "push press",
-    "count": 54
+    "b": "row (erg)",
+    "count": 111
   },
   {
     "a": "clean",
-    "b": "thruster",
-    "count": 53
+    "b": "toes-to-bar",
+    "count": 111
+  },
+  {
+    "a": "jerk (split/push)",
+    "b": "push press",
+    "count": 110
+  },
+  {
+    "a": "lunge",
+    "b": "pull-up",
+    "count": 109
+  },
+  {
+    "a": "front squat",
+    "b": "jerk (split/push)",
+    "count": 109
+  },
+  {
+    "a": "back squat",
+    "b": "kettlebell swing",
+    "count": 109
+  },
+  {
+    "a": "deadlift",
+    "b": "handstand push-up",
+    "count": 108
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "row (erg)",
+    "count": 108
   },
   {
     "a": "bench press",
-    "b": "burpee",
-    "count": 53
+    "b": "clean",
+    "count": 107
   },
   {
-    "a": "pull-up",
-    "b": "wall ball",
-    "count": 52
-  },
-  {
-    "a": "box jump",
-    "b": "snatch",
-    "count": 52
+    "a": "lunge",
+    "b": "run",
+    "count": 105
   },
   {
     "a": "row (erg)",
     "b": "thruster",
-    "count": 51
+    "count": 105
   },
   {
-    "a": "front squat",
-    "b": "push-up",
-    "count": 51
+    "a": "burpee",
+    "b": "muscle-up",
+    "count": 105
   },
   {
-    "a": "push press",
-    "b": "run",
-    "count": 50
-  },
-  {
-    "a": "back squat",
-    "b": "double under",
-    "count": 50
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "double under",
-    "count": 50
-  },
-  {
-    "a": "jerk (split/push)",
+    "a": "handstand push-up",
     "b": "pull-up",
-    "count": 49
-  },
-  {
-    "a": "back squat",
-    "b": "push-up",
-    "count": 49
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "lunge",
-    "count": 49
+    "count": 104
   },
   {
     "a": "deadlift",
-    "b": "kettlebell swing",
-    "count": 48
+    "b": "thruster",
+    "count": 104
   },
   {
-    "a": "kettlebell swing",
-    "b": "push press",
-    "count": 48
+    "a": "jerk (split/push)",
+    "b": "push-up",
+    "count": 103
   },
   {
-    "a": "front squat",
-    "b": "run",
-    "count": 48
+    "a": "row (erg)",
+    "b": "snatch",
+    "count": 103
+  },
+  {
+    "a": "lunge",
+    "b": "sit-up",
+    "count": 102
   },
   {
     "a": "double under",
-    "b": "kettlebell swing",
-    "count": 47
+    "b": "jerk (split/push)",
+    "count": 102
+  },
+  {
+    "a": "deadlift",
+    "b": "wall ball",
+    "count": 101
+  },
+  {
+    "a": "bench press",
+    "b": "burpee",
+    "count": 101
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "snatch",
+    "count": 100
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "row (erg)",
+    "count": 100
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "push-up",
+    "count": 100
+  },
+  {
+    "a": "sit-up",
+    "b": "toes-to-bar",
+    "count": 99
+  },
+  {
+    "a": "double under",
+    "b": "sit-up",
+    "count": 98
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "sit-up",
+    "count": 97
+  },
+  {
+    "a": "dumbbell snatch",
+    "b": "snatch",
+    "count": 97
+  },
+  {
+    "a": "back squat",
+    "b": "lunge",
+    "count": 97
+  },
+  {
+    "a": "pull-up",
+    "b": "sit-up",
+    "count": 96
+  },
+  {
+    "a": "burpee",
+    "b": "push press",
+    "count": 96
+  },
+  {
+    "a": "double under",
+    "b": "row (erg)",
+    "count": 96
+  },
+  {
+    "a": "muscle-up",
+    "b": "snatch",
+    "count": 96
+  },
+  {
+    "a": "muscle-up",
+    "b": "run",
+    "count": 95
+  },
+  {
+    "a": "clean",
+    "b": "wall ball",
+    "count": 95
+  },
+  {
+    "a": "front squat",
+    "b": "row (erg)",
+    "count": 95
+  },
+  {
+    "a": "double under",
+    "b": "front squat",
+    "count": 95
+  },
+  {
+    "a": "run",
+    "b": "sit-up",
+    "count": 95
   },
   {
     "a": "clean",
     "b": "lunge",
-    "count": 47
+    "count": 94
   },
   {
-    "a": "box jump",
-    "b": "clean",
-    "count": 47
+    "a": "burpee",
+    "b": "lunge",
+    "count": 94
   },
   {
-    "a": "box jump",
+    "a": "push press",
+    "b": "push-up",
+    "count": 94
+  },
+  {
+    "a": "deadlift",
+    "b": "lunge",
+    "count": 94
+  },
+  {
+    "a": "push press",
     "b": "run",
-    "count": 47
+    "count": 94
+  },
+  {
+    "a": "push-up",
+    "b": "row (weighted)",
+    "count": 94
+  },
+  {
+    "a": "box jump",
+    "b": "push press",
+    "count": 93
+  },
+  {
+    "a": "deadlift",
+    "b": "muscle-up",
+    "count": 93
+  },
+  {
+    "a": "run",
+    "b": "thruster",
+    "count": 93
   },
   {
     "a": "jerk (split/push)",
-    "b": "run",
-    "count": 47
+    "b": "row (erg)",
+    "count": 93
+  },
+  {
+    "a": "burpee",
+    "b": "sit-up",
+    "count": 92
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "snatch",
+    "count": 92
   },
   {
     "a": "back squat",
-    "b": "lunge",
-    "count": 47
+    "b": "bench press",
+    "count": 91
+  },
+  {
+    "a": "sit-up",
+    "b": "snatch",
+    "count": 89
   },
   {
     "a": "bench press",
-    "b": "clean",
-    "count": 47
+    "b": "double under",
+    "count": 89
+  },
+  {
+    "a": "burpee",
+    "b": "toes-to-bar",
+    "count": 89
   },
   {
     "a": "clean",
     "b": "handstand push-up",
-    "count": 46
-  },
-  {
-    "a": "deadlift",
-    "b": "wall ball",
-    "count": 46
-  },
-  {
-    "a": "deadlift",
-    "b": "lunge",
-    "count": 46
-  },
-  {
-    "a": "jerk (split/push)",
-    "b": "snatch",
-    "count": 46
-  },
-  {
-    "a": "push press",
-    "b": "strict press",
-    "count": 45
-  },
-  {
-    "a": "burpee",
-    "b": "push press",
-    "count": 44
-  },
-  {
-    "a": "clean",
-    "b": "wall ball",
-    "count": 44
-  },
-  {
-    "a": "burpee",
-    "b": "muscle-up",
-    "count": 44
-  },
-  {
-    "a": "bench press",
-    "b": "double under",
-    "count": 44
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "wall ball",
-    "count": 43
-  },
-  {
-    "a": "push-up",
-    "b": "wall ball",
-    "count": 43
-  },
-  {
-    "a": "burpee",
-    "b": "jerk (split/push)",
-    "count": 43
-  },
-  {
-    "a": "run",
-    "b": "thruster",
-    "count": 43
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "row (erg)",
-    "count": 43
+    "count": 88
   },
   {
     "a": "push press",
     "b": "row (erg)",
-    "count": 43
+    "count": 87
   },
   {
-    "a": "back squat",
-    "b": "bike (assault/echo)",
-    "count": 43
-  },
-  {
-    "a": "row (weighted)",
+    "a": "overhead squat",
     "b": "run",
-    "count": 43
+    "count": 86
   },
   {
-    "a": "double under",
+    "a": "push press",
     "b": "snatch",
-    "count": 42
+    "count": 86
   },
   {
-    "a": "lunge",
-    "b": "row (weighted)",
-    "count": 42
-  },
-  {
-    "a": "burpee",
-    "b": "front squat",
-    "count": 42
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "kettlebell swing",
-    "count": 42
-  },
-  {
-    "a": "front squat",
-    "b": "snatch",
-    "count": 41
-  },
-  {
-    "a": "clean",
+    "a": "snatch",
     "b": "toes-to-bar",
-    "count": 41
-  },
-  {
-    "a": "run",
-    "b": "toes-to-bar",
-    "count": 41
-  },
-  {
-    "a": "double under",
-    "b": "lunge",
-    "count": 40
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "front squat",
-    "count": 40
-  },
-  {
-    "a": "deadlift",
-    "b": "thruster",
-    "count": 39
-  },
-  {
-    "a": "front squat",
-    "b": "push press",
-    "count": 39
-  },
-  {
-    "a": "burpee",
-    "b": "toes-to-bar",
-    "count": 39
-  },
-  {
-    "a": "bench press",
-    "b": "lunge",
-    "count": 39
-  },
-  {
-    "a": "double under",
-    "b": "wall ball",
-    "count": 38
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "lunge",
-    "count": 38
-  },
-  {
-    "a": "jerk (split/push)",
-    "b": "push-up",
-    "count": 38
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "muscle-up",
-    "count": 38
-  },
-  {
-    "a": "handstand push-up",
-    "b": "muscle-up",
-    "count": 37
-  },
-  {
-    "a": "clean",
-    "b": "kettlebell swing",
-    "count": 36
-  },
-  {
-    "a": "muscle-up",
-    "b": "run",
-    "count": 36
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "muscle-up",
-    "count": 36
-  },
-  {
-    "a": "back squat",
-    "b": "row (weighted)",
-    "count": 36
-  },
-  {
-    "a": "double under",
-    "b": "push press",
-    "count": 35
+    "count": 84
   },
   {
     "a": "box jump",
-    "b": "toes-to-bar",
-    "count": 35
-  },
-  {
-    "a": "jerk (split/push)",
-    "b": "row (erg)",
-    "count": 35
-  },
-  {
-    "a": "lunge",
-    "b": "row (erg)",
-    "count": 35
-  },
-  {
-    "a": "push-up",
-    "b": "strict press",
-    "count": 35
-  },
-  {
-    "a": "muscle-up",
-    "b": "row (erg)",
-    "count": 35
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "wall ball",
-    "count": 35
+    "b": "front squat",
+    "count": 82
   },
   {
     "a": "double under",
-    "b": "run",
-    "count": 34
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "toes-to-bar",
-    "count": 34
-  },
-  {
-    "a": "push-up",
-    "b": "toes-to-bar",
-    "count": 34
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "row (weighted)",
-    "count": 34
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "strict press",
-    "count": 34
-  },
-  {
-    "a": "front squat",
-    "b": "lunge",
-    "count": 33
-  },
-  {
-    "a": "double under",
-    "b": "row (erg)",
-    "count": 33
+    "b": "thruster",
+    "count": 81
   },
   {
     "a": "bench press",
     "b": "kettlebell swing",
-    "count": 33
-  },
-  {
-    "a": "kettlebell swing",
-    "b": "snatch",
-    "count": 32
+    "count": 81
   },
   {
     "a": "overhead squat",
     "b": "pull-up",
-    "count": 32
-  },
-  {
-    "a": "front squat",
-    "b": "row (weighted)",
-    "count": 32
-  },
-  {
-    "a": "lunge",
-    "b": "push press",
-    "count": 32
-  },
-  {
-    "a": "deadlift",
-    "b": "muscle-up",
-    "count": 32
-  },
-  {
-    "a": "clean",
-    "b": "row (weighted)",
-    "count": 32
-  },
-  {
-    "a": "overhead squat",
-    "b": "run",
-    "count": 32
-  },
-  {
-    "a": "push press",
-    "b": "toes-to-bar",
-    "count": 32
-  },
-  {
-    "a": "handstand push-up",
-    "b": "strict press",
-    "count": 32
+    "count": 79
   },
   {
     "a": "kettlebell swing",
-    "b": "thruster",
-    "count": 31
+    "b": "push press",
+    "count": 79
   },
   {
     "a": "back squat",
-    "b": "wall ball",
-    "count": 31
+    "b": "box jump",
+    "count": 79
   },
   {
-    "a": "muscle-up",
-    "b": "thruster",
-    "count": 31
-  },
-  {
-    "a": "pull-up",
+    "a": "deadlift",
     "b": "toes-to-bar",
-    "count": 31
+    "count": 79
+  },
+  {
+    "a": "run",
+    "b": "toes-to-bar",
+    "count": 79
   },
   {
     "a": "box jump",
     "b": "double under",
-    "count": 30
-  },
-  {
-    "a": "back squat",
-    "b": "row (erg)",
-    "count": 30
-  },
-  {
-    "a": "handstand push-up",
-    "b": "push press",
-    "count": 30
-  },
-  {
-    "a": "back squat",
-    "b": "push press",
-    "count": 30
-  },
-  {
-    "a": "back squat",
-    "b": "burpee",
-    "count": 30
-  },
-  {
-    "a": "double under",
-    "b": "row (weighted)",
-    "count": 30
+    "count": 78
   },
   {
     "a": "bench press",
     "b": "snatch",
-    "count": 30
+    "count": 78
   },
   {
-    "a": "burpee",
-    "b": "overhead squat",
-    "count": 29
+    "a": "double under",
+    "b": "wall ball",
+    "count": 77
   },
   {
-    "a": "handstand push-up",
-    "b": "kettlebell swing",
-    "count": 29
+    "a": "kettlebell swing",
+    "b": "lunge",
+    "count": 77
+  },
+  {
+    "a": "pull-up",
+    "b": "wall ball",
+    "count": 77
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "muscle-up",
+    "count": 75
+  },
+  {
+    "a": "push-up",
+    "b": "toes-to-bar",
+    "count": 75
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "box jump",
+    "count": 75
+  },
+  {
+    "a": "box jump",
+    "b": "sit-up",
+    "count": 74
+  },
+  {
+    "a": "back squat",
+    "b": "toes-to-bar",
+    "count": 74
+  },
+  {
+    "a": "pull-up",
+    "b": "toes-to-bar",
+    "count": 74
+  },
+  {
+    "a": "bench press",
+    "b": "bike (assault/echo)",
+    "count": 74
+  },
+  {
+    "a": "kettlebell swing",
+    "b": "wall ball",
+    "count": 73
+  },
+  {
+    "a": "back squat",
+    "b": "muscle-up",
+    "count": 73
+  },
+  {
+    "a": "deadlift",
+    "b": "row (weighted)",
+    "count": 73
+  },
+  {
+    "a": "double under",
+    "b": "toes-to-bar",
+    "count": 73
+  },
+  {
+    "a": "double under",
+    "b": "muscle-up",
+    "count": 73
   },
   {
     "a": "back squat",
     "b": "jerk (split/push)",
-    "count": 29
+    "count": 72
+  },
+  {
+    "a": "back squat",
+    "b": "wall ball",
+    "count": 72
+  },
+  {
+    "a": "double under",
+    "b": "lunge",
+    "count": 71
+  },
+  {
+    "a": "double under",
+    "b": "push press",
+    "count": 71
+  },
+  {
+    "a": "jerk (split/push)",
+    "b": "kettlebell swing",
+    "count": 71
+  },
+  {
+    "a": "snatch",
+    "b": "wall ball",
+    "count": 71
+  },
+  {
+    "a": "handstand push-up",
+    "b": "run",
+    "count": 69
+  },
+  {
+    "a": "muscle-up",
+    "b": "row (erg)",
+    "count": 69
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "double under",
+    "count": 69
+  },
+  {
+    "a": "bike (assault/echo)",
+    "b": "sit-up",
+    "count": 69
   },
   {
     "a": "burpee",
-    "b": "row (weighted)",
-    "count": 29
+    "b": "overhead squat",
+    "count": 68
+  },
+  {
+    "a": "row (weighted)",
+    "b": "run",
+    "count": 68
+  },
+  {
+    "a": "snatch",
+    "b": "thruster",
+    "count": 67
+  },
+  {
+    "a": "front squat",
+    "b": "kettlebell swing",
+    "count": 66
+  },
+  {
+    "a": "back squat",
+    "b": "sit-up",
+    "count": 66
   }
 ]

@@ -67,10 +67,27 @@ export type CommentsAnalysis = {
   top_commenters: TopCommenter[];
 };
 
+export type LLMTaggedComponent = { component: string; details: string };
+export type LLMTag = {
+  id: number | null;
+  date: string | null;
+  title: string;
+  link: string;
+  is_rest_day: boolean;
+  components: LLMTaggedComponent[];
+  component_tags: string[];
+  format: string;
+  movements: string[];
+  unmapped_movements: string[];
+  notes: string;
+};
+
 export type DataBundle = {
   version: string;
   aggregates: Aggregates;
   search: SearchItem[];
   namedWorkouts: NamedWorkouts;
   commentsAnalysis: CommentsAnalysis | null;
+  llmTags?: LLMTag[] | null;
+  llmJudgedTags?: LLMTag[] | null;
 };

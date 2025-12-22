@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { loadDataBundle } from "./dataLoader";
-import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis, LLMTag } from "./types";
 import { Milestones } from "./components/Milestones";
 import { CommentsAnalysisCard } from "./components/CommentsAnalysisCard";
+import { LLMAuditCard } from "./components/LLMAuditCard";
 import { NamedWorkoutCard } from "./components/NamedWorkoutCard";
 import { QuickFinder } from "./components/QuickFinder";
 import { Section } from "./components/Section";
@@ -14,22 +15,38 @@ import { numberWithCommas } from "./utils/format";
 
 type Status = "idle" | "loading" | "ready" | "error";
 
+function useHashRoute() {
+  const [hash, setHash] = useState(() => window.location.hash || "");
+  useEffect(() => {
+    const onChange = () => setHash(window.location.hash || "");
+    window.addEventListener("hashchange", onChange);
+    return () => window.removeEventListener("hashchange", onChange);
+  }, []);
+  if (hash.startsWith("#/")) return hash.slice(2) || "";
+  return "";
+}
+
 function App() {
+  const route = useHashRoute();
   const [status, setStatus] = useState<Status>("idle");
   const [aggregates, setAggregates] = useState<Aggregates | null>(null);
   const [searchIndex, setSearchIndex] = useState<SearchItem[]>([]);
   const [namedWorkouts, setNamedWorkouts] = useState<NamedWorkouts | null>(null);
   const [commentsAnalysis, setCommentsAnalysis] = useState<CommentsAnalysis | null>(null);
+  const [llmTags, setLlmTags] = useState<LLMTag[] | null>(null);
+  const [llmJudgedTags, setLlmJudgedTags] = useState<LLMTag[] | null>(null);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setStatus("loading");
     loadDataBundle()
-      .then(({ aggregates, search, namedWorkouts, commentsAnalysis }) => {
+      .then(({ aggregates, search, namedWorkouts, commentsAnalysis, llmTags, llmJudgedTags }) => {
         setAggregates(aggregates);
         setSearchIndex(search);
         setNamedWorkouts(namedWorkouts);
         setCommentsAnalysis(commentsAnalysis);
+        setLlmTags(llmTags);
+        setLlmJudgedTags(llmJudgedTags);
         setStatus("ready");
       })
       .catch((err) => {
@@ -48,6 +65,26 @@ function App() {
 
   const total = Math.max(0, ...searchIndex.map((s) => (typeof s.workout_no === "number" ? s.workout_no : 0)));
 
+  if (route === "llm-audit") {
+    return (
+      <div className="page">
+        <div className="audit-page">
+          <div className="audit-page__header">
+            <div>
+              <p className="kicker">Audit</p>
+              <h1>LLM vs Regex</h1>
+              <p className="muted">Compare first-pass LLM tags and/or judge-reviewed tags against the regex-based pipeline.</p>
+            </div>
+            <a className="btn btn--ghost" href="#movements">
+              Back to story
+            </a>
+          </div>
+          <LLMAuditCard llmTags={llmTags} llmJudgedTags={llmJudgedTags} search={searchIndex} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <div className="story-container">
@@ -64,6 +101,11 @@ function App() {
               Scroll to explore: milestones, top movements, common pairings, and search across all {numberWithCommas(total)} workouts.
             </p>
             <Milestones total={total} search={searchIndex} />
+            <div className="hero__cta">
+              <a className="btn btn--ghost" href="#/llm-audit">
+                LLM audit
+              </a>
+            </div>
           </div>
         </header>
 

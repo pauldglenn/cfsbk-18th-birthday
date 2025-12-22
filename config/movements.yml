@@ -101,6 +101,8 @@
 - name: bench press
   patterns:
     - bench press
+    - \bdb\s+bench(?:\s+press)?\b
+    - \bdumbbell\s+bench(?:\s+press)?\b
   tags: [weightlifting]
 
 - name: back squat
@@ -113,6 +115,13 @@
     - front squat
   tags: [weightlifting]
 
+- name: air squat
+  patterns:
+    - air squats?
+    - \bairsquats?\b
+    - bodyweight squats?
+  tags: [gymnastics]
+
 - name: overhead squat
   patterns:
     - overhead squat
@@ -122,6 +131,19 @@
   patterns:
     - lunge
   tags: [weightlifting]
+
+- name: sled push
+  patterns:
+    - sled push(?:es)?
+    - prowler push(?:es)?
+  tags: [conditioning]
+
+- name: sled pull
+  patterns:
+    - sled pull(?:s)?
+    - prowler pull(?:s)?
+    - sled drag(?:s)?
+  tags: [conditioning]
 
 - name: rope climb
   patterns:
@@ -153,6 +175,11 @@
   patterns:
     - handstand (push[- ]?up|pushup)
     - hspu
+  tags: [gymnastics]
+
+- name: sit-up
+  patterns:
+    - sit[- ]?ups?
   tags: [gymnastics]
 
 - name: kettlebell swing
@@ -199,5 +226,6 @@
     - pendlay row
     - seal row
     - three[- ]point db row
-    - renegade row
+    - renegade rows?
+    - renegade (?:db|dumbbell) rows?
   tags: [weightlifting]

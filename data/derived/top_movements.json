@@ -1,134 +1,154 @@
 [
   {
     "movement": "clean",
-    "days": 942
-  },
-  {
-    "movement": "deadlift",
-    "days": 862
+    "days": 1210
   },
   {
     "movement": "pull-up",
-    "days": 768
+    "days": 1171
   },
   {
-    "movement": "back squat",
-    "days": 685
-  },
-  {
-    "movement": "snatch",
-    "days": 666
-  },
-  {
-    "movement": "push-up",
-    "days": 651
+    "movement": "deadlift",
+    "days": 1117
   },
   {
     "movement": "run",
-    "days": 628
+    "days": 1099
+  },
+  {
+    "movement": "push-up",
+    "days": 973
   },
   {
     "movement": "burpee",
-    "days": 537
+    "days": 952
   },
   {
-    "movement": "front squat",
-    "days": 517
+    "movement": "snatch",
+    "days": 869
   },
   {
-    "movement": "jerk (split/push)",
-    "days": 498
+    "movement": "back squat",
+    "days": 802
   },
   {
     "movement": "row (erg)",
-    "days": 467
-  },
-  {
-    "movement": "bike (assault/echo)",
-    "days": 464
-  },
-  {
-    "movement": "bench press",
-    "days": 452
-  },
-  {
-    "movement": "push press",
-    "days": 377
+    "days": 791
   },
   {
     "movement": "double under",
-    "days": 358
-  },
-  {
-    "movement": "box jump",
-    "days": 343
+    "days": 748
   },
   {
     "movement": "kettlebell swing",
-    "days": 328
+    "days": 655
+  },
+  {
+    "movement": "jerk (split/push)",
+    "days": 635
+  },
+  {
+    "movement": "front squat",
+    "days": 621
+  },
+  {
+    "movement": "box jump",
+    "days": 590
+  },
+  {
+    "movement": "bike (assault/echo)",
+    "days": 582
+  },
+  {
+    "movement": "sit-up",
+    "days": 517
+  },
+  {
+    "movement": "bench press",
+    "days": 511
   },
   {
     "movement": "lunge",
-    "days": 325
+    "days": 478
+  },
+  {
+    "movement": "push press",
+    "days": 473
   },
   {
     "movement": "thruster",
-    "days": 244
-  },
-  {
-    "movement": "overhead squat",
-    "days": 232
+    "days": 428
   },
   {
     "movement": "wall ball",
-    "days": 232
-  },
-  {
-    "movement": "row (weighted)",
-    "days": 224
+    "days": 398
   },
   {
     "movement": "muscle-up",
-    "days": 223
-  },
-  {
-    "movement": "handstand push-up",
-    "days": 213
+    "days": 381
   },
   {
     "movement": "toes-to-bar",
-    "days": 196
+    "days": 357
+  },
+  {
+    "movement": "overhead squat",
+    "days": 313
+  },
+  {
+    "movement": "handstand push-up",
+    "days": 309
+  },
+  {
+    "movement": "row (weighted)",
+    "days": 267
   },
   {
     "movement": "strict press",
-    "days": 137
+    "days": 143
   },
   {
-    "movement": "dumbbell snatch",
-    "days": 59
+    "movement": "air squat",
+    "days": 123
   },
   {
     "movement": "dumbbell thruster",
-    "days": 55
+    "days": 113
+  },
+  {
+    "movement": "dumbbell snatch",
+    "days": 97
   },
   {
     "movement": "turkish get-up",
-    "days": 45
+    "days": 75
   },
   {
     "movement": "rope climb",
-    "days": 33
+    "days": 57
   },
   {
-    "movement": "kettlebell snatch",
-    "days": 10
+    "movement": "sled push",
+    "days": 49
   },
   {
     "movement": "ski erg",
-    "days": 7
+    "days": 15
+  },
+  {
+    "movement": "kettlebell snatch",
+    "days": 14
   },
   {
     "movement": "dumbbell clean",
-    "days": 5
+    "days": 8
+  },
+  {
+    "movement": "sled pull",
+    "days": 7
+  },
+  {
+    "movement": "clean and jerk",
+    "days": 1
   }
 ]

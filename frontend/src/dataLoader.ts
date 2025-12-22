@@ -1,4 +1,4 @@
-import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis } from "./types";
+import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis, LLMTag } from "./types";
 
 const BASE = `${import.meta.env.BASE_URL}data/derived`;
 
@@ -68,12 +68,22 @@ export async function loadCommentsAnalysis(): Promise<CommentsAnalysis | null> {
   return fetchJsonOptional(`${BASE}/comments_analysis.json`);
 }
 
+export async function loadLLMTags(): Promise<LLMTag[] | null> {
+  return fetchJsonOptional(`${BASE}/llm_tags.json`);
+}
+
+export async function loadLLMJudgedTags(): Promise<LLMTag[] | null> {
+  return fetchJsonOptional(`${BASE}/llm_judged_tags.json`);
+}
+
 export async function loadDataBundle() {
-  const [aggregates, search, namedWorkouts, commentsAnalysis] = await Promise.all([
+  const [aggregates, search, namedWorkouts, commentsAnalysis, llmTags, llmJudgedTags] = await Promise.all([
     loadAggregates(),
     loadSearchIndex(),
     loadNamedWorkouts(),
     loadCommentsAnalysis(),
+    loadLLMTags(),
+    loadLLMJudgedTags(),
   ]);
-  return { aggregates, search, namedWorkouts, commentsAnalysis };
+  return { aggregates, search, namedWorkouts, commentsAnalysis, llmTags, llmJudgedTags };
 }

@@ -34,6 +34,25 @@
   margin: 0 auto;
 }
 
+.hero__cta {
+  margin-top: 14px;
+}
+
+.audit-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 18px 42px;
+}
+
+.audit-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
 .kicker {
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1052,4 +1071,127 @@
   font-size: 13px;
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.35;
+}
+
+.llm-audit__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.llm-audit__controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.llm-audit__toggle {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.llm-audit__toggle .btn.is-active {
+  border-color: rgba(59, 130, 246, 0.65);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.llm-audit__checkbox {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
+.llm-audit__search {
+  border: 1px solid #1f2937;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-width: 260px;
+}
+
+.llm-audit__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.llm-audit__row {
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  background: #0b1220;
+  overflow: hidden;
+}
+
+.llm-audit__row-btn {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  color: inherit;
+  cursor: pointer;
+}
+
+.llm-audit__row-title {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.llm-audit__date {
+  font-variant-numeric: tabular-nums;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.llm-audit__title {
+  font-weight: 700;
+}
+
+.llm-audit__chips {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.llm-audit__details {
+  border-top: 1px solid #1f2937;
+  padding: 12px;
+}
+
+.llm-audit__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.llm-audit__col-title {
+  font-weight: 750;
+  margin-bottom: 6px;
+}
+
+.llm-audit__pillset {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.llm-audit__delta {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.llm-audit__links {
+  margin-top: 10px;
 }

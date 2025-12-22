@@ -60,6 +60,57 @@ Artifacts land in `data/derived/`:
 - `comment_count` is included on each workout when running with `--with-comments` or `--with-comment-analysis` (hits the WP comments API)
 - `comments_analysis.json` is written when running with `--with-comment-analysis` (monthly totals, most-commented posts, top commenters)
 
+## LLM tagging (audit mode)
+The regex-based tagger is the source of truth for the site. For auditing, you can generate a second set of tags using an LLM and compare them in the frontend.
+
+1) Provide an OpenAI key (either works):
+```bash
+export OPENAI_API_KEY="..."
+```
+or add it to `.env` (gitignored) as `OPENAI_API_KEY=...`.
+
+2) Generate LLM tags for a date range (start small to control cost):
+```bash
+uv run python scripts/llm_tag_workouts.py --start-date 2016-01-01 --end-date 2016-01-31 --max-posts 50 --workers 4
+```
+
+This writes gitignored artifacts:
+- `data/derived/llm_tags.jsonl` (append-only)
+- `data/derived/llm_tags.json` (JSON array for the frontend)
+- `data/llm_cache/` (per-post cached responses)
+
+### Judge pass (second opinion)
+You can optionally run a second-pass "judge" LLM that sees:
+- The full blog post text
+- The regex result (`data/derived/search_index.json`)
+- The first-pass LLM result
+
+By default it only judges posts where regex and first-pass LLM disagree (to control cost):
+```bash
+uv run python etl.py build
+uv run python scripts/llm_tag_workouts.py --start-date 2016-01-01 --end-date 2016-01-31 --judge
+```
+
+Outputs (gitignored):
+- `data/derived/llm_judged_tags.jsonl`
+- `data/derived/llm_judged_tags.json`
+
+### Deploying LLM results
+If you don’t want to re-run LLM tagging in prod, commit these to the repo after generating them locally:
+- `data/derived/llm_tags.json`
+- `data/derived/llm_judged_tags.json`
+
+(The per-post cache and `.jsonl` files remain gitignored.)
+
+3) Sync derived data into the dev server and reload:
+```bash
+cd frontend
+npm run sync-data
+npm run dev
+```
+
+Then open the **LLM Tagging Audit** section to review differences between regex tags and LLM tags.
+
 ## Frontend (React/Vite)
 Scaffold lives in `frontend/`.
 ```bash
