@@ -75,7 +75,7 @@ jobs:
             --model "${{ inputs.model }}" \
             --judge \
             --workers "${{ inputs.workers }}" \
-            --overwrite
+            --resume
 
       - name: Commit LLM outputs
         env:
