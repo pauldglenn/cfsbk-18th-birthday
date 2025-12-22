@@ -1,4 +1,13 @@
 {
+  "thruster": {
+    "Friday": 13,
+    "Saturday": 89,
+    "Wednesday": 23,
+    "Sunday": 52,
+    "Monday": 31,
+    "Thursday": 32,
+    "Tuesday": 4
+  },
   "kettlebell swing": {
     "Friday": 36,
     "Sunday": 54,
@@ -17,24 +26,6 @@
     "Monday": 49,
     "Tuesday": 38
   },
-  "thruster": {
-    "Friday": 13,
-    "Saturday": 89,
-    "Wednesday": 23,
-    "Sunday": 52,
-    "Monday": 31,
-    "Thursday": 32,
-    "Tuesday": 4
-  },
-  "box jump": {
-    "Saturday": 85,
-    "Sunday": 64,
-    "Tuesday": 29,
-    "Wednesday": 35,
-    "Monday": 37,
-    "Thursday": 56,
-    "Friday": 36
-  },
   "burpee": {
     "Saturday": 147,
     "Friday": 49,
@@ -43,6 +34,15 @@
     "Wednesday": 59,
     "Monday": 54,
     "Thursday": 104
+  },
+  "box jump": {
+    "Saturday": 85,
+    "Sunday": 64,
+    "Tuesday": 29,
+    "Wednesday": 35,
+    "Monday": 38,
+    "Thursday": 56,
+    "Friday": 36
   },
   "deadlift": {
     "Tuesday": 85,
@@ -89,15 +89,6 @@
     "Friday": 39,
     "Tuesday": 55
   },
-  "jerk (split/push)": {
-    "Tuesday": 22,
-    "Sunday": 108,
-    "Thursday": 133,
-    "Wednesday": 37,
-    "Saturday": 83,
-    "Friday": 33,
-    "Monday": 82
-  },
   "push press": {
     "Tuesday": 37,
     "Saturday": 51,
@@ -107,13 +98,22 @@
     "Thursday": 71,
     "Friday": 28
   },
+  "jerk (split/push)": {
+    "Tuesday": 22,
+    "Sunday": 108,
+    "Thursday": 133,
+    "Wednesday": 37,
+    "Saturday": 83,
+    "Friday": 33,
+    "Monday": 82
+  },
   "pull-up": {
     "Friday": 62,
     "Saturday": 162,
     "Thursday": 116,
     "Sunday": 142,
     "Wednesday": 107,
-    "Monday": 129,
+    "Monday": 130,
     "Tuesday": 49
   },
   "turkish get-up": {
@@ -225,7 +225,7 @@
   "rope climb": {
     "Wednesday": 6,
     "Sunday": 3,
-    "Monday": 5,
+    "Monday": 6,
     "Thursday": 5,
     "Saturday": 7,
     "Friday": 3,
@@ -265,7 +265,7 @@
     "Friday": 1
   },
   "bike (assault/echo)": {
-    "Monday": 55,
+    "Monday": 56,
     "Wednesday": 58,
     "Tuesday": 64,
     "Saturday": 72,
@@ -276,11 +276,11 @@
   "toes-to-bar": {
     "Wednesday": 24,
     "Thursday": 36,
-    "Saturday": 40,
+    "Saturday": 39,
     "Monday": 26,
     "Friday": 25,
     "Tuesday": 21,
-    "Sunday": 24
+    "Sunday": 25
   },
   "ski erg": {
     "Tuesday": 1,

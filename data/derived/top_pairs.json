@@ -130,13 +130,13 @@
     "count": 101
   },
   {
-    "a": "burpee",
-    "b": "run",
-    "count": 99
-  },
-  {
     "a": "bike (assault/echo)",
     "b": "pull-up",
+    "count": 100
+  },
+  {
+    "a": "burpee",
+    "b": "run",
     "count": 99
   },
   {
@@ -250,6 +250,11 @@
     "count": 76
   },
   {
+    "a": "box jump",
+    "b": "pull-up",
+    "count": 75
+  },
+  {
     "a": "back squat",
     "b": "snatch",
     "count": 75
@@ -263,11 +268,6 @@
     "a": "deadlift",
     "b": "push press",
     "count": 75
-  },
-  {
-    "a": "box jump",
-    "b": "pull-up",
-    "count": 74
   },
   {
     "a": "lunge",
@@ -470,6 +470,11 @@
     "count": 56
   },
   {
+    "a": "bike (assault/echo)",
+    "b": "box jump",
+    "count": 56
+  },
+  {
     "a": "deadlift",
     "b": "row (weighted)",
     "count": 56
@@ -477,11 +482,6 @@
   {
     "a": "dumbbell thruster",
     "b": "thruster",
-    "count": 55
-  },
-  {
-    "a": "bike (assault/echo)",
-    "b": "box jump",
     "count": 55
   },
   {

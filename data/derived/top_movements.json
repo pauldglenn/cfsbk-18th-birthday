@@ -9,7 +9,7 @@
   },
   {
     "movement": "pull-up",
-    "days": 767
+    "days": 768
   },
   {
     "movement": "back squat",
@@ -45,7 +45,7 @@
   },
   {
     "movement": "bike (assault/echo)",
-    "days": 463
+    "days": 464
   },
   {
     "movement": "bench press",
@@ -61,7 +61,7 @@
   },
   {
     "movement": "box jump",
-    "days": 342
+    "days": 343
   },
   {
     "movement": "kettlebell swing",
@@ -117,7 +117,7 @@
   },
   {
     "movement": "rope climb",
-    "days": 32
+    "days": 33
   },
   {
     "movement": "kettlebell snatch",
