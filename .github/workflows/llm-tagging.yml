@@ -14,7 +14,7 @@ on:
       workers:
         description: "Parallel workers (lower if you hit rate limits)"
         required: true
-        default: "2"
+        default: "6"
       model:
         description: "OpenAI model"
         required: true
