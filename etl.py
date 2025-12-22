@@ -29,6 +29,19 @@ from cfa_etl.movements import (
 from cfa_etl.named_workouts import build_named_workouts
 
 
+def _print_frontend_sync_hint() -> None:
+    # The Vite dev server serves JSON from `frontend/public/data/derived`, so after
+    # regenerating `data/derived/*` you typically need to sync it over.
+    try:
+        from pathlib import Path
+
+        root = Path(__file__).resolve().parent
+        if (root / "frontend" / "package.json").exists():
+            print("[etl] If the frontend is running, sync derived data with: (cd frontend && npm run sync-data) then reload the page.")
+    except Exception:
+        return
+
+
 def _build_with_comment_analysis(raw: list[dict]) -> None:
     print("[etl] Fetching comments (metadata-only) for analytics…")
     comments = list(
@@ -57,6 +70,7 @@ def _build_with_comment_analysis(raw: list[dict]) -> None:
     comments_analysis = build_comments_analysis(canonical, comments)
     print("[etl] Writing artifacts…")
     write_artifacts(canonical, aggregates, comments_analysis=comments_analysis)
+    _print_frontend_sync_hint()
 
 
 def cmd_fetch(args: argparse.Namespace) -> None:
@@ -75,6 +89,7 @@ def cmd_build(_: argparse.Namespace) -> None:
     canonical = build_canonical(raw, comment_counts)
     aggregates = aggregate(canonical)
     write_artifacts(canonical, aggregates)
+    _print_frontend_sync_hint()
 
 
 def cmd_all(args: argparse.Namespace) -> None:
@@ -91,6 +106,7 @@ def cmd_all(args: argparse.Namespace) -> None:
     canonical = build_canonical(raw, comment_counts)
     aggregates = aggregate(canonical)
     write_artifacts(canonical, aggregates)
+    _print_frontend_sync_hint()
 
 
 def main() -> None:

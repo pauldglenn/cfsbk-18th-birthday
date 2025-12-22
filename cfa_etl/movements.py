@@ -90,6 +90,22 @@ def is_workout_component(name: str) -> bool:
     return False
 
 
+def _details_look_like_workout(details: str) -> bool:
+    if not details:
+        return False
+    d = details.lower()
+    if any(k in d for k in ["amrap", "for time", "emom", "every", "interval", "tabata"]):
+        return True
+    if re.search(r"\bcal(?:ories)?\b", d) and ("bike" in d or "row" in d):
+        return True
+    if re.search(r"\b\d+\b", d) and re.search(
+        r"(row|run|bike|burpee|squat|deadlift|snatch|clean|press|pull[- ]?up|push[- ]?up|thruster|swing)",
+        d,
+    ):
+        return True
+    return False
+
+
 def movement_text_from_components(components: List[Dict]) -> str:
     """
     Build a text blob for movement detection but drop lines that reference
@@ -113,7 +129,10 @@ def movement_text_from_components(components: List[Dict]) -> str:
         "sunday:",
     )
     workout_components = [
-        c for c in (components or []) if is_workout_component(c.get("component") or "")
+        c
+        for c in (components or [])
+        if is_workout_component(c.get("component") or "")
+        or _details_look_like_workout(c.get("details") or "")
     ]
     source_components = workout_components if workout_components else (components or [])
     lines: List[str] = []
@@ -131,20 +150,14 @@ def movement_text_from_components(components: List[Dict]) -> str:
 
     for comp in source_components:
         detail = comp.get("details") or ""
-        if "___" in detail:
-            detail = detail.split("___", 1)[0]
-        detail_lower = detail.lower()
-        for marker in promo_breaks + [
-            "post work to comments",
-            "post loads to comments",
-            "post load to comments",
-            "post to comments",
-        ]:
-            idx = detail_lower.find(marker)
-            if idx > 0:
-                detail = detail[:idx]
-                detail_lower = detail_lower[:idx]
-                break
+        # Some older posts collapse multiple workout sections into a single block of text
+        # separated by underscores/hyphens or phrases like "Post loads to comments. Exposure X of Y".
+        # Normalize these into line breaks so we don't accidentally drop the metcon portion.
+        detail = re.sub(r"\s*_{3,}\s*", "\n", detail)
+        detail = re.sub(r"\s*-{3,}\s*", "\n", detail)
+        detail = re.sub(r"(?i)\bpost\s+(?:loads?|work)\s+to\s+comments\.?", "\n", detail)
+        detail = re.sub(r"(?i)\bpost\s+to\s+comments\.?", "\n", detail)
+        detail = re.sub(r"(?i)\bexposure\s+\d+\s+of\s+\d+\b", "\n", detail)
         for line in detail.split("\n"):
             if not line.strip():
                 continue
@@ -152,6 +165,8 @@ def movement_text_from_components(components: List[Dict]) -> str:
             lc_norm = " ".join(
                 lc.replace("\xa0", " ").translate(apostrophe_replacements).split()
             )
+            if re.fullmatch(r"[_\-\s]+", lc_norm):
+                continue
             if any(mark in lc for mark in skip_markers):
                 continue
             if "trivia" in lc or (re.match(r"^\d+\.", lc.strip()) and "?" in line):
@@ -160,17 +175,23 @@ def movement_text_from_components(components: List[Dict]) -> str:
                 break
             m = re.search(r"post\s+.*comments", lc_norm)
             if m:
-                lines.append(line[: m.start()].strip())
-                break
+                prefix = line[: m.start()].strip()
+                if prefix:
+                    lines.append(prefix)
+                continue
             if "post" in lc_norm and "comments" in lc_norm:
                 cut_index = lc.lower().find("post")
-                lines.append(line[:cut_index].strip())
-                break
+                prefix = line[:cut_index].strip()
+                if prefix:
+                    lines.append(prefix)
+                continue
             if re.search(r"weeks\s+1-2", lc_norm):
                 break
             if "exposure" in lc_norm:
-                lines.append(line.split("exposure", 1)[0].strip())
-                break
+                prefix = line.split("exposure", 1)[0].strip()
+                if prefix:
+                    lines.append(prefix)
+                continue
             if "whiteboard" in lc_norm and "yesterday" in lc_norm:
                 continue
             lines.append(line)
@@ -189,14 +210,20 @@ def is_rest_day(components: List[Dict], title: str = "") -> bool:
     """
     if "rest day" in (title or "").lower():
         return True
-    text = " ".join(
-        (c.get("component") or "") + " " + (c.get("details") or "")
-        for c in (components or [])
+    # Many posts include "Yesterday's Whiteboard: Rest Day" in blog/news content;
+    # don't treat those as actual rest days. Only consider "rest day" early in the post.
+    intro = " ".join(
+        ((c.get("component") or "") + " " + (c.get("details") or "")).strip()
+        for c in (components or [])[:2]
     ).lower()
-    if "rest day" not in text:
+    if "rest day" not in intro:
         return False
-    if re.search(r"\d", text) and ("for time" in text or "amrap" in text or "emom" in text):
+
+    # If the intro still looks like a real workout, it's not a rest day.
+    if _details_look_like_workout(intro):
         return False
+
+    # Otherwise, treat it as a rest day.
     return True
 
 

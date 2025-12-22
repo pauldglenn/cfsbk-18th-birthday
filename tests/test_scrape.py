@@ -89,6 +89,14 @@ def test_kettlebell_swings_not_lost():
     assert "run" in tags
 
 
+def test_double_unders_variants_tagged():
+    title = "WOD 4.9.15"
+    comps = [{"component": "METCON", "details": "AMRAP 12 Minutes: 90 Double-Unders then 50 DUs then 30 D/U then 20 dubs"}]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "double under" in tags
+
+
 def test_deadlift_not_from_promo():
     title = "WOD 6.20.19"
     comps = [
@@ -106,6 +114,41 @@ def test_deadlift_not_from_promo():
     assert "deadlift" not in tags
     assert "wall ball" in tags
     assert "clean" in tags
+
+
+def test_movement_text_keeps_metcon_after_exposure_separator():
+    title = "Snatch | WOD 9.18.16"
+    comps = [
+        {
+            "component": "Snatch Complex",
+            "details": (
+                "Fitness Every 2 Minutes x 8: Power Snatch + High Hang Snatch + Overhead Squat "
+                "Performance Every 2 Minutes x 8: Power Snatch + High Hang Snatch + Snatch Balance "
+                "Post loads to comments. Exposure 5 of 8 __________________ "
+                "5 RNFT or 20 Minutes: "
+                "5ea Front Rack Reverse Lunges "
+                "10 Strict Toes-to-Bars, Hanging Leg Raises, or Hanging Knee Raises "
+                "20 Calorie Row or 10 Calorie Assault Bike "
+                "Post work to comments."
+            ),
+        }
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "bike (assault/echo)" in tags
+    assert "row (erg)" in tags
+
+
+def test_movement_text_includes_named_metcon_heading_with_empty_metcon():
+    title = "Thursday 12.31.20"
+    comps = [
+        {"component": "STRENGTH", "details": "Strict Ring Dips 4-5×6-12"},
+        {"component": "METCON", "details": ""},
+        {"component": "“Fuck you, 2020”", "details": "AMRAP 20:20 20 Cal Row or Bike 20 Burpees"},
+    ]
+    movement_text = movement_text_from_components(comps)
+    tags = tag_movements(f"{title} {movement_text}".lower(), load_movement_patterns())
+    assert "bike (assault/echo)" in tags
 
 
 def test_instructional_clean_deadlift_not_tagged():
@@ -297,3 +340,20 @@ def test_workout_no_skips_rest_days_for_milestones():
     assert r["is_rest_day"] is True
     assert r["workout_no"] is None
     assert w3["workout_no"] == 2
+
+
+def test_rest_day_not_triggered_by_yesterdays_whiteboard_in_later_component():
+    from cfa_etl.movements import is_rest_day
+
+    title = "Front Squat | WOD 7.13.16"
+    comps = [
+        {
+            "component": "Front Squat",
+            "details": "4 RNFT (or 20 Minutes): 6ea Front Rack Reverse Lunges 20 Strokes on the Erg",
+        },
+        {
+            "component": "Spikeball Tournament!",
+            "details": "Yesterday’s Whiteboard: Rest Day",
+        },
+    ]
+    assert is_rest_day(comps, title) is False

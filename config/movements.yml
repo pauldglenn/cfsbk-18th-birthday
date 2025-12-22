@@ -38,8 +38,11 @@
 
 - name: double under
   patterns:
-    - double under
+    - double[- ]?unders?
     - \bdu\b
+    - \bdus\b
+    - \bd\s*/\s*u\b
+    - \bdubs?\b
   tags: [monostructural]
 
 - name: box jump
