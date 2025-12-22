@@ -1,0 +1,109 @@
+name: LLM Tagging (One-off)
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Start date (YYYY-MM-DD)"
+        required: true
+        default: "2007-01-01"
+      end_date:
+        description: "End date (YYYY-MM-DD)"
+        required: true
+        default: "2025-12-31"
+      workers:
+        description: "Parallel workers (lower if you hit rate limits)"
+        required: true
+        default: "2"
+      model:
+        description: "OpenAI model"
+        required: true
+        default: "gpt-4o-mini"
+
+concurrency:
+  group: llm-tagging
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  llm_tagging:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Sync deps
+        run: uv sync
+
+      - name: Ensure baseline inputs exist
+        run: |
+          if [ ! -f data/raw/latest.jsonl ]; then
+            echo "Missing data/raw/latest.jsonl; fetching posts…"
+            uv run python etl.py fetch
+            python - <<'PY'
+            import shutil
+            import pathlib
+
+            raw_dir = pathlib.Path("data/raw")
+            files = sorted(raw_dir.glob("posts-*.jsonl"), reverse=True)
+            if not files:
+                raise SystemExit("No posts-*.jsonl files found after fetch")
+            shutil.copy(files[0], raw_dir / "latest.jsonl")
+            PY
+          fi
+
+          if [ ! -f data/derived/search_index.json ]; then
+            echo "Missing data/derived/search_index.json; building baseline…"
+            uv run python etl.py build
+          fi
+
+      - name: Run LLM tagging + judge
+        run: |
+          uv run python scripts/llm_tag_workouts.py \
+            --start-date "${{ inputs.start_date }}" \
+            --end-date "${{ inputs.end_date }}" \
+            --model "${{ inputs.model }}" \
+            --judge \
+            --workers "${{ inputs.workers }}" \
+            --overwrite
+
+      - name: Commit LLM outputs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+
+          git add data/derived/llm_tags.json data/derived/llm_judged_tags.json
+          if git diff --cached --quiet; then
+            echo "No LLM output changes."
+            exit 0
+          fi
+          git commit -m "Refresh LLM tags (${{ inputs.start_date }}..${{ inputs.end_date }})"
+
+          # Avoid non-fast-forward failures if main advanced during the job.
+          for attempt in 1 2 3 4 5; do
+            echo "Push attempt ${attempt}…"
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              exit 1
+            fi
+            if git push; then
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "Failed to push after retries."
+          exit 1
