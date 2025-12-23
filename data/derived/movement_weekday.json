@@ -1,12 +1,12 @@
 {
-  "double under": {
-    "Friday": 57,
-    "Saturday": 117,
-    "Sunday": 122,
-    "Wednesday": 142,
-    "Monday": 131,
-    "Thursday": 130,
-    "Tuesday": 49
+  "thruster": {
+    "Friday": 22,
+    "Saturday": 118,
+    "Wednesday": 62,
+    "Sunday": 80,
+    "Monday": 67,
+    "Thursday": 70,
+    "Tuesday": 8
   },
   "kettlebell swing": {
     "Friday": 50,
@@ -17,14 +17,14 @@
     "Thursday": 113,
     "Tuesday": 34
   },
-  "thruster": {
-    "Friday": 22,
-    "Saturday": 118,
-    "Wednesday": 62,
-    "Sunday": 80,
-    "Monday": 67,
-    "Thursday": 70,
-    "Tuesday": 8
+  "double under": {
+    "Friday": 57,
+    "Saturday": 117,
+    "Sunday": 122,
+    "Wednesday": 142,
+    "Monday": 131,
+    "Thursday": 130,
+    "Tuesday": 49
   },
   "box jump": {
     "Saturday": 123,
@@ -64,7 +64,7 @@
   },
   "clean": {
     "Friday": 73,
-    "Tuesday": 82,
+    "Tuesday": 83,
     "Sunday": 211,
     "Wednesday": 152,
     "Saturday": 213,
@@ -99,7 +99,7 @@
     "Friday": 32
   },
   "jerk (split/push)": {
-    "Tuesday": 28,
+    "Tuesday": 29,
     "Sunday": 125,
     "Thursday": 161,
     "Wednesday": 58,
@@ -243,7 +243,7 @@
   },
   "strict press": {
     "Saturday": 17,
-    "Tuesday": 36,
+    "Tuesday": 37,
     "Monday": 24,
     "Wednesday": 26,
     "Thursday": 21,
