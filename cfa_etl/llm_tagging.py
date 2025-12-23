@@ -232,6 +232,24 @@ def _parse_retry_after_s_from_error_text(text: str) -> Optional[float]:
     return value
 
 
+def _sleep_s_for_retry(attempt: int, err: Exception) -> float:
+    """
+    Centralized retry backoff policy.
+
+    Notes:
+    - For 429s we back off aggressively because concurrent workers can exhaust TPM
+      and short Retry-After hints (e.g. 200ms) are often insufficient.
+    """
+    jitter = random.uniform(0.0, 1.0)
+    if isinstance(err, OpenAIAPIError) and err.status_code == 429:
+        # attempt=1 -> 5s, then 10, 20, 40... up to 5 minutes
+        base = min(300.0, 5.0 * (2.0 ** (attempt - 1)))
+        retry_after = (err.retry_after_s or 0.0) * 4.0
+        return max(base, retry_after) + jitter
+    # Other errors: smaller exponential backoff up to 30s
+    return min(30.0, 1.5 ** attempt) + random.uniform(0.0, 0.25)
+
+
 def _chat_completions(
     *,
     session: requests.Session,
@@ -453,16 +471,7 @@ def tag_post_with_llm(
             return _validate_llm_result(obj, movement_labels=movement_labels)
         except Exception as e:
             last_err = e
-            # Exponential backoff with jitter. For 429s (rate limits), back off more aggressively
-            # and respect any server-provided retry delay when present.
-            jitter = random.uniform(0.0, 0.25)
-            if isinstance(e, OpenAIAPIError) and e.status_code == 429:
-                base = min(60.0, 2.0 ** attempt)
-                retry_after = e.retry_after_s or 0.0
-                sleep_s = max(base, retry_after) + jitter
-            else:
-                sleep_s = min(30.0, 1.5 ** attempt) + jitter
-            time.sleep(sleep_s)
+            time.sleep(_sleep_s_for_retry(attempt, e))
             continue
 
     raise RuntimeError(f"LLM tagging failed after {cfg.max_retries} retries: {last_err}")
@@ -508,14 +517,7 @@ def judge_post_tags_with_llm(
             return _validate_llm_result(obj, movement_labels=movement_labels)
         except Exception as e:
             last_err = e
-            jitter = random.uniform(0.0, 0.25)
-            if isinstance(e, OpenAIAPIError) and e.status_code == 429:
-                base = min(60.0, 2.0 ** attempt)
-                retry_after = e.retry_after_s or 0.0
-                sleep_s = max(base, retry_after) + jitter
-            else:
-                sleep_s = min(30.0, 1.5 ** attempt) + jitter
-            time.sleep(sleep_s)
+            time.sleep(_sleep_s_for_retry(attempt, e))
             continue
 
     raise RuntimeError(f"LLM judge failed after {cfg.max_retries} retries: {last_err}")
