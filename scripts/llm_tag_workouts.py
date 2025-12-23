@@ -119,6 +119,51 @@ def _append_jsonl(path: Path, obj: Dict[str, Any], lock: threading.Lock) -> None
             f.write("\n")
 
 
+def _read_seen_ids_from_json_array(path: Path) -> Set[int]:
+    """
+    Read ids from a JSON array file like data/derived/llm_tags.json.
+    (Used in GitHub Actions where we commit the .json array but not the .jsonl.)
+    """
+    seen: Set[int] = set()
+    if not path.exists():
+        return seen
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            return seen
+        for obj in data:
+            if isinstance(obj, dict):
+                pid = obj.get("id")
+                if isinstance(pid, int):
+                    seen.add(pid)
+    except Exception:
+        return seen
+    return seen
+
+
+def _ensure_jsonl_from_json_array(json_path: Path, jsonl_path: Path) -> None:
+    """
+    If only the JSON array exists (committed), reconstruct a local jsonl so we can:
+    - efficiently append new records
+    - regenerate the JSON array at the end from a single source of truth
+    """
+    if jsonl_path.exists() or not json_path.exists():
+        return
+    try:
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            return
+        jsonl_path.parent.mkdir(parents=True, exist_ok=True)
+        with jsonl_path.open("w", encoding="utf-8") as f:
+            for obj in data:
+                if not isinstance(obj, dict):
+                    continue
+                json.dump(obj, f, ensure_ascii=False)
+                f.write("\n")
+    except Exception:
+        return
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="LLM-based tagging for CFSBK workouts (local audit tool).")
     parser.add_argument("--input", default="data/raw/latest.jsonl", help="Input jsonl from WP API.")
@@ -166,6 +211,7 @@ def main() -> None:
 
     in_path = Path(args.input)
     out_path = Path(args.out)
+    out_json_path = Path(args.out_json)
     cache_dir = Path(args.cache_dir)
     cache_dir.mkdir(parents=True, exist_ok=True)
 
@@ -189,9 +235,17 @@ def main() -> None:
     seen_ids: Set[int] = set()
     seen_judge_ids: Set[int] = set()
     if args.resume and not args.overwrite:
+        # In CI we often commit the JSON array but not the jsonl; reconstruct local jsonl so
+        # resume and JSON regeneration work as expected.
+        _ensure_jsonl_from_json_array(out_json_path, out_path)
+        if args.judge:
+            _ensure_jsonl_from_json_array(Path(args.judge_out_json), Path(args.judge_out))
+
         seen_ids = _read_seen_ids(out_path)
+        seen_ids |= _read_seen_ids_from_json_array(out_json_path)
         if args.judge:
             seen_judge_ids = _read_seen_ids(Path(args.judge_out))
+            seen_judge_ids |= _read_seen_ids_from_json_array(Path(args.judge_out_json))
 
     load_dotenv()
     if not os.getenv("OPENAI_API_KEY"):
@@ -334,7 +388,6 @@ def main() -> None:
                     running.add(ex.submit(worker, *c))
 
     # Produce a JSON array for the frontend to fetch.
-    out_json_path = Path(args.out_json)
     items: List[Dict[str, Any]] = []
     if out_path.exists():
         with out_path.open() as f:
