@@ -73,6 +73,19 @@ jobs:
             --workers "${{ inputs.workers }}" \
             --resume
 
+      - name: Upload partial outputs (for recovery)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-tagging-output-${{ github.run_id }}
+          if-no-files-found: ignore
+          retention-days: 14
+          path: |
+            data/derived/llm_tags.json
+            data/derived/llm_tags.jsonl
+            data/derived/llm_judged_tags.json
+            data/derived/llm_judged_tags.jsonl
+
       - name: Commit LLM outputs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
