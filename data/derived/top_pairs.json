@@ -175,13 +175,13 @@
     "count": 180
   },
   {
-    "a": "double under",
-    "b": "pull-up",
-    "count": 178
-  },
-  {
     "a": "deadlift",
     "b": "double under",
+    "count": 179
+  },
+  {
+    "a": "double under",
+    "b": "pull-up",
     "count": 178
   },
   {
@@ -215,13 +215,13 @@
     "count": 165
   },
   {
-    "a": "back squat",
-    "b": "clean",
-    "count": 163
-  },
-  {
     "a": "deadlift",
     "b": "row (erg)",
+    "count": 164
+  },
+  {
+    "a": "back squat",
+    "b": "clean",
     "count": 163
   },
   {
@@ -645,6 +645,11 @@
     "count": 97
   },
   {
+    "a": "double under",
+    "b": "row (erg)",
+    "count": 97
+  },
+  {
     "a": "back squat",
     "b": "lunge",
     "count": 97
@@ -657,11 +662,6 @@
   {
     "a": "burpee",
     "b": "push press",
-    "count": 96
-  },
-  {
-    "a": "double under",
-    "b": "row (erg)",
     "count": 96
   },
   {
