@@ -15,6 +15,8 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,6 +48,56 @@ jobs:
               shutil.copy(files[0], raw_dir / "latest.jsonl")
           PY
           uv run python etl.py build --with-comment-analysis
+
+      - name: Update LLM tags (judge preferred)
+        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        run: |
+          # Compute an incremental date range:
+          # - start: last date currently present in data/derived/llm_tags.json (inclusive)
+          # - end: max derived workout date in data/raw/latest.jsonl
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scrape_cfsbk import derive_workout_date
+
+          llm_path = Path("data/derived/llm_tags.json")
+          start = "2007-01-01"
+          if llm_path.exists():
+              data = json.loads(llm_path.read_text(encoding="utf-8"))
+              dates = [o.get("date") for o in data if isinstance(o, dict) and o.get("date")]
+              if dates:
+                  start = max(dates)
+
+          latest_path = Path("data/raw/latest.jsonl")
+          end = None
+          with latest_path.open() as f:
+              for line in f:
+                  if not line.strip():
+                      continue
+                  post = json.loads(line)
+                  post_date = (post.get("date") or "")[:10]
+                  d = derive_workout_date(post, post_date)
+                  if d and (end is None or d > end):
+                      end = d
+          if end is None:
+              raise SystemExit("Failed to determine end date from data/raw/latest.jsonl")
+
+          print(f"Start date: {start}")
+          print(f"End date: {end}")
+
+          Path(".llm_range.json").write_text(json.dumps({"start": start, "end": end}), encoding="utf-8")
+          PY
+
+          RANGE="$(cat .llm_range.json)"
+          START="$(python - <<PY\nimport json\nprint(json.loads('''$RANGE''')['start'])\nPY)"
+          END="$(python - <<PY\nimport json\nprint(json.loads('''$RANGE''')['end'])\nPY)"
+
+          uv run python scripts/llm_tag_workouts.py \
+            --start-date "${START}" \
+            --end-date "${END}" \
+            --judge \
+            --workers 1 \
+            --resume
 
       - name: Commit updated data
         env:
