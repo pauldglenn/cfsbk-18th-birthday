@@ -50,8 +50,12 @@ jobs:
           uv run python etl.py build --with-comment-analysis
 
       - name: Update LLM tags (judge preferred)
-        if: ${{ secrets.OPENAI_API_KEY != '' }}
         run: |
+          if [ -z "${OPENAI_API_KEY:-}" ]; then
+            echo "OPENAI_API_KEY not set; skipping LLM tagging."
+            exit 0
+          fi
+
           # Compute an incremental date range:
           # - start: last date currently present in data/derived/llm_tags.json (inclusive)
           # - end: max derived workout date in data/raw/latest.jsonl
