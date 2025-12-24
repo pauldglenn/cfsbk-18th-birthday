@@ -9,6 +9,7 @@ type Diff = {
   date: string;
   title: string;
   link: string;
+  anyDiff: boolean;
   restMismatch: boolean;
   formatMismatch: boolean;
   missingInRegex: string[];
@@ -42,7 +43,7 @@ export function LLMAuditCard({
   const [onlyDiffs, setOnlyDiffs] = useState(true);
   const [q, setQ] = useState("");
 
-  const { diffs, totals } = useMemo(() => {
+  const { diffs, all, totals } = useMemo(() => {
     const byId = new Map<number, SearchItem>();
     for (const s of search) byId.set(s.id, s);
 
@@ -56,7 +57,8 @@ export function LLMAuditCard({
       if (t.id != null) judgeById.set(t.id, t);
     }
 
-    const computed: Diff[] = [];
+    const computedDiffs: Diff[] = [];
+    const computedAll: Diff[] = [];
     let compared = 0;
     let exact = 0;
     let withDiff = 0;
@@ -79,16 +81,15 @@ export function LLMAuditCard({
       const anyDiff =
         restMismatch || formatMismatch || mov.missing.length > 0 || mov.extra.length > 0 || tags.missing.length > 0 || tags.extra.length > 0;
 
-      if (!anyDiff) {
-        exact += 1;
-        continue;
-      }
-      withDiff += 1;
-      computed.push({
+      if (!anyDiff) exact += 1;
+      else withDiff += 1;
+
+      const item: Diff = {
         id: llm.id,
         date: llm.date || regex.date,
         title: llm.title || regex.title,
         link: llm.link || regex.link,
+        anyDiff,
         restMismatch,
         formatMismatch,
         missingInRegex: mov.missing,
@@ -99,17 +100,21 @@ export function LLMAuditCard({
         llm: llmById.get(llm.id) || null,
         judge: judgeById.get(llm.id) || null,
         regex,
-      });
+      };
+
+      computedAll.push(item);
+      if (anyDiff) computedDiffs.push(item);
     }
 
-    computed.sort((a, b) => a.date.localeCompare(b.date));
+    computedDiffs.sort((a, b) => a.date.localeCompare(b.date));
+    computedAll.sort((a, b) => a.date.localeCompare(b.date));
 
-    return { diffs: computed, totals: { compared, exact, withDiff } };
+    return { diffs: computedDiffs, all: computedAll, totals: { compared, exact, withDiff } };
   }, [llmTags, llmJudgedTags, mode, search]);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    let items = diffs;
+    let items = onlyDiffs ? diffs : all;
     if (query) {
       items = items.filter((d) => {
         const llmMovs = (d.llm?.movements || []).join(" ");
@@ -118,9 +123,10 @@ export function LLMAuditCard({
         return hay.includes(query);
       });
     }
-    if (!onlyDiffs) return items;
+    // Avoid rendering thousands of rows accidentally.
+    if (!onlyDiffs && !query) return items.slice(-200);
     return items;
-  }, [diffs, onlyDiffs, q]);
+  }, [all, diffs, onlyDiffs, q]);
 
   const [open, setOpen] = useState<number | null>(null);
 
@@ -176,7 +182,7 @@ export function LLMAuditCard({
       </div>
 
       {filtered.length === 0 ? (
-        <p className="muted">No differences found for the current filter.</p>
+        <p className="muted">{onlyDiffs ? "No differences found for the current filter." : "No matches found for the current filter."}</p>
       ) : (
         <div className="llm-audit__list">
           {filtered.map((d) => {
