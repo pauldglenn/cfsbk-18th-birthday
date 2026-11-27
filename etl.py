@@ -27,6 +27,7 @@ from cfa_etl.movements import (
     tag_movements,
 )
 from cfa_etl.named_workouts import build_named_workouts
+from cfa_etl.reviews import load_reviews
 
 
 def _print_frontend_sync_hint() -> None:
@@ -63,7 +64,7 @@ def _build_with_comment_analysis(raw: list[dict]) -> None:
         pid_int = int(pid)
         counts[pid_int] = counts.get(pid_int, 0) + 1
     print(f"[etl] Building canonical for {len(raw)} posts…")
-    canonical = build_canonical(raw, counts)
+    canonical = build_canonical(raw, counts, load_reviews())
     print("[etl] Building aggregates…")
     aggregates = aggregate(canonical)
     print("[etl] Building comment analysis…")
@@ -86,7 +87,7 @@ def cmd_build(_: argparse.Namespace) -> None:
     comment_counts: Dict[int, int] | None = None
     if getattr(_, "with_comments", False):
         comment_counts = fetch_comment_counts(raw)
-    canonical = build_canonical(raw, comment_counts)
+    canonical = build_canonical(raw, comment_counts, load_reviews())
     aggregates = aggregate(canonical)
     write_artifacts(canonical, aggregates)
     _print_frontend_sync_hint()
@@ -95,7 +96,7 @@ def cmd_build(_: argparse.Namespace) -> None:
 def cmd_all(args: argparse.Namespace) -> None:
     raw_path = fetch_raw(max_pages=args.max_pages)
     time.sleep(0.1)
-    raw = list(load_raw_posts())
+    raw = list(load_raw_posts(raw_path))
     if getattr(args, "with_comment_analysis", False):
         _build_with_comment_analysis(raw)
         return
@@ -103,7 +104,7 @@ def cmd_all(args: argparse.Namespace) -> None:
     comment_counts: Dict[int, int] | None = None
     if getattr(args, "with_comments", False):
         comment_counts = fetch_comment_counts(raw)
-    canonical = build_canonical(raw, comment_counts)
+    canonical = build_canonical(raw, comment_counts, load_reviews())
     aggregates = aggregate(canonical)
     write_artifacts(canonical, aggregates)
     _print_frontend_sync_hint()

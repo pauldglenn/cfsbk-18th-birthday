@@ -24,6 +24,8 @@ def aggregate(canonical: List[Dict]) -> Dict[str, Dict]:
     movement_calendar = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
 
     for item in canonical:
+        if item.get("extraction_status") not in {None, "extracted", "reviewed"}:
+            continue
         date = item.get("date") or ""
         if date:
             yearly_counts[date[:4]] += 1

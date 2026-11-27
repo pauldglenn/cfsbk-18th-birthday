@@ -1195,3 +1195,66 @@
 .llm-audit__links {
   margin-top: 10px;
 }
+
+.finder__filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 155px), 1fr));
+  gap: 12px;
+}
+
+.finder__field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.finder__field .input {
+  width: 100%;
+}
+
+.finder__list {
+  max-height: none;
+  overflow: visible;
+}
+
+.finder__item summary {
+  cursor: pointer;
+}
+
+.finder__meta {
+  display: block;
+  margin: 4px 0 0 18px;
+}
+
+.finder__details {
+  border-top: 1px solid #26354d;
+  margin-top: 12px;
+  padding: 0 6px 10px;
+}
+
+.finder__details a {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+.finder__prescription {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.finder__notes {
+  font-size: 0.9rem;
+  color: #b6c3d7;
+}
+
+.finder__pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.finder__pages button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

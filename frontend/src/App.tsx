@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { loadDataBundle } from "./dataLoader";
+import { loadDataBundle, loadLLMJudgedTags, loadLLMTags } from "./dataLoader";
 import type { Aggregates, SearchItem, NamedWorkouts, CommentsAnalysis, LLMTag } from "./types";
 import { Milestones } from "./components/Milestones";
 import { CommentsAnalysisCard } from "./components/CommentsAnalysisCard";
@@ -35,18 +35,17 @@ function App() {
   const [commentsAnalysis, setCommentsAnalysis] = useState<CommentsAnalysis | null>(null);
   const [llmTags, setLlmTags] = useState<LLMTag[] | null>(null);
   const [llmJudgedTags, setLlmJudgedTags] = useState<LLMTag[] | null>(null);
+  const [auditError, setAuditError] = useState(false);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setStatus("loading");
     loadDataBundle()
-      .then(({ aggregates, search, namedWorkouts, commentsAnalysis, llmTags, llmJudgedTags }) => {
+      .then(({ aggregates, search, namedWorkouts, commentsAnalysis }) => {
         setAggregates(aggregates);
         setSearchIndex(search);
         setNamedWorkouts(namedWorkouts);
         setCommentsAnalysis(commentsAnalysis);
-        setLlmTags(llmTags);
-        setLlmJudgedTags(llmJudgedTags);
         setStatus("ready");
       })
       .catch((err) => {
@@ -54,6 +53,20 @@ function App() {
         setStatus("error");
       });
   }, []);
+
+  useEffect(() => {
+    if (route !== "llm-audit") return;
+    let active = true;
+    Promise.all([loadLLMTags(), loadLLMJudgedTags()])
+      .then(([tags, judged]) => {
+        if (!active) return;
+        setLlmTags(tags);
+        setLlmJudgedTags(judged);
+        setAuditError(false);
+      })
+      .catch(() => { if (active) setAuditError(true); });
+    return () => { active = false; };
+  }, [route]);
 
   if (status === "loading") {
     return <div className="loading">Loading data…</div>;
@@ -72,14 +85,14 @@ function App() {
           <div className="audit-page__header">
             <div>
               <p className="kicker">Audit</p>
-              <h1>LLM vs Regex</h1>
-              <p className="muted">Compare first-pass LLM tags and/or judge-reviewed tags against the regex-based pipeline.</p>
+              <h1>Historical Tagging Audit</h1>
+              <p className="muted">Compare the previous model tags with the current archive.</p>
             </div>
             <a className="btn btn--ghost" href="#movements">
               Back to story
             </a>
           </div>
-          <LLMAuditCard llmTags={llmTags} llmJudgedTags={llmJudgedTags} search={searchIndex} />
+          {auditError ? <p>Historical tags could not be loaded.</p> : <LLMAuditCard llmTags={llmTags} llmJudgedTags={llmJudgedTags} search={searchIndex} />}
         </div>
       </div>
     );
@@ -90,24 +103,25 @@ function App() {
       <div className="story-container">
         <header className="hero story-slide">
           <div className="hero__content">
-            <p className="kicker">18 Years of CrossFit South Brooklyn</p>
+            <p className="kicker">19 Years of CrossFit South Brooklyn</p>
             <h1>Cataloging Every Workout</h1>
             <p className="lead">
-              From 2007 to today, thousands of strength days, metcons, partner throwdowns, and floater sessions have
-              been programmed at CFSBK. This project brings them together so members can explore trends, milestones, and
-              movement stories across the entire history.
+              Explore strength sessions, metcons, and benchmarks from the CrossFit South Brooklyn blog. Open a workout to see its prescription and the original post.
             </p>
             <p className="muted">
-              Scroll to explore: milestones, top movements, common pairings, and search across all {numberWithCommas(total)} workouts.
+              {numberWithCommas(total)} workouts indexed · {searchIndex[0]?.date.slice(0, 4)}–{searchIndex.at(-1)?.date.slice(0, 4)}
             </p>
             <Milestones total={total} search={searchIndex} />
             <div className="hero__cta">
-              <a className="btn btn--ghost" href="#/llm-audit">
-                LLM audit
-              </a>
+              <a className="btn btn--ghost" href="#finder">Find a workout</a>
+              <a className="btn btn--ghost" href="#movements">Explore trends</a>
             </div>
           </div>
         </header>
+
+        <Section id="finder" title="Workout Finder">
+          <QuickFinder search={searchIndex} />
+        </Section>
 
         <Section id="movements" title="Top Movements">
           <p className="muted">Click a movement to expand its history by year.</p>
@@ -134,9 +148,6 @@ function App() {
           <CommentsAnalysisCard analysis={commentsAnalysis} />
         </Section>
 
-        <Section id="finder" title="Quick Finder">
-          <QuickFinder search={searchIndex} />
-        </Section>
       </div>
     </div>
   );

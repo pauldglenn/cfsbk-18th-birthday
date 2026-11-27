@@ -12,10 +12,12 @@ import html
 import json
 import re
 import time
+from datetime import date
 from typing import Dict, Iterable, List, Optional
 
 import requests
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup
+
 
 API_URL = "https://crossfitsouthbrooklyn.com/wp-json/wp/v2/posts"
 CATEGORY_ID = 1  # "Workout of the Day"
@@ -93,115 +95,49 @@ def extract_cycle_info(text_blob: str) -> List[str]:
     return seen
 
 
-def collect_component_text(start_node: Tag) -> str:
-    """
-    Gather text following a component heading until the next heading or <hr/>.
-    """
-    parts: List[str] = []
-    cursor = start_node.next_sibling
-
-    while cursor:
-        if isinstance(cursor, Tag) and cursor.name in {"h2", "h3", "h4", "h5", "h6", "hr"}:
-            break
-
-        if isinstance(cursor, Tag):
-            text = cursor.get_text(" ", strip=True)
-        elif isinstance(cursor, NavigableString):
-            text = str(cursor).strip()
-        else:
-            text = ""
-
-        if text:
-            parts.append(text)
-
-        cursor = cursor.next_sibling
-
-    return clean_text(" ".join(parts))
+def post_title(post: Dict) -> str:
+    rendered = (post.get("title") or {}).get("rendered") or ""
+    return html.unescape(BeautifulSoup(rendered, "html.parser").get_text()).strip()
 
 
-def parse_components(soup: BeautifulSoup) -> List[Dict[str, str]]:
-    """
-    Extract workout components that follow the "Workout of the Day" heading.
-    """
-    wod_heading = soup.find(
-        lambda tag: tag.name in {"h2", "h3"}
-        and "workout of the day" in tag.get_text(" ", strip=True).lower()
-    )
-    if not wod_heading:
-        # Fallback: if there is text before the first heading, treat that as the workout
-        # and ignore later headings (often blog/news content).
-        first_heading = soup.find(lambda t: t.name in {"h2", "h3", "h4", "h5", "h6"})
-        leading_text_parts: List[str] = []
-        if first_heading:
-            for node in first_heading.previous_siblings:
-                if isinstance(node, Tag):
-                    txt = node.get_text(" ", strip=True)
-                elif isinstance(node, NavigableString):
-                    txt = str(node).strip()
-                else:
-                    txt = ""
-                if txt:
-                    leading_text_parts.append(txt)
-        leading_text = clean_text(" ".join(reversed(leading_text_parts)))
-        if leading_text:
-            return [{"component": "Workout", "details": leading_text}]
+def parse_components(soup: BeautifulSoup) -> List[Dict]:
+    """Extract today's programming from the supplied post body."""
+    from cfa_etl.extraction import extract_programming, source_blocks
+    from cfa_etl.movements import load_movement_patterns
 
-        # Otherwise, try heading-delimited sections. If none exist, capture the whole body.
-        sections: List[Dict[str, str]] = []
-        for heading in soup.find_all(lambda t: t.name in {"h2", "h3", "h4", "h5", "h6"}):
-            heading_text = heading.get_text(" ", strip=True)
-            if not heading_text:
-                continue
-            details = collect_component_text(heading)
-            sections.append({"component": heading_text, "details": details})
-
-        if sections:
-            return sections
-
-        blob = clean_text(soup.get_text(" ", strip=True))
-        return [{"component": "Workout", "details": blob}] if blob else []
-
-    components: List[Dict[str, str]] = []
-    node = wod_heading.next_sibling
-
-    while node:
-        if isinstance(node, Tag):
-            heading_text = node.get_text(" ", strip=True)
-
-            # Stop once we hit the next major section.
-            if node.name in {"h2", "h3"} and "workout of the day" not in heading_text.lower():
-                break
-
-            if node.name in {"h3", "h4", "h5", "h6"} and heading_text:
-                details = collect_component_text(node)
-                components.append({"component": heading_text, "details": details})
-
-        node = node.next_sibling
-
-    if components:
-        return components
-
-    # If nothing was captured under the WOD heading, fallback to a single blob.
-    blob = clean_text(soup.get_text(" ", strip=True))
-    return [{"component": "Workout", "details": blob}] if blob else []
+    return extract_programming(source_blocks(soup), "", load_movement_patterns())[1]
 
 
-def process_post(post: Dict) -> Dict:
+def process_post(post: Dict, patterns=None, *, review: Dict | None = None) -> Dict:
     """Build a structured record for a single post."""
+    from cfa_etl.extraction import extract_programming, source_blocks
+    from cfa_etl.movements import load_movement_patterns
+    from cfa_etl.reviews import resolve_selection, source_digest
+
     content_html = post.get("content", {}).get("rendered") or ""
     soup = BeautifulSoup(content_html, "html.parser")
     text_blob = soup.get_text(" ", strip=True)
     post_date = (post.get("date") or "")[:10]
-    title_rendered = (post.get("title", {}) or {}).get("rendered") or ""
-
+    title = post_title(post)
+    blocks = source_blocks(soup)
+    review_matches = review is not None and review["source_digest"] == source_digest(title, blocks)
+    if review_matches:
+        status, components = resolve_selection(title, blocks, review)
+    else:
+        status, components = extract_programming(
+            blocks, title, patterns if patterns is not None else load_movement_patterns()
+        )
+        if review is not None:
+            status = "needs_review"
     return {
         "id": post.get("id"),
         "post_date": post_date,
         "date": derive_workout_date(post, post_date),
-        "title": html.unescape(title_rendered),
+        "title": title,
         "link": post.get("link"),
         "cycle_info": extract_cycle_info(text_blob),
-        "components": parse_components(soup),
+        "components": components,
+        "extraction_status": status,
     }
 
 
@@ -210,31 +146,27 @@ def derive_workout_date(post: Dict, fallback: str) -> str:
     Workouts are often posted a day in advance. Derive the intended date from
     the title/slug first, then the permalink path; otherwise fall back to publish date.
     """
+    from cfa_etl.extraction import valid_date
+
     title = (post.get("title", {}) or {}).get("rendered") or ""
     slug = post.get("slug") or ""
 
     def parse_ymd(text: str) -> str | None:
-        m = re.search(r"(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})", text)
+        m = re.search(r"(?<!\d)(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)", text)
         if not m:
             return None
         month, day, year = m.groups()
         if len(year) == 2:
             year_int = int(year)
             year = f"20{year.zfill(2)}" if year_int < 70 else f"19{year.zfill(2)}"
-        return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+        return valid_date(f"{year}-{month.zfill(2)}-{day.zfill(2)}")
 
     # Prefer explicit date in title or slug (often the real workout date)
     date_from_title = parse_ymd(title) or parse_ymd(slug)
-    # If the parsed year is in the future relative to publish date, treat it as a typo and fall back
-    # Also, if parsed year is before 2007, fall back to publish year (likely an abbreviated year typo).
-    if date_from_title and fallback:
-        try:
-            pub_year = int(fallback[:4])
-            parsed_year = int(date_from_title[:4])
-            if parsed_year - pub_year > 2 or parsed_year < 2007:
-                date_from_title = None
-        except Exception:
-            pass
+    if date_from_title and fallback and valid_date(fallback):
+        skew = abs((date.fromisoformat(date_from_title) - date.fromisoformat(fallback)).days)
+        if skew > 31:
+            date_from_title = None
     if date_from_title:
         return date_from_title
 

@@ -233,6 +233,11 @@ def extract_rep_scheme(components: List[Dict]) -> str:
     (numbers, AMRAP, For Time, EMOM). If nothing matches, fallback to the
     first 200 chars of the first component.
     """
+    if components and "source_blocks" in components[0]:
+        return " | ".join(
+            f"{component['component']}: {component['details'].replace(chr(10), ' / ')}"
+            for component in components
+        )[:400]
     keywords = ("amrap", "for time", "emom", "every", "round", "rounds", "minutes", "minute")
     lines = []
     for comp in components or []:

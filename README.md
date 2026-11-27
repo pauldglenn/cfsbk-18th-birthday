@@ -1,13 +1,6 @@
-# CrossFit South Brooklyn Workout Scraper
+# CrossFit South Brooklyn Workout Archive
 
-Python helper that pulls the full history of CrossFit South Brooklyn "Workout of the Day" posts via the site's WordPress API and extracts the workout components (Strength, Assistance, Conditioning, etc.), the date, and any cycle markers like `(WK4/8)`.
-
-## Plan
-- Use the WordPress REST API (`wp-json/wp/v2/posts`) scoped to the `Workout of the Day` category (ID 1) to avoid brittle HTML pagination.
-- Fetch posts in pages of up to 100 items, respecting the `X-WP-TotalPages` header and pausing slightly between requests.
-- Parse each post's rendered HTML with BeautifulSoup; find the `Workout of the Day` heading and capture subsequent component headings (h3–h6) and their text until the next heading.
-- Detect cycle information with regex patterns such as `(WK4/8)` or `(Week 6/8)` and include it on every record.
-- Emit newline-delimited JSON so the data can be transformed later into a richer model.
+A searchable archive of CrossFit South Brooklyn’s daily programming from 2007 through November 2026. See the [extraction review](EXTRACTION_REVIEW.md) for source examples, known limits, and the review workflow.
 
 ## Usage (uv)
 ```bash
@@ -56,12 +49,21 @@ Artifacts land in `data/derived/`:
 - `workouts.jsonl` (canonical with movements/format/component tags/seq_no)
 - `top_movements.json`, `top_pairs.json`, `yearly_counts.json`, `weekday_counts.json`
 - `movement_yearly.json`, `movement_weekday.json`, `movement_monthly.json`, `movement_calendar.json`
-- `search_index.json`, `data_version.json`
+- `search_index.json`, `data_version.json`, and per-year `prescriptions/*.json` for the finder
 - `comment_count` is included on each workout when running with `--with-comments` or `--with-comment-analysis` (hits the WP comments API)
 - `comments_analysis.json` is written when running with `--with-comment-analysis` (monthly totals, most-commented posts, top commenters)
 
-## LLM tagging (audit mode)
-The regex-based tagger is the source of truth for the site. For auditing, you can generate a second set of tags using an LLM and compare them in the frontend.
+## Source review and historical tagging audit
+
+The archive builds from WordPress text and reviewed selections in `config/workout_reviews.json`. To get model proposals for selected posts, use a model with Structured Outputs and an OpenAI API key.
+
+```bash
+uv run python scripts/propose_workout_reviews.py --model YOUR_MODEL --id 10754 --output proposals.json
+```
+
+Compare each proposal to its original post before copying it into the reviewed configuration. Use one record per post ID. Run `uv run python etl.py build` and sync the frontend after changes.
+
+The previous tagging script and its saved outputs are available for comparison at `#/llm-audit`.
 
 1) Provide an OpenAI key (either works):
 ```bash
@@ -95,8 +97,8 @@ Outputs (gitignored):
 - `data/derived/llm_judged_tags.jsonl`
 - `data/derived/llm_judged_tags.json`
 
-### Deploying LLM results
-If you don’t want to re-run LLM tagging in prod, commit these to the repo after generating them locally:
+### Saving historical audit results
+The historical audit loads these files when present:
 - `data/derived/llm_tags.json`
 - `data/derived/llm_judged_tags.json`
 

@@ -14,6 +14,18 @@ export type Aggregates = {
 
 export type MovementDayEntry = { day: number; date: string; title: string; summary: string; link: string };
 
+export type ExtractionStatus = "extracted" | "reviewed" | "needs_review" | "rest_day" | "non_workout";
+
+export type Prescription = {
+  component: string;
+  details: string;
+  notes: string;
+  formats: string[];
+  movements: string[];
+  tags: string[];
+  source_blocks: number[];
+};
+
 export type SearchItem = {
   id: number;
   seq_no?: number;
@@ -26,6 +38,8 @@ export type SearchItem = {
   movements: string[];
   component_tags: string[];
   format: string;
+  formats?: string[];
+  extraction_status?: ExtractionStatus;
   cycle_info: string[];
 };
 

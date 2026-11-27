@@ -12,7 +12,9 @@
 - name: row (erg)
   patterns:
     - calories? row(ed|ing)?
-    - row for
+    - \brow for\b
+    - \bcal(?:orie)?s? row\b
+    - \brow,? cal(?:orie)?s?\b
     - \d+\s*m(?:eters)?\s*row
     - row\s+\d+\s*m(?:eters)?
     - rower\b
@@ -21,7 +23,7 @@
 
 - name: run
   patterns:
-    - \brun
+    - \b(?:run|runs|running)\b
   tags: [monostructural]
 
 - name: bike (assault/echo)
@@ -52,7 +54,7 @@
 
 - name: wall ball
   patterns:
-    - wall ball
+    - wall[- ]?balls?\b
   tags: [weightlifting]
 
 - name: thruster
@@ -62,12 +64,13 @@
 
 - name: deadlift
   patterns:
-    - \bdeadlift
+    - \bdeadlifts?\b
+    - \brdl(?:s)?\b
   tags: [weightlifting]
 
 - name: clean
   patterns:
-    - \bclean
+    - \bcleans?\b
     - power clean
   tags: [weightlifting]
 
@@ -79,7 +82,8 @@
 
 - name: clean and jerk
   patterns:
-    - clean.?jerk
+    - \bclean(?:s)?\s*(?:and|&|\+|/)\s*jerks?\b
+    - \bclean[- ]jerks?\b
   tags: [weightlifting]
 
 - name: jerk (split/push)
@@ -153,6 +157,7 @@
 - name: pull-up
   patterns:
     - pull[- ]?up
+    - chin[- ]?up
   tags: [gymnastics]
 
 - name: muscle-up
@@ -168,7 +173,7 @@
 
 - name: push-up
   patterns:
-    - push[- ]?up
+    - (?<!handstand )push[- ]?up
   tags: [gymnastics]
 
 - name: handstand push-up
@@ -202,7 +207,8 @@
 - name: dumbbell snatch
   patterns:
     - db snatch
-    - dumbbell snatch
+    - dumbbell (?:power |hang )?snatch
+    - db (?:power |hang )snatch
   tags: [weightlifting]
 
 - name: dumbbell clean
@@ -229,3 +235,79 @@
     - renegade rows?
     - renegade (?:db|dumbbell) rows?
   tags: [weightlifting]
+
+- name: ring row
+  patterns:
+    - \bring rows?\b
+
+- name: handstand walk
+  patterns:
+    - \bhandstand walk(?:s|ing)?\b
+    - \bhsw\b
+
+- name: wall walk
+  patterns:
+    - \bwall walks?\b
+
+- name: ground-to-overhead
+  patterns:
+    - \bground[- ]to[- ]overheads?\b
+    - \bgtoh\b
+
+- name: shoulder-to-overhead
+  patterns:
+    - \bshoulder[- ]to[- ]overheads?\b
+    - \bstoh\b
+
+- name: sumo deadlift high pull
+  patterns:
+    - \bsumo deadlift high[- ]pulls?\b
+    - \bsdhp\b
+
+- name: hollow rock
+  patterns:
+    - \bhollow rocks?\b
+
+- name: single under
+  patterns:
+    - \bsingle[- ]unders?\b
+
+- name: cluster
+  patterns:
+    - \b(?:\d+\s+clusters?|clusters?\s+\d+)\b
+
+- name: goblet squat
+  patterns:
+    - \bgoblet squats?\b
+
+- name: knees-to-elbows
+  patterns:
+    - \bknees?[- ]to[- ]elbows?\b
+
+- name: v-up
+  patterns:
+    - \bv[- ]?ups?\b
+
+- name: tuck-up
+  patterns:
+    - \btuck[- ]?ups?\b
+
+- name: hollow hold
+  patterns:
+    - \bhollow holds?\b
+
+- name: dip
+  patterns:
+    - \b(?:(?:ring|bar|strict) dips?|\d+\s+dips?)\b
+
+- name: plank
+  patterns:
+    - \bplanks?\b
+
+- name: squat (unspecified)
+  patterns:
+    - ^(?:\d+\s+)?squats?$
+
+- name: press (unspecified)
+  patterns:
+    - ^press$

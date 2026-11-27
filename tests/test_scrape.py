@@ -236,7 +236,9 @@ def test_named_workouts_include_grace_and_murph_counts():
 
     murph = next((w for w in named["heroes"] if w["name"].lower() == "murph"), None)
     assert murph is not None
-    assert murph["count"] == 17
+    dates = {occ["date"] for occ in murph["occurrences"]}
+    assert "2026-05-24" in dates
+    assert "2023-05-28" not in dates  # The workout is embedded in an image.
 
 
 def test_named_workouts_skip_tomorrow_components():

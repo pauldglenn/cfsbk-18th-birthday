@@ -71,7 +71,7 @@ export function LLMAuditCard({
       if (!regex) continue;
       compared += 1;
 
-      const regexRest = regex.workout_no == null;
+      const regexRest = regex.extraction_status === "rest_day" || (!regex.extraction_status && regex.workout_no == null);
       const restMismatch = llm.is_rest_day !== regexRest;
       const formatMismatch = (llm.format || "") !== (regex.format || "");
 
@@ -149,7 +149,7 @@ export function LLMAuditCard({
     <div className="card llm-audit">
       <div className="llm-audit__header">
         <div>
-          <h3 className="trend-title">{mode === "judge" ? "Judge vs regex" : "LLM vs regex"}</h3>
+          <h3 className="trend-title">{mode === "judge" ? "Judge vs archive" : "LLM vs archive"}</h3>
           <p className="muted">
             Compared {totals.compared} posts · Exact matches {totals.exact} · Differences {totals.withDiff}
           </p>
@@ -218,7 +218,7 @@ export function LLMAuditCard({
                   <div className="llm-audit__details">
                     <div className="llm-audit__cols">
                       <div className="llm-audit__col">
-                        <div className="llm-audit__col-title">Regex</div>
+                        <div className="llm-audit__col-title">Archive</div>
                         <div className="muted">format: {d.regex.format || "—"}</div>
                         <div className="llm-audit__pillset">
                           {(d.regex.movements || []).slice().sort().map((m) => (
@@ -267,9 +267,9 @@ export function LLMAuditCard({
                     {(d.missingInRegex.length > 0 || d.extraInRegex.length > 0) && (
                       <div className="llm-audit__delta">
                         {d.missingInRegex.length > 0 && (
-                          <div className="muted">Missing in regex: {d.missingInRegex.join(", ")}</div>
+                          <div className="muted">Missing in archive: {d.missingInRegex.join(", ")}</div>
                         )}
-                        {d.extraInRegex.length > 0 && <div className="muted">Extra in regex: {d.extraInRegex.join(", ")}</div>}
+                        {d.extraInRegex.length > 0 && <div className="muted">Extra in archive: {d.extraInRegex.join(", ")}</div>}
                       </div>
                     )}
 
