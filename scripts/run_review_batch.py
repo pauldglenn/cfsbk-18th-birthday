@@ -8,9 +8,16 @@ from pathlib import Path
 
 import requests
 
+import propose_workout_reviews as reviewer
 from propose_workout_reviews import load_raw_posts, propose
 
 MODEL = "gpt-5-mini"
+reviewer.INSTRUCTIONS += """
+If notes interrupt a prescription, split it into separate components so selected
+IDs remain in strictly increasing order. Prefer heading 0 if the heading is
+mixed with prescription text or spans multiple lines. If you cannot cleanly
+select the evidence at block granularity, return needs_review.
+"""
 
 
 def select(post):
@@ -34,8 +41,7 @@ def select(post):
 def main():
     if not os.environ.get("OPENAI_API_KEY"):
         raise SystemExit("This repository has no OPENAI_API_KEY available to the workflow.")
-    search = json.loads(Path("data/derived/search_index.json").read_text())
-    ids = {row["id"] for row in search if row["extraction_status"] == "needs_review"}
+    ids = {1666, 1929, 785, 1172, 282, 1564, 6950, 1575, 7465, 5804, 1580, 1586, 1601, 7491, 327, 6736, 7384, 862, 6377, 6890, 1515, 1531, 1020, 6398}
     posts = [post for post in load_raw_posts() if post["id"] in ids]
     output = Path("review-output")
     output.mkdir(exist_ok=True)
