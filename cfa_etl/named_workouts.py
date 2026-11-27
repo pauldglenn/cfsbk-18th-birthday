@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from .movements import extract_rep_scheme
 
@@ -96,15 +96,6 @@ GIRL_NAMES = [
 ]
 
 
-def _compile_name_patterns(names: List[str]) -> List[Tuple[str, re.Pattern]]:
-    patterns = []
-    for name in names:
-        escaped = re.escape(name).replace("\\ ", r"\s+")
-        pat = re.compile(rf"\b{escaped}\b", re.IGNORECASE)
-        patterns.append((name.title(), pat))
-    return patterns
-
-
 def _normalize_name(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", (text or "").lower()).strip()
 
@@ -112,8 +103,6 @@ def _normalize_name(text: str) -> str:
 def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
     hero_hits = defaultdict(list)
     girl_hits = defaultdict(list)
-    hero_patterns = _compile_name_patterns(HERO_NAMES)
-    girl_patterns = _compile_name_patterns(GIRL_NAMES)
 
     ignores = (
         "training cycle",
@@ -126,7 +115,14 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
     )
 
     for item in canonical:
+        if item.get("extraction_status") not in {None, "extracted", "reviewed"}:
+            continue
         title_l = (item.get("title") or "").lower()
+        quoted = re.findall(r'["“]([^"”]+)["”]', title_l)
+        title_parts = [title_l, *quoted, *re.split(r"\s*\|\s*", title_l)]
+        title_names = {_normalize_name(part) for part in title_parts}
+        if re.match(r"^(?:(?:monday|sunday) \d{1,2}\.\d{1,2}\.\d{2,4} |\d+(?:st|nd|rd|th) annual )?memorial day murph(?: \d{4})?$", title_l):
+            title_names.add("murph")
         component_names: List[str] = []
         for comp in item.get("components") or []:
             name = (comp.get("component") or "").lower()
@@ -144,41 +140,12 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
             "summary": summary,
         }
 
-        matches_hero = []
-        for name, pat in hero_patterns:
-            name_norm = _normalize_name(name)
-            title_hit = bool(pat.search(title_l))
-            comp_hit = any(_normalize_name(c) == name_norm for c in component_names)
-            if not (title_hit or comp_hit):
-                continue
-            if name_norm == "murph" and not title_hit:
-                summary_l = summary.lower()
-                if not (
-                    ("pull" in summary_l and "push" in summary_l and "squat" in summary_l)
-                    or "1 mile" in summary_l
-                    or "1-mile" in summary_l
-                ):
-                    continue
-            matches_hero.append(name)
-
-        matches_girl = []
-        for name, pat in girl_patterns:
-            name_norm = _normalize_name(name)
-            if pat.search(title_l) or any(_normalize_name(c) == name_norm for c in component_names):
-                matches_girl.append(name)
-
-        for m in matches_hero:
-            if _normalize_name(m) == "murph":
-                summary_l = summary.lower()
-                if not (
-                    ("pull" in summary_l and "push" in summary_l and "squat" in summary_l)
-                    or "1 mile" in summary_l
-                    or "1-mile" in summary_l
-                ):
-                    continue
-            hero_hits[m].append(entry)
-        for m in matches_girl:
-            girl_hits[m].append(entry)
+        component_names_normalized = {_normalize_name(name) for name in component_names}
+        names = title_names | component_names_normalized
+        for entries, benchmarks in ((hero_hits, HERO_NAMES), (girl_hits, GIRL_NAMES)):
+            for name in benchmarks:
+                if _normalize_name(name) in names:
+                    entries[name].append(entry)
 
     def build_list(hit_map: Dict[str, List[Dict]]) -> List[Dict]:
         data = []
@@ -186,7 +153,7 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
             entries_sorted = sorted(entries, key=lambda e: e.get("date") or "", reverse=True)
             data.append(
                 {
-                    "name": name,
+                    "name": name.upper() if name == "dt" else name.title(),
                     "count": len(entries_sorted),
                     "latest_date": entries_sorted[0].get("date"),
                     "latest_link": entries_sorted[0].get("link"),
@@ -194,21 +161,6 @@ def build_named_workouts(canonical: List[Dict]) -> Dict[str, List[Dict]]:
                 }
             )
         return sorted(data, key=lambda x: (-x["count"], x["name"]))
-
-    murph_entries = []
-    for item in canonical:
-        if "murph" in (item.get("title") or "").lower():
-            summary = extract_rep_scheme(item.get("components") or [])
-            murph_entries.append(
-                {
-                    "date": item.get("date"),
-                    "title": item.get("title"),
-                    "link": item.get("link"),
-                    "summary": summary,
-                }
-            )
-    if murph_entries:
-        hero_hits["Murph"] = murph_entries
 
     return {"heroes": build_list(hero_hits), "girls": build_list(girl_hits)}
 

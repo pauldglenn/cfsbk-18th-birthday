@@ -34,10 +34,10 @@ export function TopPairs({ aggregates }: { aggregates: Aggregates }) {
     const sharedEntries = (pair: Pair): MovementDayEntry[] => {
       const aEntries = entriesForMovement(pair.a);
       const bEntries = entriesForMovement(pair.b);
-      const byDate = new Map(aEntries.map((e) => [e.date, e]));
+      const byPost = new Map(aEntries.map((e) => [e.link, e]));
       const shared: MovementDayEntry[] = [];
       for (const e of bEntries) {
-        const hit = byDate.get(e.date);
+        const hit = byPost.get(e.link);
         if (hit) shared.push(hit);
       }
       shared.sort((x, y) => (y.date || "").localeCompare(x.date || ""));
@@ -75,13 +75,13 @@ export function TopPairs({ aggregates }: { aggregates: Aggregates }) {
             <button type="button" className={`chip-row pair-row ${open ? "pair-row--open" : ""}`} onClick={() => setOpenKey(open ? null : key)}>
               <span className="chip">{p.a}</span>
               <span className="chip">{p.b}</span>
-              <span className="muted">{numberWithCommas(p.count)} days</span>
+              <span className="muted">{numberWithCommas(p.count)} workouts</span>
               <span className="pair-row__chev">{open ? "▾" : "▸"}</span>
             </button>
             {open && shared && (
               <div className="pair-expander">
                 <div className="pair-expander__meta muted">
-                  {numberWithCommas(together)} days together · {numberWithCommas(aDays)} days with {p.a} · {numberWithCommas(bDays)} days with {p.b}
+                  {numberWithCommas(together)} workouts together · {numberWithCommas(aDays)} workouts with {p.a} · {numberWithCommas(bDays)} workouts with {p.b}
                   {" · "}
                   overlap: {pct(together, aDays)} of {p.a}, {pct(together, bDays)} of {p.b}
                 </div>

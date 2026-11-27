@@ -63,12 +63,10 @@ def fetch_comment_counts(posts: List[Dict], pause: float = 0.05) -> Dict[int, in
     return counts
 
 
-def load_raw_posts() -> Iterable[Dict]:
+def load_raw_posts(path: Path | None = None) -> Iterable[Dict]:
     latest = RAW_DIR / "latest.jsonl"
-    if latest.exists():
-        path = latest
-    else:
-        files = sorted(RAW_DIR.glob("posts-*.jsonl"), reverse=True)
+    if path is None:
+        files = [latest] if latest.exists() else sorted(RAW_DIR.glob("posts-*.jsonl"), reverse=True)
         if not files:
             raise SystemExit("No raw files found in data/raw. Run `uv run python etl.py fetch` first.")
         path = files[0]
@@ -109,6 +107,8 @@ def write_artifacts(
             "movements": item.get("movements"),
             "component_tags": item.get("component_tags"),
             "format": item.get("format"),
+            "formats": item["formats"],
+            "extraction_status": item["extraction_status"],
             "cycle_info": item.get("cycle_info"),
         }
         for item in canonical
@@ -116,12 +116,26 @@ def write_artifacts(
     with search_path.open("w", encoding="utf-8") as f:
         json.dump(search_data, f, ensure_ascii=False)
 
+    details_by_year: dict[str, dict] = {}
+    for item in canonical:
+        if item.get("date") and item["components"]:
+            details_by_year.setdefault(item["date"][:4], {})[str(item["id"])] = item["components"]
+    details_dir = DERIVED_DIR / "prescriptions"
+    details_dir.mkdir(exist_ok=True)
+    for year, details in details_by_year.items():
+        with (details_dir / f"{year}.json").open("w", encoding="utf-8") as f:
+            json.dump(details, f, ensure_ascii=False, separators=(",", ":"))
+    for file in details_dir.glob("*.json"):
+        if file.stem not in details_by_year:
+            file.unlink()
+
     version_path = DERIVED_DIR / "data_version.json"
-    total_workouts = sum(1 for item in canonical if not item.get("is_rest_day"))
+    total_workouts = sum(1 for item in canonical if item["workout_no"] is not None)
     version = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "total_workouts": total_workouts,
         "total_posts": len(canonical),
+        "needs_review": sum(item["extraction_status"] == "needs_review" for item in canonical),
     }
     with version_path.open("w", encoding="utf-8") as f:
         json.dump(version, f, indent=2)

@@ -15,3 +15,5 @@ data/derived/llm_judged_tags.jsonl
 frontend/public/data/derived/llm_*.json
 frontend/public/data/derived/llm_tags.jsonl
 frontend/public/data/derived/llm_judged_tags.jsonl
+
+__pycache__/

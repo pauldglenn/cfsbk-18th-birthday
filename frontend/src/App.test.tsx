@@ -84,6 +84,7 @@ describe("App scrollytelling interactions", () => {
         url.includes("movement_monthly") ? mockAggregates.movement_monthly :
         url.includes("movement_calendar") ? mockAggregates.movement_calendar :
         url.includes("search_index") ? mockSearch :
+        url.includes("prescriptions/2025") ? { 1: [{ component: "METCON", details: "3 rounds for time\nRun 400m", notes: "Rest 1 minute." }] } :
         url.includes("named_workouts") ? mockNamed :
         url.includes("comments_analysis") ? mockCommentsAnalysis :
         [];
@@ -115,5 +116,21 @@ describe("App scrollytelling interactions", () => {
 
     const dayCell = await screen.findByRole("button", { name: /^8$/ });
     expect(dayCell).toBeInTheDocument();
+  });
+
+  it("filters the archive and loads the original prescription when expanded", async () => {
+    render(<App />);
+
+    const movement = await screen.findByLabelText("Movement");
+    fireEvent.change(movement, { target: { value: "run" } });
+    expect(screen.getByRole("status")).toHaveTextContent("1 result");
+    const entry = screen.getByText("Saturday 11.8.25").closest("details")!;
+    entry.open = true;
+    fireEvent(entry, new Event("toggle"));
+    expect(await screen.findByText(/3 rounds for time/)).toBeVisible();
+    expect(screen.getByRole("link", { name: "Read the original post" })).toHaveAttribute("href", "http://example.com");
+
+    fireEvent.change(screen.getByLabelText("Search the archive"), { target: { value: "nonexistent" } });
+    expect(screen.getByRole("status")).toHaveTextContent("0 results");
   });
 });

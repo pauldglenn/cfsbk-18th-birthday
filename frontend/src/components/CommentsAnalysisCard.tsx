@@ -12,7 +12,7 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
         <div className="comments-card__header">
           <div>
             <h3 className="trend-title">Comments</h3>
-            <p className="muted">Comment analytics aren’t available yet. Run `uv run python etl.py build --with-comment-analysis`.</p>
+            <p className="muted">Comment analytics aren’t available yet.</p>
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ export function CommentsAnalysisCard({ analysis }: { analysis: CommentsAnalysis 
       <div className="comments-card__header">
         <div>
           <h3 className="trend-title">Comments</h3>
-          <p className="muted">{numberWithCommas(total_comments)} total comments across the full history.</p>
+          <p className="muted">{numberWithCommas(total_comments)} comments in the {analysis.generated_at.slice(0, 10)} snapshot.</p>
         </div>
       </div>
 
