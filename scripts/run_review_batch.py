@@ -46,13 +46,10 @@ def main():
     output = Path("review-output")
     output.mkdir(exist_ok=True)
     with (output / "proposals.jsonl").open("w") as proposals, (output / "errors.jsonl").open("w") as errors:
-        first, *remaining = posts
-        proposals.write(json.dumps(select(first), ensure_ascii=False) + "\n")
-        proposals.flush()
-        print(f"{MODEL} accepted first post. Reviewing {len(posts)} posts.", flush=True)
+        print(f"{MODEL} reviewing {len(posts)} posts.", flush=True)
         with ThreadPoolExecutor(max_workers=8) as workers:
-            tasks = {workers.submit(select, post): post["id"] for post in remaining}
-            for index, future in enumerate(as_completed(tasks), start=2):
+            tasks = {workers.submit(select, post): post["id"] for post in posts}
+            for index, future in enumerate(as_completed(tasks), start=1):
                 try:
                     proposals.write(json.dumps(future.result(), ensure_ascii=False) + "\n")
                     proposals.flush()
